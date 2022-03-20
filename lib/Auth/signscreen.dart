@@ -163,7 +163,7 @@ class SignScreenState extends State<SignScreen> {
                   });
                   await signInWithGoogle().then((result) {
                     if (result != null) {
-
+// a
                       Navigator.of(context).pushNamedAndRemoveUntil('/homepage', (route) => true);
                     }
                   }).catchError((error) {
