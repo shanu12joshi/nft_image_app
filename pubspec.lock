@@ -106,6 +106,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.1.2"
+  file_picker:
+    dependency: "direct main"
+    description:
+      name: file_picker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.5.1"
   firebase:
     dependency: "direct main"
     description:
@@ -413,6 +420,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
+  sn_progress_dialog:
+    dependency: "direct main"
+    description:
+      name: sn_progress_dialog
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.3"
   source_span:
     dependency: transitive
     description:
@@ -482,7 +496,7 @@ packages:
       name: win32
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.3.6"
+    version: "2.4.2"
   xdg_directories:
     dependency: transitive
     description:

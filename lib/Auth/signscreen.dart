@@ -1,16 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'dart:async';
-import 'dart:convert' show json;
-import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:http/http.dart' as http;
-import 'package:nft_app/Home/homepage.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+
 
 import '../Utils/authentication.dart';
 
@@ -163,7 +157,10 @@ class SignScreenState extends State<SignScreen> {
                   });
                   await signInWithGoogle().then((result) {
                     if (result != null) {
-// a
+                      // Navigator.of(context).push(
+                          // MaterialPageRoute(
+                          //     builder: (context) =>
+                          //         ABC()));
                       Navigator.of(context).pushNamedAndRemoveUntil('/homepage', (route) => true);
                     }
                   }).catchError((error) {

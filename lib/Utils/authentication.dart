@@ -92,11 +92,13 @@ Future<User?> signInWithGoogle() async {
                         "username":user.displayName,
                         "profileUrl":user.photoURL,
                         "role": Role,
+
               });
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('auth', true);
     prefs.setString("userid", user.uid);
+    print("__++__++${prefs.get("auth")}");
   }
 
   return user;
@@ -104,9 +106,9 @@ Future<User?> signInWithGoogle() async {
 
 /// For signing out of their Google account
 Future signOutGoogle() async {
-  await googleSignIn.signOut();
-  await _auth.signOut();
-
+  // await googleSignIn.signOut();
+  // await _auth.signOut();
+  await FirebaseAuth.instance.signOut();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setBool('auth', false);
 
