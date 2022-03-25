@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:nft_app/Auth/signscreen.dart';
 import 'package:nft_app/Home/homepage.dart';
+import 'package:nft_app/HomeScreen.dart';
 
 import '../Utils/authentication.dart';
 
@@ -54,7 +55,8 @@ class _SplashScreenState extends State<SplashScreen> {
             () => Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(
                 builder: (context) =>
-                    HomePage()),
+                HomeScreen()),
+                    // HomePage()),
                 (Route<dynamic> route) => false),
       );
     } else {

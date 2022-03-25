@@ -14,9 +14,9 @@ import 'package:path/path.dart' as Path;
 import 'package:firebase/firebase.dart' as fb;
 import 'package:firebase/firestore.dart' as fs;
 // flutter run -d chrome --web-hostname localhost --web-port 61992
+//flutter run -d chrome --web-renderer html
 class HomePage extends StatefulWidget {
   static const route = '/homepage';
-
 
   const HomePage({Key? key}) : super(key: key);
   @override
@@ -39,6 +39,7 @@ class _HomePageState extends State<HomePage> {
   String? twitter;
 
   String? _imageurl;
+  String? _imageName;
   String error="";
   bool _loading = false;
   bool _upload = false;
@@ -291,6 +292,7 @@ class _HomePageState extends State<HomePage> {
             imagecontroller.text = files.name;
             _imageselected = false;
             _imageurl = path;
+            _imageName = dateTime.toString();
           }
           );
           _uploadTask =  fb.storage().refFromURL("gs://nft-image-app.appspot.com").child(path).put(files);
@@ -327,6 +329,8 @@ class _HomePageState extends State<HomePage> {
 
     if (_formkey.currentState!.validate()) {
       if(_imageurl!=null){
+        print(_imageName);
+        print(_imageurl);
         setState(() {
           _loading = true;
         });
@@ -337,6 +341,7 @@ class _HomePageState extends State<HomePage> {
           userid: uid,
           image: _imageurl,
         ).then((value) {
+          print("DATA SUbmitetd");
           setState(() {
             // pref.setBool("status", true);
             _loading = false;

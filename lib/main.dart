@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nft_app/Auth/signscreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:nft_app/Home/homepage.dart';
+import 'package:nft_app/HomeScreen.dart';
 import 'package:nft_app/Splash/splashscreen.dart';
 
 Future<void> main()async {
@@ -34,7 +35,8 @@ class MyApp extends StatelessWidget {
       routes: {
         SignScreen.route:(context)=>SignScreen(),
         SplashScreen.route:(context)=>SplashScreen(),
-        HomePage.route:(context)=>HomePage()
+        HomePage.route:(context)=>HomePage(),
+        HomeScreen.route:(context) => HomeScreen()
       },
       home: SignScreen( ),
     );

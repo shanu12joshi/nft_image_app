@@ -28,14 +28,14 @@ class NftService {
     String nftId = id.v1();
     final pref = await SharedPreferences.getInstance();
 
-    String downloadUrl = await _firebaseStorage.ref(image.toString()).getDownloadURL();
-    if(downloadUrl!=null){
+    // String downloadUrl = await _firebaseStorage.ref(image.toString()).getDownloadURL();
+    if(image!=null){
       _firestore.collection('nft').doc(nftId).set({
         'title': title,
         'id': nftId,
         'description': description,
         'twitter':twitter,
-        'images': downloadUrl,
+        'images': image,
         "userid":userid,
       }).then((value) {
         pref.setBool('status',true);
