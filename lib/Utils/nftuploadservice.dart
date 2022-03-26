@@ -18,7 +18,9 @@ class NftService {
         String? description,
         String? twitter,
         String? image,
+        String? imageThumbnail,
         String? userid,
+        String? type,
         bool? status
         }
       )
@@ -37,6 +39,8 @@ class NftService {
         'twitter':twitter,
         'images': image,
         "userid":userid,
+        "type": type,
+        "imageThumbnail": imageThumbnail
       }).then((value) {
         pref.setBool('status',true);
         print("${pref.getBool("status")}");

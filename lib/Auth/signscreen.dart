@@ -162,7 +162,7 @@ class SignScreenState extends State<SignScreen> {
                           //     builder: (context) =>
                           //         ABC()));
                       // Navigator.of(context).pushNamedAndRemoveUntil('/homescreen', (route) => true);
-                      Navigator.of(context).pushNamedAndRemoveUntil('/homescreen', (route) => true);
+                      Navigator.of(context).pushNamedAndRemoveUntil('/homepage', (route) => true);
                     }
                   }).catchError((error) {
                     print('Registration Error: $error');
