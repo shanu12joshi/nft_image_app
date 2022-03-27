@@ -355,7 +355,6 @@ class _HomePageState extends State<HomePage> {
       final reader = FileReader();
       reader.readAsDataUrl(files);
       reader.onLoadEnd.listen((event) async {
-        type = files.type;
         isVideoThumbnailUploaded = true;
         selectedImage!(files);
         _upload = true;
@@ -382,6 +381,8 @@ class _HomePageState extends State<HomePage> {
               .child(path)
               .put(files);
         }
+        print("_uploadTask");
+        print(_uploadTask);
       });
     } else {
       showDialog(

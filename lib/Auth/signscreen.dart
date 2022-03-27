@@ -161,8 +161,8 @@ class SignScreenState extends State<SignScreen> {
                           // MaterialPageRoute(
                           //     builder: (context) =>
                           //         ABC()));
-                      // Navigator.of(context).pushNamedAndRemoveUntil('/homescreen', (route) => true);
-                      Navigator.of(context).pushNamedAndRemoveUntil('/homepage', (route) => true);
+                      Navigator.of(context).pushNamedAndRemoveUntil('/homescreen', (route) => true);
+                      // Navigator.of(context).pushNamedAndRemoveUntil('/homepage', (route) => true);
                     }
                   }).catchError((error) {
                     print('Registration Error: $error');
