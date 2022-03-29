@@ -395,6 +395,7 @@ class _HomePageState extends State<HomePage> {
                 ElevatedButton(
                   onPressed: () {
                     Navigator.pop(context);
+                    Navigator.pop(context);
                   },
                   child: Text("Ok", style: TextStyle(color: Colors.white)),
                   style: ElevatedButton.styleFrom(primary: Colors.green),
@@ -434,6 +435,7 @@ class _HomePageState extends State<HomePage> {
               actions: [
                 ElevatedButton(
                   onPressed: () {
+                    Navigator.pop(context);
                     Navigator.pop(context);
                   },
                   child: Text("Ok", style: TextStyle(color: Colors.white)),
@@ -487,6 +489,8 @@ class _HomePageState extends State<HomePage> {
                 ElevatedButton(
                   onPressed: () {
                     Navigator.pop(context);
+                    Navigator.pop(context);
+
                   },
                   child: Text("Ok", style: TextStyle(color: Colors.white)),
                   style: ElevatedButton.styleFrom(primary: Colors.green),
