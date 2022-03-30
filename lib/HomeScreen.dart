@@ -204,25 +204,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               image.data
                                                                   .toString(),
                                                             ),
-                                                            // Center(
-                                                            //   child: InkWell(
-                                                            //     onTap: () {
-                                                            //       Navigator
-                                                            //           .push(
-                                                            //         context,
-                                                            //         MaterialPageRoute(
-                                                            //             builder:
-                                                            //                 (context) =>
-                                                            //                     NFTVideoPlayer(videoUrl)),
-                                                            //       );
-                                                            //     },
-                                                            //     child: Icon(
-                                                            //       Icons
-                                                            //           .play_arrow,
-                                                            //       size: 60.0,
-                                                            //     ),
-                                                            //   ),
-                                                            // )
+                                                            Center(
+                                                              child: Container(
+                                                                decoration: BoxDecoration(
+                                                                  color: Colors.black.withOpacity(0.25), // border color
+                                                                  shape: BoxShape.circle,
+                                                                ),
+                                                                child: Icon(Icons.play_arrow_rounded, size: 50,color: Colors.white,),
+                                                              ),
+                                                            )
                                                           ],
                                                         ),
                                                 ),

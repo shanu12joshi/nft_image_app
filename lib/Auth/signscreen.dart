@@ -161,6 +161,7 @@ class SignScreenState extends State<SignScreen> {
                           // MaterialPageRoute(
                           //     builder: (context) =>
                           //         ABC()));
+                      Navigator.pop(context);
                       Navigator.of(context).pushNamedAndRemoveUntil('/homescreen', (route) => true);
                       // Navigator.of(context).pushNamedAndRemoveUntil('/homepage', (route) => true);
                     }
