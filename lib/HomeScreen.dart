@@ -3,6 +3,7 @@ import 'dart:html';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/rendering.dart';
+import 'package:nft_app/ImageView.dart';
 import 'package:nft_app/VideoPlayer.dart';
 import 'package:video_player/video_player.dart';
 
@@ -32,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.fromLTRB(30,8, 8, 0),
                     child: Text(
                       "THE UNBIASED",
                       style: TextStyle(
@@ -40,73 +41,76 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Column(
-                        children: [
-                          SizedBox(
-                            height: 100,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "BECOME A PART OF\nAN UNBIASED INITIATIVE",
-                              style: TextStyle(
-                                fontSize: 40,
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(30,0, 0, 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                          children: [
+                            SizedBox(
+                              height: 100,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "BECOME A PART OF\nAN UNBIASED INITIATIVE",
+                                style: TextStyle(
+                                  fontSize: 40,
+                                ),
                               ),
                             ),
-                          ),
-                          //TODO Line not showing here
-                          Divider(
-                            color: Colors.black,
-                            height: 20,
-                            thickness: 2,
-                          ),
-                          SizedBox(
-                            height: 60,
-                          ),
-                          // Row(
-                          //   // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          //   children: [
-                          //     Text(
-                          //       "TOTAL SUBMISSION",
-                          //       style: TextStyle(
-                          //         fontSize: 12,
-                          //       ),
-                          //     ),
-                          //     Text(
-                          //       "TOTAL SELECTED",
-                          //       style: TextStyle(
-                          //         fontSize: 12,
-                          //       ),
-                          //     ),
-                          //   ],
-                          // ),
-                          SizedBox(
-                            height: 60,
-                          ),
-                          TextButton(
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
+                            //TODO Line not showing here
+                            Divider(
+                              color: Colors.black,
+                              height: 20,
+                              thickness: 2,
                             ),
-                            onPressed: () {
-                              Navigator.of(context).pushNamedAndRemoveUntil(
-                                  '/homepage', (route) => true);
-                            },
-                            child: Text("Submit Your Art Work",style: TextStyle(color: Colors.white),),
-                          ),
-                        ],
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(10, 50, 10, 10),
-                        child: Image.network(
-                          "https://f8n-production-collection-assets.imgix.net/0xe7a49073905c68153449472e054041638d0FF547/3/nft.png?q=80&auto=format%2Ccompress&cs=srgb&max-w=1680&max-h=1680",
-                          width: 400,
+                            SizedBox(
+                              height: 60,
+                            ),
+                            // Row(
+                            //   // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            //   children: [
+                            //     Text(
+                            //       "TOTAL SUBMISSION",
+                            //       style: TextStyle(
+                            //         fontSize: 12,
+                            //       ),
+                            //     ),
+                            //     Text(
+                            //       "TOTAL SELECTED",
+                            //       style: TextStyle(
+                            //         fontSize: 12,
+                            //       ),
+                            //     ),
+                            //   ],
+                            // ),
+                            SizedBox(
+                              height: 60,
+                            ),
+                            TextButton(
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pushNamedAndRemoveUntil(
+                                    '/homepage', (route) => true);
+                              },
+                              child: Text("Submit Your Art Work",style: TextStyle(color: Colors.white),),
+                            ),
+                          ],
                         ),
-                      )
-                    ],
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(10, 50, 10, 10),
+                          child: Image.network(
+                            "https://f8n-production-collection-assets.imgix.net/0xe7a49073905c68153449472e054041638d0FF547/3/nft.png?q=80&auto=format%2Ccompress&cs=srgb&max-w=1680&max-h=1680",
+                            width: 400,
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                   StreamBuilder(
                       stream: FirebaseFirestore.instance
@@ -167,7 +171,28 @@ class _HomeScreenState extends State<HomeScreen> {
                                               InkWell(
                                                 splashColor:
                                                     Colors.blue.withAlpha(30),
-                                                // onTap: () {},
+                                                onTap: () {
+                                                  if(type){
+                                                    Navigator
+                                                        .push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder:
+                                                              (context) =>
+                                                              ImageView(image.data.toString())),
+                                                    );
+                                                  }
+                                                  else{
+                                                    Navigator
+                                                        .push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder:
+                                                              (context) =>
+                                                              NFTVideoPlayer(videoUrl)),
+                                                    );
+                                                  }
+                                                },
                                                 child: Center(
                                                   child: type
                                                       ? Image.network(
@@ -179,25 +204,25 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               image.data
                                                                   .toString(),
                                                             ),
-                                                            Center(
-                                                              child: InkWell(
-                                                                onTap: () {
-                                                                  Navigator
-                                                                      .push(
-                                                                    context,
-                                                                    MaterialPageRoute(
-                                                                        builder:
-                                                                            (context) =>
-                                                                                NFTVideoPlayer(videoUrl)),
-                                                                  );
-                                                                },
-                                                                child: Icon(
-                                                                  Icons
-                                                                      .play_arrow,
-                                                                  size: 60.0,
-                                                                ),
-                                                              ),
-                                                            )
+                                                            // Center(
+                                                            //   child: InkWell(
+                                                            //     onTap: () {
+                                                            //       Navigator
+                                                            //           .push(
+                                                            //         context,
+                                                            //         MaterialPageRoute(
+                                                            //             builder:
+                                                            //                 (context) =>
+                                                            //                     NFTVideoPlayer(videoUrl)),
+                                                            //       );
+                                                            //     },
+                                                            //     child: Icon(
+                                                            //       Icons
+                                                            //           .play_arrow,
+                                                            //       size: 60.0,
+                                                            //     ),
+                                                            //   ),
+                                                            // )
                                                           ],
                                                         ),
                                                 ),
