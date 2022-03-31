@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:html';
+import 'package:cupertino_stepper/cupertino_stepper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -70,17 +71,24 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     data();
   }
-
+  int _currentStep = 0;
   @override
   Widget build(BuildContext context) {
     final fs.Firestore firestore = fb.firestore();
 
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.deepOrange,
-        title: Text("NFT Image App"),
+        // centerTitle: true,
+        automaticallyImplyLeading: true,
+        backgroundColor: Colors.white,
+        elevation: 0.0,
+        title: Text(
+          "THE UNBIASED",
+          style: TextStyle(
+            fontSize: 30,
+            color: Colors.black,
+          ),
+        ),
         actions: [
           IconButton(
               onPressed: () async {
@@ -92,7 +100,8 @@ class _HomePageState extends State<HomePage> {
                   print('Sign Out Error: $error');
                 });
               },
-              icon: Icon(Icons.login_outlined))
+              icon: Icon(Icons.login_outlined,color: Colors.black,),
+          )
         ],
       ),
       body: Form(
@@ -100,120 +109,249 @@ class _HomePageState extends State<HomePage> {
         child: ListView(
           padding: EdgeInsets.all(10),
           children: [
-            TextFormField(
-              controller: titlecontroller,
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return "Please Enter Title";
-                } else {
-                  return null;
-                }
-              },
-              decoration: const InputDecoration(
-                  labelText: "Title",
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(8),
-                      ),
-                      borderSide: BorderSide(
-                        color: Colors.black45,
-                      ))),
-              style: TextStyle(),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            TextFormField(
-              controller: descriptioncontroller,
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return "Please Enter Your ArtWork Description";
-                } else {
-                  return null;
-                }
-              },
-              decoration: const InputDecoration(
-                  labelText: "Description",
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(8),
-                      ),
-                      borderSide: BorderSide(
-                        color: Colors.black45,
-                      ))),
-              style: TextStyle(),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            TextFormField(
-              controller: twittercontroller,
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return "Please Enter Twitter Account ID";
-                } else {
-                  return null;
-                }
-              },
-              decoration: const InputDecoration(
-                  labelText: "Twitter",
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(8),
-                      ),
-                      borderSide: BorderSide(
-                        color: Colors.black45,
-                      ))),
-              style: TextStyle(),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Expanded(
-                  flex: 3,
-                  child: AbsorbPointer(
-                    absorbing: true,
-                    child: TextFormField(
-                      controller: imagecontroller,
-                      decoration: const InputDecoration(
-                          labelText: "Nft File",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(8),
-                              ),
-                              borderSide: BorderSide(
-                                color: Colors.black45,
-                              ))),
-                      style: TextStyle(),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                  child: Container(
-                    height: 50,
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: Colors.green,
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)))),
-                        onPressed: () {
-                          uploadStorage();
 
-                          // uploadImage();
-                          // uploadStorage();
-                        },
-                        child: Text("Upload")),
-                  ),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  height: MediaQuery.of(context).size.height*0.25,
+                  child: Stepper(
+                    type: StepperType.horizontal,
+                    currentStep: _currentStep,
+                    elevation: 0.0,
+                    onStepCancel: () {
+                      if (_currentStep > 0) {
+                        setState(() {
+                          _currentStep -= 1;
+                        });
+                      }
+                    },
+                    onStepContinue: () {
+                      if (_currentStep <= 0) {
+                        setState(() {
+                          _currentStep += 1;
+                        });
+                      }
+                    },
+                    onStepTapped: (int index) {
+                      setState(() {
+                        _currentStep = index;
+                      });
+                    },
+                    steps: <Step>[
+                      Step(
+                        title: const Text('Step 1 SignIn'),
+                        content: Container(
+                            alignment: Alignment.centerLeft,
+                            child: const Text('Content for Step 1')),
+                      ),
+                      const Step(
+                        title: Text('Step 2 Submit Your ArtWork'),
+                        content: Text('Content for Step 2'),
+                      ),
+                      const Step(
+                        title: Text('Step 3 Share On Twitter'),
+                        content: Text('Content for Step 3'),
+                      ),
+                    ],
+                  )
+                ),
+                Row(
+                  children: [
+                    Flexible(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  "ART TITLE : ",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),
+                                ),
+                              ),
+                              Expanded(
+                                flex: 5,
+                                child: TextFormField(
+                                  controller: titlecontroller,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Please Enter Title";
+                                    } else {
+                                      return null;
+                                    }
+                                  },
+                                  decoration: const InputDecoration(
+                                      labelText: "Title",
+                                      border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(8),
+                                          ),
+                                          borderSide: BorderSide(
+                                            color: Colors.black45,
+                                          ))),
+                                  style: TextStyle(),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+
+                            children: [
+                              Expanded(child: Text("ART DESCRIPTION : ",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),)),
+                              Expanded(
+                                flex: 5,
+                                child: TextFormField(
+                                  controller: descriptioncontroller,
+                                  maxLines: 10,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Please Enter Your ArtWork Description";
+                                    } else {
+                                      return null;
+                                    }
+                                  },
+                                  decoration: const InputDecoration(
+                                      labelText: "Description",
+                                      border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(8),
+                                          ),
+                                          borderSide: BorderSide(
+                                            color: Colors.black45,
+                                          ))),
+                                  style: TextStyle(),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Expanded(child: Text("TWITTER HANDLE : ",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),)),
+                                Expanded(
+                                  flex: 5,
+                                child: TextFormField(
+                                  controller: twittercontroller,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Please Enter Twitter Account ID";
+                                    } else {
+                                      return null;
+                                    }
+                                  },
+                                  decoration: const InputDecoration(
+                                      labelText: "Twitter",
+                                      border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(8),
+                                          ),
+                                          borderSide: BorderSide(
+                                            color: Colors.black45,
+                                          ))),
+                                  style: TextStyle(),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 40,
+                          ),
+                          ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                padding: EdgeInsets.all(20),
+                                primary: Colors.white
+                              ),
+                              onPressed: (){}, child: Text('UPLOAD YOUR ARTWORK',style: TextStyle(
+                            color: Colors.black,fontWeight: FontWeight.w600,fontSize: 18
+                          ),))
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Container(
+                      // height: MediaQuery.of(context).size.height*0.5,
+                      color: Colors.black,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Image.network("https://techstartups.com/wp-content/uploads/2021/09/Bored.jpg",
+                            fit: BoxFit.cover,
+                              scale: 1.5,
+                            ),
+                            Container(
+                              // width: MediaQuery.of(context).size.width,
+                              alignment: Alignment.center,
+                              padding: EdgeInsets.all(12),
+                              color: Colors.black,
+                              child: Text("ART PREVIEW",style: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.w600),),
+                            )
+                          ],
+                        ),
+                    ),
+                    // Expanded(
+                    //   child: Row(
+                    //     mainAxisSize: MainAxisSize.max,
+                    //     children: [
+                    //       Expanded(
+                    //         flex: 3,
+                    //         child: AbsorbPointer(
+                    //           absorbing: true,
+                    //           child: TextFormField(
+                    //             controller: imagecontroller,
+                    //             decoration: const InputDecoration(
+                    //                 labelText: "Nft File",
+                    //                 border: OutlineInputBorder(
+                    //                     borderRadius: BorderRadius.all(
+                    //                       Radius.circular(8),
+                    //                     ),
+                    //                     borderSide: BorderSide(
+                    //                       color: Colors.black45,
+                    //                     ))),
+                    //           ),
+                    //         ),
+                    //       ),
+                    //       SizedBox(
+                    //         width: 10,
+                    //       ),
+                    //       Expanded(
+                    //         child: Container(
+                    //           height: 50,
+                    //           child: ElevatedButton(
+                    //               style: ElevatedButton.styleFrom(
+                    //                   primary: Colors.green,
+                    //                   shape: RoundedRectangleBorder(
+                    //                       borderRadius:
+                    //                       BorderRadius.all(Radius.circular(10)))),
+                    //               onPressed: () {
+                    //                 uploadStorage();
+                    //
+                    //                 // uploadImage();
+                    //                 // uploadStorage();
+                    //               },
+                    //               child: Text("Upload")),
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                  ],
                 ),
               ],
             ),
+
+
+
+
             if (isVideo == true)
             Row(
               mainAxisSize: MainAxisSize.max,
@@ -264,9 +402,11 @@ class _HomePageState extends State<HomePage> {
             nftuploaded == true
                 ? Text("Your Artwork is Already Submitted!")
                 : Text(''),
+
             SizedBox(
               height: 50,
             ),
+
             if (nftuploaded != true)
               if(isVideo == false || isVideoThumbnailUploaded == true)
                 Visibility(
@@ -288,10 +428,10 @@ class _HomePageState extends State<HomePage> {
                           child: Text("Save")),
                     ),
                   ) else SizedBox(),
-            SizedBox(
+                SizedBox(
               height: 10,
             ),
-            StreamBuilder<fb.UploadTaskSnapshot>(
+                StreamBuilder<fb.UploadTaskSnapshot>(
               stream: _uploadTask?.onStateChanged,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
@@ -488,9 +628,8 @@ class _HomePageState extends State<HomePage> {
               actions: [
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.pop(context);
-                    Navigator.pop(context);
-
+                    // Navigator.pop(context);
+                    // Navigator.pop(context);
                   },
                   child: Text("Ok", style: TextStyle(color: Colors.white)),
                   style: ElevatedButton.styleFrom(primary: Colors.green),
@@ -501,4 +640,5 @@ class _HomePageState extends State<HomePage> {
       // Navigator.pop(context);
     }
   }
+
 }
