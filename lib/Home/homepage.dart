@@ -16,6 +16,7 @@ import 'package:firebase/firestore.dart' as fs;
 
 // flutter run -d chrome --web-hostname localhost --web-port 61992
 //flutter run -d chrome --web-renderer html
+
 class HomePage extends StatefulWidget {
   static const route = '/homepage';
 
@@ -73,8 +74,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final fs.Firestore firestore = fb.firestore();
-
+    final User? user = FirebaseAuth.instance.currentUser;
+    print("USERS");
+    print(user);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,

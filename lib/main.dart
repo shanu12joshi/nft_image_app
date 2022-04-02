@@ -31,14 +31,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: SignScreen.route,
+      initialRoute: HomeScreen.route,
       routes: {
         SignScreen.route:(context)=>SignScreen(),
         SplashScreen.route:(context)=>SplashScreen(),
         HomePage.route:(context)=>HomePage(),
         HomeScreen.route:(context) => HomeScreen()
       },
-      home: SignScreen( ),
+      home: HomeScreen(),
     );
   }
 }
