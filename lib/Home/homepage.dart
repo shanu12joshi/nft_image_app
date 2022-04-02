@@ -28,8 +28,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  GoogleSignIn _googleSignIn = GoogleSignIn();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   NftService nftService = NftService();
   TextEditingController titlecontroller = TextEditingController();
@@ -72,7 +70,9 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     data();
   }
-  int _currentStep = 0;
+
+  int _currentStep = 1;
+
   @override
   Widget build(BuildContext context) {
     final User? user = FirebaseAuth.instance.currentUser;
@@ -93,16 +93,19 @@ class _HomePageState extends State<HomePage> {
         ),
         actions: [
           IconButton(
-              onPressed: () async {
-                await signOutGoogle().then((result) {
-                  print(result);
-                  Navigator.of(context)
-                      .pushNamedAndRemoveUntil('/signin', (route) => false);
-                }).catchError((error) {
-                  print('Sign Out Error: $error');
-                });
-              },
-              icon: Icon(Icons.login_outlined,color: Colors.black,),
+            onPressed: () async {
+              await signOutGoogle().then((result) {
+                print(result);
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil('/signin', (route) => false);
+              }).catchError((error) {
+                print('Sign Out Error: $error');
+              });
+            },
+            icon: Icon(
+              Icons.login_outlined,
+              color: Colors.black,
+            ),
           )
         ],
       ),
@@ -111,53 +114,51 @@ class _HomePageState extends State<HomePage> {
         child: ListView(
           padding: EdgeInsets.all(10),
           children: [
-
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
-                  height: MediaQuery.of(context).size.height*0.25,
-                  child: Stepper(
-                    type: StepperType.horizontal,
-                    currentStep: _currentStep,
-                    elevation: 0.0,
-                    onStepCancel: () {
-                      if (_currentStep > 0) {
+                    height: MediaQuery.of(context).size.height * 0.25,
+                    child: Stepper(
+                      type: StepperType.horizontal,
+                      currentStep: _currentStep,
+                      elevation: 0.0,
+                      onStepCancel: () {
+                        if (_currentStep > 0) {
+                          setState(() {
+                            _currentStep -= 1;
+                          });
+                        }
+                      },
+                      onStepContinue: () {
+                        if (_currentStep <= 0) {
+                          setState(() {
+                            _currentStep += 1;
+                          });
+                        }
+                      },
+                      onStepTapped: (int index) {
                         setState(() {
-                          _currentStep -= 1;
+                          _currentStep = index;
                         });
-                      }
-                    },
-                    onStepContinue: () {
-                      if (_currentStep <= 0) {
-                        setState(() {
-                          _currentStep += 1;
-                        });
-                      }
-                    },
-                    onStepTapped: (int index) {
-                      setState(() {
-                        _currentStep = index;
-                      });
-                    },
-                    steps: <Step>[
-                      Step(
-                        title: const Text('Step 1 SignIn'),
-                        content: Container(
-                            alignment: Alignment.centerLeft,
-                            child: const Text('Content for Step 1')),
-                      ),
-                      const Step(
-                        title: Text('Step 2 Submit Your ArtWork'),
-                        content: Text('Content for Step 2'),
-                      ),
-                      const Step(
-                        title: Text('Step 3 Share On Twitter'),
-                        content: Text('Content for Step 3'),
-                      ),
-                    ],
-                  )
-                ),
+                      },
+                      steps: <Step>[
+                        Step(
+                          title: const Text('Step 1 SignIn'),
+                          content: Container(
+                              alignment: Alignment.centerLeft,
+                              child: const Text('Content for Step 1')),
+                        ),
+                        const Step(
+                          title: Text('Step 2 Submit Your ArtWork'),
+                          content: Text('Content for Step 2'),
+                        ),
+                        const Step(
+                          title: Text('Step 3 Share On Twitter'),
+                          content: Text('Content for Step 3'),
+                        ),
+                      ],
+                    )),
                 Row(
                   children: [
                     Flexible(
@@ -169,7 +170,10 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               Expanded(
                                 child: Text(
-                                  "ART TITLE : ",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),
+                                  "ART TITLE : ",
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600),
                                 ),
                               ),
                               Expanded(
@@ -202,9 +206,13 @@ class _HomePageState extends State<HomePage> {
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-
                             children: [
-                              Expanded(child: Text("ART DESCRIPTION : ",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),)),
+                              Expanded(
+                                  child: Text(
+                                "ART DESCRIPTION : ",
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.w600),
+                              )),
                               Expanded(
                                 flex: 5,
                                 child: TextFormField(
@@ -237,9 +245,14 @@ class _HomePageState extends State<HomePage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Expanded(child: Text("TWITTER HANDLE : ",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),)),
-                                Expanded(
-                                  flex: 5,
+                              Expanded(
+                                  child: Text(
+                                "TWITTER HANDLE : ",
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.w600),
+                              )),
+                              Expanded(
+                                flex: 5,
                                 child: TextFormField(
                                   controller: twittercontroller,
                                   validator: (value) {
@@ -266,14 +279,46 @@ class _HomePageState extends State<HomePage> {
                           SizedBox(
                             height: 40,
                           ),
-                          ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                padding: EdgeInsets.all(20),
-                                primary: Colors.white
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    padding: EdgeInsets.all(20),
+                                    primary: Colors.white),
+                                onPressed: () {
+                                  uploadStorage();
+                                },
+                                child: Text(
+                                  'UPLOAD YOUR ARTWORK',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 18),
+                                ),
                               ),
-                              onPressed: (){}, child: Text('UPLOAD YOUR ARTWORK',style: TextStyle(
-                            color: Colors.black,fontWeight: FontWeight.w600,fontSize: 18
-                          ),))
+                              // SizedBox(height: 30),
+                              if (isVideo == true)
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      padding: EdgeInsets.all(20),
+                                      primary: Colors.white),
+                                  onPressed: () {
+                                    uploadThumbnailStorage();
+                                  },
+                                  child: Text(
+                                    'UPLOAD YOUR THUMBNAIL IMAGE',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 18),
+                                  ),
+                                )
+                              else
+                                Container(),
+                            ],
+                          ),
+
                         ],
                       ),
                     ),
@@ -283,22 +328,29 @@ class _HomePageState extends State<HomePage> {
                     Container(
                       // height: MediaQuery.of(context).size.height*0.5,
                       color: Colors.black,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Image.network("https://techstartups.com/wp-content/uploads/2021/09/Bored.jpg",
+                      child: Column(
+                        children: [
+                          Image.network(
+                            "https://techstartups.com/wp-content/uploads/2021/09/Bored.jpg",
                             fit: BoxFit.cover,
-                              scale: 1.5,
+                            width: MediaQuery.of(context).size.width / 3.5,
+                            // scale: 2.5,
+                          ),
+                          Container(
+                            // width: MediaQuery.of(context).size.width,
+                            alignment: Alignment.center,
+                            padding: EdgeInsets.all(12),
+                            color: Colors.black,
+                            child: Text(
+                              "ART PREVIEW",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600),
                             ),
-                            Container(
-                              // width: MediaQuery.of(context).size.width,
-                              alignment: Alignment.center,
-                              padding: EdgeInsets.all(12),
-                              color: Colors.black,
-                              child: Text("ART PREVIEW",style: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.w600),),
-                            )
-                          ],
-                        ),
+                          )
+                        ],
+                      ),
                     ),
                     // Expanded(
                     //   child: Row(
@@ -350,90 +402,39 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
-
-
-
-
-            if (isVideo == true)
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Expanded(
-                  flex: 3,
-                  child: AbsorbPointer(
-                    absorbing: true,
-                    child: TextFormField(
-                      controller: imagecontroller,
-                      decoration: const InputDecoration(
-                          labelText: "Nft Thumbnail File",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(8),
-                              ),
-                              borderSide: BorderSide(
-                                color: Colors.black45,
-                              ))),
-                      style: TextStyle(),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                  child: Container(
-                    height: 50,
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: Colors.green,
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(10)))),
-                        onPressed: () {
-                          uploadThumbnailStorage();
-
-                          // uploadImage();
-                          // uploadStorage();
-                        },
-                        child: Text("Upload NFT Thumbnail")),
-                  ),
-                ),
-              ],
-            ) else Container(),
-
             nftuploaded == true
                 ? Text("Your Artwork is Already Submitted!")
                 : Text(''),
-
             SizedBox(
               height: 50,
             ),
-
             if (nftuploaded != true)
-              if(isVideo == false || isVideoThumbnailUploaded == true)
+              if (isVideo == false || isVideoThumbnailUploaded == true)
                 Visibility(
-                    visible: _upload,
-                    child: Center(
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              primary: Colors.blue[200],
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)))),
-                          onPressed: () {
-                            if (_formkey.currentState!.validate()) {
-                              setState(() {
-                                uploadToCloud();
-                              });
-                            }
-                          },
-                          child: Text("Save")),
-                    ),
-                  ) else SizedBox(),
-                SizedBox(
+                  visible: _upload,
+                  child: Center(
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.blue[200],
+                            shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)))),
+                        onPressed: () {
+                          if (_formkey.currentState!.validate()) {
+                            setState(() {
+                              uploadToCloud();
+                            });
+                          }
+                        },
+                        child: Text("Save")),
+                  ),
+                )
+              else
+                SizedBox(),
+            SizedBox(
               height: 10,
             ),
-                StreamBuilder<fb.UploadTaskSnapshot>(
+            StreamBuilder<fb.UploadTaskSnapshot>(
               stream: _uploadTask?.onStateChanged,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
@@ -475,7 +476,7 @@ class _HomePageState extends State<HomePage> {
       reader.readAsDataUrl(files);
       reader.onLoadEnd.listen((event) async {
         type = files.type;
-        if(type!.contains("video")){
+        if (type!.contains("video")) {
           isVideoThumbnailUploaded = false;
           isVideo = true;
         }
@@ -484,7 +485,6 @@ class _HomePageState extends State<HomePage> {
       });
     });
   }
-
 
   Future<void> uploadThumbnailImage(
       {@required Function(File file)? selectedImage}) async {
@@ -503,7 +503,6 @@ class _HomePageState extends State<HomePage> {
       });
     });
   }
-
 
   void uploadStorage() {
     //Upload to firebase storage
@@ -550,7 +549,9 @@ class _HomePageState extends State<HomePage> {
 
   void uploadThumbnailStorage() {
     //Upload to firebase storage
-    if (nftuploaded == false || nftuploaded == null || isVideoThumbnailUploaded == false) {
+    if (nftuploaded == false ||
+        nftuploaded == null ||
+        isVideoThumbnailUploaded == false) {
       final dateTime = DateTime.now();
       final path = "NftFile/$dateTime";
       uploadThumbnailImage(selectedImage: (files) {
@@ -589,7 +590,6 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-
   void uploadToCloud({String? url}) async {
     if (_formkey.currentState!.validate()) {
       if (_imageurl != null) {
@@ -604,8 +604,7 @@ class _HomePageState extends State<HomePage> {
                 userid: uid,
                 image: _imageurl,
                 type: type,
-                imageThumbnail: _imageThumbnailurl
-        )
+                imageThumbnail: _imageThumbnailurl)
             .then((value) {
           print("DATA SUbmitetd");
           setState(() {
@@ -630,8 +629,8 @@ class _HomePageState extends State<HomePage> {
               actions: [
                 ElevatedButton(
                   onPressed: () {
-                    // Navigator.pop(context);
-                    // Navigator.pop(context);
+                    Navigator.pop(context);
+                    Navigator.pop(context);
                   },
                   child: Text("Ok", style: TextStyle(color: Colors.white)),
                   style: ElevatedButton.styleFrom(primary: Colors.green),
@@ -642,5 +641,4 @@ class _HomePageState extends State<HomePage> {
       // Navigator.pop(context);
     }
   }
-
 }
