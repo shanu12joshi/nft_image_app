@@ -31,13 +31,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: HomeScreen.route,
-      routes: {
-        SignScreen.route:(context)=>SignScreen(),
-        SplashScreen.route:(context)=>SplashScreen(),
-        HomePage.route:(context)=>HomePage(),
-        HomeScreen.route:(context) => HomeScreen()
-      },
+      // initialRoute: HomeScreen.route,
+      // routes: {
+      //   SignScreen.route:(context)=>SignScreen(),
+      //   SplashScreen.route:(context)=>SplashScreen(),
+      //   HomePage.route:(context)=>HomePage(),
+      //   HomeScreen.route:(context) => HomeScreen()
+      // },
       home: HomeScreen(),
     );
   }

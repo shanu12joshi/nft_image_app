@@ -26,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     getUserInfo();
-    navigateUser();
+    // navigateUser();
   }
 
   // Future initializeUser() async {
@@ -48,7 +48,6 @@ class _SplashScreenState extends State<SplashScreen> {
   navigateUser() async {
     // checking whether user already loggedIn or not
     if (_auth.currentUser != null) {
-      print("_____adasda");
       // &&  FirebaseAuth.instance.currentUser.reload() != null
       Timer(
         Duration(seconds: 3),

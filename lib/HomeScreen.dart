@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:nft_app/Home/homepage.dart';
 import 'package:nft_app/ImageView.dart';
 import 'package:nft_app/VideoPlayer.dart';
 import 'package:nft_app/widget/customsubtitle/customsubtitletext.dart';
@@ -82,8 +83,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                 // MaterialPageRoute(
                                 //     builder: (context) =>
                                 //         ABC()));
-                                Navigator.pop(context);
-                                Navigator.of(context).pushNamedAndRemoveUntil('/homescreen', (route) => true);
                                 // Navigator.of(context).pushNamedAndRemoveUntil('/homepage', (route) => true);
                               }
                             }).catchError((error) {
@@ -186,8 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         Colors.black),
                               ),
                               onPressed: () {
-                                Navigator.of(context).pushNamedAndRemoveUntil(
-                                    '/homepage', (route) => true);
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
                               },
                               child:Padding(
                                 padding: const EdgeInsets.all(12.0),

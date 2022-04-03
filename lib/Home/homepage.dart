@@ -79,18 +79,15 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final User? user = FirebaseAuth.instance.currentUser;
-    print("USERS");
-    print(user);
     return Scaffold(
       appBar: AppBar(
         // centerTitle: true,
         automaticallyImplyLeading: true,
         backgroundColor: Colors.white,
         elevation: 0.0,
-        title:CustomTitle(
+        title: CustomTitle(
           fontSize: 30,
-          text:  "THE UNBIASED",
+          text: "THE UNBIASED",
           color: Colors.black,
         ),
         actions: [
@@ -172,8 +169,8 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               Expanded(
                                 child: CustomTitle(
-                                 text: "ART TITLE : ",
-                                      fontSize: 18,
+                                  text: "ART TITLE : ",
+                                  fontSize: 18,
                                 ),
                               ),
                               Expanded(
@@ -209,8 +206,8 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               Expanded(
                                   child: CustomTitle(
-                                text:"ART DESCRIPTION : ",
-                                    fontSize: 18,
+                                text: "ART DESCRIPTION : ",
+                                fontSize: 18,
                               )),
                               Expanded(
                                 flex: 5,
@@ -246,8 +243,8 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               Expanded(
                                   child: CustomTitle(
-                               text: "TWITTER HANDLE : ",
-                                    fontSize: 18,
+                                text: "TWITTER HANDLE : ",
+                                fontSize: 18,
                               )),
                               Expanded(
                                 flex: 5,
@@ -288,8 +285,8 @@ class _HomePageState extends State<HomePage> {
                                   uploadStorage();
                                 },
                                 child: CustomTitle(
-                                 text: 'UPLOAD YOUR ARTWORK',
-                                      color: Colors.black,
+                                  text: 'UPLOAD YOUR ARTWORK',
+                                  color: Colors.black,
                                 ),
                               ),
                               // SizedBox(height: 30),
@@ -322,44 +319,79 @@ class _HomePageState extends State<HomePage> {
                     Container(
                         // height: MediaQuery.of(context).size.height*0.5,
                         color: Colors.black,
-                        child: nftuploaded == true
-                            ? FutureBuilder(future: downloadURLS(ImageURL) ,builder: (context, image) {
-                              print("HELLOOOOOOO");
-                              print(image.data);
-                              return Column(
-                                children: [
-                                  Image.network(
-                                    image.data.toString(),
-                                    fit: BoxFit.cover,
-                                    width:
-                                    MediaQuery.of(context).size.width / 3.5,
-                                    // scale: 2.5,
-                                  ),
-                                  Container(
-                                    // width: MediaQuery.of(context).size.width,
-                                    alignment: Alignment.center,
-                                    padding: EdgeInsets.all(12),
-                                    color: Colors.black,
-                                    child: Text(
-                                      "ART PREVIEW",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                  )
-                                ],
-                              );
-                            } )
-                            : TextButton(
-                          onPressed: (){},
-                              child: Container(
-                                color: Colors.red,
-                                width:
-                                    MediaQuery.of(context).size.width / 3.5,
-                          height: MediaQuery.of(context).size.height / 2.5,
+                        child: Column(
+                          children: [
+                            Image.network(
+                              "https://imageio.forbes.com/specials-images/imageserve/6170e01f8d7639b95a7f2eeb/Sotheby-s-NFT-Natively-Digital-1-2-sale-Bored-Ape-Yacht-Club--8817-by-Yuga-Labs/0x0.png?fit=bounds&format=png&width=960",
+                              fit: BoxFit.cover,
+                              width: MediaQuery.of(context).size.width / 3.5,
+                              // scale: 2.5,
+                            ),
+                            Container(
+                              // width: MediaQuery.of(context).size.width,
+                              alignment: Alignment.center,
+                              padding: EdgeInsets.all(12),
+                              color: Colors.black,
+                              child: Text(
+                                "ART PREVIEW",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600),
                               ),
-                            )),
+                            )
+                          ],
+                        ))
+
+                    // _upload
+                    //     ? FutureBuilder(
+                    //         future: downloadURLS(ImageURL),
+                    //         builder: (context, image) {
+                    //           print("HELLOOOOOOO");
+                    //           if (image.hasData) {
+                    //             print("IMAGE DATA");
+                    //             print(image.data);
+                    //             return Column(
+                    //               children: [
+                    //                 Image.network(
+                    //                   image.data.toString(),
+                    //                   fit: BoxFit.cover,
+                    //                   width: MediaQuery.of(context)
+                    //                           .size
+                    //                           .width /
+                    //                       3.5,
+                    //                   // scale: 2.5,
+                    //                 ),
+                    //                 Container(
+                    //                   // width: MediaQuery.of(context).size.width,
+                    //                   alignment: Alignment.center,
+                    //                   padding: EdgeInsets.all(12),
+                    //                   color: Colors.black,
+                    //                   child: Text(
+                    //                     "ART PREVIEW",
+                    //                     style: TextStyle(
+                    //                         color: Colors.white,
+                    //                         fontSize: 18,
+                    //                         fontWeight: FontWeight.w600),
+                    //                   ),
+                    //                 )
+                    //               ],
+                    //             );
+                    //           } else {
+                    //             return SizedBox.shrink();
+                    //           }
+                    //         })
+                    //     : TextButton(
+                    //         onPressed: () {},
+                    //         child: Container(
+                    //           color: Colors.red,
+                    //           width:
+                    //               MediaQuery.of(context).size.width / 3.5,
+                    //           height:
+                    //               MediaQuery.of(context).size.height / 2.5,
+                    //         ),
+                    //       )),
+
                     // Expanded(
                     //   child: Row(
                     //     mainAxisSize: MainAxisSize.max,
@@ -656,12 +688,6 @@ class _HomePageState extends State<HomePage> {
 
 Future<Uri> downloadURLS(String image) {
   print("IMAGE");
-  print(image);
-  print(fb
-      .storage()
-      .refFromURL("gs://nft-image-app.appspot.com/")
-      .child(image)
-      .getDownloadURL());
   return fb
       .storage()
       .refFromURL("gs://nft-image-app.appspot.com/")
