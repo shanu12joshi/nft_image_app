@@ -52,6 +52,8 @@ class _HomePageState extends State<HomePage> {
   fb.UploadTask? _uploadTask;
   bool? nftuploaded;
 
+  late String ImageURL;
+
   // fb.UploadTask? task;
   // Future<void> _handleSignOut() => _googleSignIn.signOut();
   // FirebaseService service = new FirebaseService();
@@ -318,7 +320,6 @@ class _HomePageState extends State<HomePage> {
                                 Container(),
                             ],
                           ),
-
                         ],
                       ),
                     ),
@@ -326,32 +327,46 @@ class _HomePageState extends State<HomePage> {
                       width: 20,
                     ),
                     Container(
-                      // height: MediaQuery.of(context).size.height*0.5,
-                      color: Colors.black,
-                      child: Column(
-                        children: [
-                          Image.network(
-                            "https://techstartups.com/wp-content/uploads/2021/09/Bored.jpg",
-                            fit: BoxFit.cover,
-                            width: MediaQuery.of(context).size.width / 3.5,
-                            // scale: 2.5,
-                          ),
-                          Container(
-                            // width: MediaQuery.of(context).size.width,
-                            alignment: Alignment.center,
-                            padding: EdgeInsets.all(12),
-                            color: Colors.black,
-                            child: Text(
-                              "ART PREVIEW",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
+                        // height: MediaQuery.of(context).size.height*0.5,
+                        color: Colors.black,
+                        child: nftuploaded == true
+                            ? FutureBuilder(future: downloadURLS(ImageURL) ,builder: (context, image) {
+                              print("HELLOOOOOOO");
+                              print(image.data);
+                              return Column(
+                                children: [
+                                  Image.network(
+                                    image.data.toString(),
+                                    fit: BoxFit.cover,
+                                    width:
+                                    MediaQuery.of(context).size.width / 3.5,
+                                    // scale: 2.5,
+                                  ),
+                                  Container(
+                                    // width: MediaQuery.of(context).size.width,
+                                    alignment: Alignment.center,
+                                    padding: EdgeInsets.all(12),
+                                    color: Colors.black,
+                                    child: Text(
+                                      "ART PREVIEW",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  )
+                                ],
+                              );
+                            } )
+                            : TextButton(
+                          onPressed: (){},
+                              child: Container(
+                                color: Colors.red,
+                                width:
+                                    MediaQuery.of(context).size.width / 3.5,
+                          height: MediaQuery.of(context).size.height / 2.5,
+                              ),
+                            )),
                     // Expanded(
                     //   child: Row(
                     //     mainAxisSize: MainAxisSize.max,
@@ -511,6 +526,7 @@ class _HomePageState extends State<HomePage> {
     if (nftuploaded == false || nftuploaded == null) {
       final dateTime = DateTime.now();
       final path = "NftFile/$dateTime";
+      ImageURL = path.toString();
       uploadImage(selectedImage: (files) {
         if (files != null) {
           setState(() {
@@ -643,4 +659,19 @@ class _HomePageState extends State<HomePage> {
       // Navigator.pop(context);
     }
   }
+}
+
+Future<Uri> downloadURLS(String image) {
+  print("IMAGE");
+  print(image);
+  print(fb
+      .storage()
+      .refFromURL("gs://nft-image-app.appspot.com/")
+      .child(image)
+      .getDownloadURL());
+  return fb
+      .storage()
+      .refFromURL("gs://nft-image-app.appspot.com/")
+      .child(image)
+      .getDownloadURL();
 }
