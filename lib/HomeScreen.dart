@@ -6,6 +6,8 @@ import 'package:flutter/rendering.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:nft_app/ImageView.dart';
 import 'package:nft_app/VideoPlayer.dart';
+import 'package:nft_app/widget/customsubtitle/customsubtitletext.dart';
+import 'package:nft_app/widget/customtitle/customtitletext.dart';
 import 'package:video_player/video_player.dart';
 
 // import 'package:firebase/firestore.dart';
@@ -49,11 +51,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.fromLTRB(30, 8, 8, 0),
-                        child: Text(
-                          "THE UNBIASED",
-                          style: TextStyle(
+                        child: CustomTitle(
                             fontSize: 30,
-                          ),
+                            text:  "THE UNBIASED",
+                            color: Colors.black,
                         ),
                       ),
                       user == null? Padding(
@@ -66,11 +67,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ),
                             )
-                          : Text("Sign In",
-                              style: TextStyle(
+                          : CustomSubtitleTitle(
+                              text:"Sign In",
                                 fontSize: 20,
                                 color: Colors.black,
-                              )),
+                              ),
                           onPressed:()async{
                             setState(() {
                               _isProcessing = true;
@@ -103,45 +104,78 @@ class _HomeScreenState extends State<HomeScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(
                               height: 100,
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Text(
+                              child: CustomTitle(text:
                                 "BECOME A PART OF\nAN UNBIASED INITIATIVE",
-                                style: TextStyle(
                                   fontSize: 40,
-                                ),
+                                color: Colors.black,
                               ),
                             ),
                             //TODO Line not showing here
-                            Divider(
+                            Container(
+                              height: 5,
+                              width: 300,
                               color: Colors.black,
-                              height: 20,
-                              thickness: 2,
                             ),
                             SizedBox(
                               height: 60,
                             ),
-                            // Row(
-                            //   // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            //   children: [
-                            //     Text(
-                            //       "TOTAL SUBMISSION",
-                            //       style: TextStyle(
-                            //         fontSize: 12,
-                            //       ),
-                            //     ),
-                            //     Text(
-                            //       "TOTAL SELECTED",
-                            //       style: TextStyle(
-                            //         fontSize: 12,
-                            //       ),
-                            //     ),
-                            //   ],
-                            // ),
+
+                            StreamBuilder(
+                                stream: FirebaseFirestore.instance
+                                    .collection("nft")
+                                    .snapshots(),
+                              builder: (context,  AsyncSnapshot<QuerySnapshot> snapshot) {
+                             if(snapshot.hasData){
+                               return Row(
+                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                 children: [
+                                   Column(
+                                     crossAxisAlignment: CrossAxisAlignment.start,
+                                     children: [
+                                       CustomTitle(
+                                         text: "TOTAL SUBMISSION",
+                                         fontSize: 15,
+                                       ),
+                                       CustomTitle(
+                                         text:"${snapshot.data!.docs.length.toString()}",
+                                         fontSize: 40,
+                                       ),
+                                     ],
+                                   ),
+                                   SizedBox(
+                                     width: 60,
+                                   ),
+
+                                   Column(
+                                     crossAxisAlignment: CrossAxisAlignment.start,
+                                     children: [
+                                       CustomTitle(
+                                         text: "TOTAL SELECTED",
+                                         fontSize: 15,
+                                       ),
+                                       CustomTitle(
+                                         text: "100/100",
+                                         fontSize: 40,
+                                       ),
+                                     ],
+                                   ),
+                                 ],
+                               );
+                             }
+                             else{
+                               return Center(
+                                 child: CircularProgressIndicator(),
+                               );
+                             }
+                              }
+                            ),
                             SizedBox(
                               height: 60,
                             ),
@@ -155,11 +189,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Navigator.of(context).pushNamedAndRemoveUntil(
                                     '/homepage', (route) => true);
                               },
-                              child:Text(
-                                "Submit Your Art Work",
-                                style: TextStyle(color: Colors.white),
+                              child:Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: CustomTitle(
+                                      color: Colors.white,
+                                  text: "Submit Your Art Work",
+                                  fontSize: 18,
+                                ),
                               ),
                             ): Container(),
+                            SizedBox(
+                              height: 60,
+                            ),
                           ],
                         ),
                         Padding(

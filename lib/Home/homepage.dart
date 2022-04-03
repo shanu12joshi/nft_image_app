@@ -15,6 +15,8 @@ import 'package:path/path.dart' as Path;
 import 'package:firebase/firebase.dart' as fb;
 import 'package:firebase/firestore.dart' as fs;
 
+import '../widget/customtitle/customtitletext.dart';
+
 // flutter run -d chrome --web-hostname localhost --web-port 61992
 //flutter run -d chrome --web-renderer html
 
@@ -86,12 +88,10 @@ class _HomePageState extends State<HomePage> {
         automaticallyImplyLeading: true,
         backgroundColor: Colors.white,
         elevation: 0.0,
-        title: Text(
-          "THE UNBIASED",
-          style: TextStyle(
-            fontSize: 30,
-            color: Colors.black,
-          ),
+        title:CustomTitle(
+          fontSize: 30,
+          text:  "THE UNBIASED",
+          color: Colors.black,
         ),
         actions: [
           IconButton(
@@ -171,11 +171,9 @@ class _HomePageState extends State<HomePage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Expanded(
-                                child: Text(
-                                  "ART TITLE : ",
-                                  style: TextStyle(
+                                child: CustomTitle(
+                                 text: "ART TITLE : ",
                                       fontSize: 18,
-                                      fontWeight: FontWeight.w600),
                                 ),
                               ),
                               Expanded(
@@ -210,10 +208,9 @@ class _HomePageState extends State<HomePage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Expanded(
-                                  child: Text(
-                                "ART DESCRIPTION : ",
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.w600),
+                                  child: CustomTitle(
+                                text:"ART DESCRIPTION : ",
+                                    fontSize: 18,
                               )),
                               Expanded(
                                 flex: 5,
@@ -248,10 +245,9 @@ class _HomePageState extends State<HomePage> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Expanded(
-                                  child: Text(
-                                "TWITTER HANDLE : ",
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.w600),
+                                  child: CustomTitle(
+                               text: "TWITTER HANDLE : ",
+                                    fontSize: 18,
                               )),
                               Expanded(
                                 flex: 5,
@@ -291,12 +287,9 @@ class _HomePageState extends State<HomePage> {
                                 onPressed: () {
                                   uploadStorage();
                                 },
-                                child: Text(
-                                  'UPLOAD YOUR ARTWORK',
-                                  style: TextStyle(
+                                child: CustomTitle(
+                                 text: 'UPLOAD YOUR ARTWORK',
                                       color: Colors.black,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 18),
                                 ),
                               ),
                               // SizedBox(height: 30),
