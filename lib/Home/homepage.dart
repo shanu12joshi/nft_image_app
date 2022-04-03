@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:html';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cupertino_stepper/cupertino_stepper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,7 +14,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 import 'package:path/path.dart' as Path;
 import 'package:firebase/firebase.dart' as fb;
-import 'package:firebase/firestore.dart' as fs;
 
 import '../HomeScreen.dart';
 import '../widget/customtitle/customtitletext.dart';
@@ -57,9 +57,12 @@ class _HomePageState extends State<HomePage> {
 
   late String ImageURL;
 
+  final User? user = FirebaseAuth.instance.currentUser;
+
   // fb.UploadTask? task;
   // Future<void> _handleSignOut() => _googleSignIn.signOut();
   // FirebaseService service = new FirebaseService();
+  
   Future<bool?> data() async {
     final status = await SharedPreferences.getInstance();
     setState(() {
@@ -73,13 +76,26 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    data();
+    // data();
   }
 
   int _currentStep = 1;
 
+  Future<bool> doesNameAlreadyExist(String? name) async {
+    final QuerySnapshot result = await FirebaseFirestore.instance
+        .collection('nft')
+        .where('userid', isEqualTo: name)
+        .limit(1)
+        .get();
+    final List<DocumentSnapshot> documents = result.docs;
+    return documents.length == 1;
+  }
+
   @override
   Widget build(BuildContext context) {
+    // print("OKAYYY");
+    // Future<bool> i = doesNameAlreadyExist(user?.uid);
+    // print(i);
     return Scaffold(
       appBar: AppBar(
         // centerTitle: true,

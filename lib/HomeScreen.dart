@@ -33,322 +33,643 @@ class _HomeScreenState extends State<HomeScreen> {
 
   bool _isProcessing = false;
 
+  Future<bool> doesNameAlreadyExist(String? name) async {
+    final QuerySnapshot result = await FirebaseFirestore.instance
+        .collection('nft')
+        .where('userid', isEqualTo: name)
+        .limit(1)
+        .get();
+    final List<DocumentSnapshot> documents = result.docs;
+    return documents.length == 1;
+  }
 
   Widget build(BuildContext context) {
     final User? user = FirebaseAuth.instance.currentUser;
-    print("user");
-    print(user);
     return Scaffold(body: LayoutBuilder(
       builder: (BuildContext context, BoxConstraints viewportConstraints) {
-        return SingleChildScrollView(
-          child: ConstrainedBox(
-              constraints:
-                  BoxConstraints(minHeight: viewportConstraints.maxHeight),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        if(viewportConstraints.maxWidth > 800){
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+                constraints:
+                BoxConstraints(minHeight: viewportConstraints.maxHeight),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(30, 8, 8, 0),
-                        child: CustomTitle(
-                            fontSize: 30,
-                            text:  "THE UNBIASED",
-                            color: Colors.black,
-                        ),
-                      ),
-                      user == null? Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 0, 30, 0),
-                        child: TextButton(
-                          child:  _isProcessing?Center(
-                              child: CircularProgressIndicator(
-                                valueColor: new AlwaysStoppedAnimation<Color>(
-                                  Colors.blueGrey,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(30, 8, 8, 0),
+                            child: CustomTitle(
+                              fontSize: 30,
+                              text:  "THE UNBIASED",
+                              color: Colors.black,
+                            ),
+                          ),
+                          user == null? Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 0, 30, 0),
+                            child: TextButton(
+                              child:  _isProcessing?Center(
+                                child: CircularProgressIndicator(
+                                  valueColor: new AlwaysStoppedAnimation<Color>(
+                                    Colors.blueGrey,
+                                  ),
                                 ),
-                              ),
-                            )
-                          : CustomSubtitleTitle(
-                              text:"Sign In",
+                              )
+                                  : CustomSubtitleTitle(
+                                text:"Sign In",
                                 fontSize: 20,
                                 color: Colors.black,
                               ),
-                          onPressed:()async{
-                            setState(() {
-                              _isProcessing = true;
-                            });
-                            await signInWithGoogle().then((result) {
-                              if (result != null) {
-                                // Navigator.of(context).push(
-                                // MaterialPageRoute(
-                                //     builder: (context) =>
-                                //         ABC()));
-                                // Navigator.of(context).pushNamedAndRemoveUntil('/homepage', (route) => true);
-                              }
-                            }).catchError((error) {
-                              print('Registration Error: $error');
-                            });
-                            setState(() {
-                              _isProcessing = false;
-                            });
+                              onPressed:()async{
+                                setState(() {
+                                  _isProcessing = true;
+                                });
+                                await signInWithGoogle().then((result) {
+                                  if (result != null) {
+                                    // Navigator.of(context).push(
+                                    // MaterialPageRoute(
+                                    //     builder: (context) =>
+                                    //         ABC()));
+                                    // Navigator.of(context).pushNamedAndRemoveUntil('/homepage', (route) => true);
+                                  }
+                                }).catchError((error) {
+                                  print('Registration Error: $error');
+                                });
+                                setState(() {
+                                  _isProcessing = false;
+                                });
 
-                          },
-                        ),
-                      ): Container(),
-                  ]),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              height: 100,
+                              },
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: CustomTitle(text:
+                          ): Container(),
+                        ]),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height: 100,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: CustomTitle(text:
                                 "BECOME A PART OF\nAN UNBIASED INITIATIVE",
                                   fontSize: 40,
-                                color: Colors.black,
-                              ),
-                            ),
-                            //TODO Line not showing here
-                            Container(
-                              height: 5,
-                              width: 300,
-                              color: Colors.black,
-                            ),
-                            SizedBox(
-                              height: 60,
-                            ),
-
-                            StreamBuilder(
-                                stream: FirebaseFirestore.instance
-                                    .collection("nft")
-                                    .snapshots(),
-                              builder: (context,  AsyncSnapshot<QuerySnapshot> snapshot) {
-                             if(snapshot.hasData){
-                               return Row(
-                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                 children: [
-                                   Column(
-                                     crossAxisAlignment: CrossAxisAlignment.start,
-                                     children: [
-                                       CustomTitle(
-                                         text: "TOTAL SUBMISSION",
-                                         fontSize: 15,
-                                       ),
-                                       CustomTitle(
-                                         text:"${snapshot.data!.docs.length.toString()}",
-                                         fontSize: 40,
-                                       ),
-                                     ],
-                                   ),
-                                   SizedBox(
-                                     width: 60,
-                                   ),
-
-                                   Column(
-                                     crossAxisAlignment: CrossAxisAlignment.start,
-                                     children: [
-                                       CustomTitle(
-                                         text: "TOTAL SELECTED",
-                                         fontSize: 15,
-                                       ),
-                                       CustomTitle(
-                                         text: "100/100",
-                                         fontSize: 40,
-                                       ),
-                                     ],
-                                   ),
-                                 ],
-                               );
-                             }
-                             else{
-                               return Center(
-                                 child: CircularProgressIndicator(),
-                               );
-                             }
-                              }
-                            ),
-                            SizedBox(
-                              height: 60,
-                            ),
-                            user!=null ? TextButton(
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        Colors.black),
-                              ),
-                              onPressed: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
-                              },
-                              child:Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: CustomTitle(
-                                      color: Colors.white,
-                                  text: "Submit Your Art Work",
-                                  fontSize: 18,
+                                  color: Colors.black,
                                 ),
                               ),
-                            ): Container(),
-                            SizedBox(
-                              height: 60,
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(10, 50, 10, 10),
-                          child: Image.network(
-                            "https://f8n-production-collection-assets.imgix.net/0xe7a49073905c68153449472e054041638d0FF547/3/nft.png?q=80&auto=format%2Ccompress&cs=srgb&max-w=1680&max-h=1680",
-                            width: 400,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  StreamBuilder(
-                      stream: FirebaseFirestore.instance
-                          .collection("nft")
-                          .snapshots(),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<QuerySnapshot> snapshot) {
-                        if (!snapshot.hasData) {
-                          return CircularProgressIndicator();
-                        } else {
-                          return new GridView.builder(
-                              itemCount: snapshot.data!.docs.length,
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              gridDelegate:
-                                  new SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 4),
-                              itemBuilder: (BuildContext context, int index) {
-                                DocumentSnapshot doc =
-                                    snapshot.data!.docs[index];
-                                bool type = getUrlType(doc["type"]);
-                                String videoUrl = "";
-                                return FutureBuilder(
-                                    future: type
-                                        ? downloadURLS(doc["images"])
-                                        : downloadURLS(doc["imageThumbnail"]),
-                                    builder: (context, image) {
-                                      if (type != true) {
-                                        downloadURLS(doc["images"]).then(
-                                            (value) =>
-                                                videoUrl = value.toString());
-                                        print(videoUrl);
-                                      }
-                                      if (!type) {
-                                        // _controller = VideoPlayerController.network(
-                                        //     image.data.toString())
-                                        //   ..initialize().then((_) {
-                                        //     setState(() {});
-                                        //   });
-                                      }
-                                      // if (snapshot.connectionState ==
-                                      //     ConnectionState.done) {
-                                      return Card(
-                                        // shape: RoundedRectangleBorder(
-                                        //   borderRadius: BorderRadius.circular(20),
-                                        //   // if you need this
-                                        //   side: BorderSide(
-                                        //     color: Colors.grey.withOpacity(0.2),
-                                        //     width: 1,
-                                        //   ),
-                                        // ),
-                                        elevation: 5,
-                                        child: Container(
-                                          width: 200,
-                                          height: 200,
-                                          child: Stack(
+                              //TODO Line not showing here
+                              Container(
+                                height: 5,
+                                width: 300,
+                                color: Colors.black,
+                              ),
+                              SizedBox(
+                                height: 60,
+                              ),
+
+                              StreamBuilder(
+                                  stream: FirebaseFirestore.instance
+                                      .collection("nft")
+                                      .snapshots(),
+                                  builder: (context,  AsyncSnapshot<QuerySnapshot> snapshot) {
+                                    if(snapshot.hasData){
+                                      return Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              InkWell(
-                                                splashColor:
-                                                    Colors.blue.withAlpha(30),
-                                                onTap: () {
-                                                  if (type) {
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              ImageView(image
-                                                                  .data
-                                                                  .toString())),
-                                                    );
-                                                  } else {
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              NFTVideoPlayer(
-                                                                  videoUrl)),
-                                                    );
-                                                  }
-                                                },
-                                                child: Center(
-                                                  child: type
-                                                      ? Image.network(
-                                                          image.data.toString(),
-                                                        )
-                                                      : Stack(
-                                                          children: [
-                                                            Image.network(
-                                                              image.data
-                                                                  .toString(),
-                                                            ),
-                                                            Center(
-                                                              child: Container(
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  color: Colors
-                                                                      .black
-                                                                      .withOpacity(
-                                                                          0.25),
-                                                                  // border color
-                                                                  shape: BoxShape
-                                                                      .circle,
-                                                                ),
-                                                                child: Icon(
-                                                                  Icons
-                                                                      .play_arrow_rounded,
-                                                                  size: 50,
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                              ),
-                                                            )
-                                                          ],
-                                                        ),
-                                                ),
+                                              CustomTitle(
+                                                text: "TOTAL SUBMISSION",
+                                                fontSize: 15,
+                                              ),
+                                              CustomTitle(
+                                                text:"${snapshot.data!.docs.length.toString()}",
+                                                fontSize: 40,
                                               ),
                                             ],
                                           ),
-                                        ),
-                                      );
+                                          SizedBox(
+                                            width: 60,
+                                          ),
 
-                                      // else {
-                                      //   return Text("LOADING");
-                                      // }
-                                    });
-                              });
-                          // return new ListView.builder(
-                          //     itemCount: snapshot.data!.docs.length,
-                          //     itemBuilder: (context, index){
-                          //       DocumentSnapshot doc = snapshot.data!.docs[index];
-                          //
-                          //       // return Text(doc['title']);
-                          // });
-                        }
-                      }),
-                ],
-              )),);
-      },
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              CustomTitle(
+                                                text: "TOTAL SELECTED",
+                                                fontSize: 15,
+                                              ),
+                                              CustomTitle(
+                                                text: "100/100",
+                                                fontSize: 40,
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      );
+                                    }
+                                    else{
+                                      return Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    }
+                                  }
+                              ),
+                              SizedBox(
+                                height: 60,
+                              ),
+                              user!=null ? TextButton(
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                  MaterialStateProperty.all<Color>(
+                                      Colors.black),
+                                ),
+                                onPressed: () {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+                                },
+                                child:Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: CustomTitle(
+                                    color: Colors.white,
+                                    text: "Submit Your Art Work",
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              ): Container(),
+                              SizedBox(
+                                height: 60,
+                              ),
+                            ],
+                          ),
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(10, 50, 10, 10),
+                            child: Image.network(
+                              "https://f8n-production-collection-assets.imgix.net/0xe7a49073905c68153449472e054041638d0FF547/3/nft.png?q=80&auto=format%2Ccompress&cs=srgb&max-w=1680&max-h=1680",
+                              width: 400,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    StreamBuilder(
+                        stream: FirebaseFirestore.instance
+                            .collection("nft")
+                            .snapshots(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<QuerySnapshot> snapshot) {
+                          if (!snapshot.hasData) {
+                            return CircularProgressIndicator();
+                          } else {
+                            return new GridView.builder(
+                                itemCount: snapshot.data!.docs.length,
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                gridDelegate:
+                                new SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 4),
+                                itemBuilder: (BuildContext context, int index) {
+                                  DocumentSnapshot doc =
+                                  snapshot.data!.docs[index];
+                                  bool type = getUrlType(doc["type"]);
+                                  String videoUrl = "";
+                                  return FutureBuilder(
+                                      future: type
+                                          ? downloadURLS(doc["images"])
+                                          : downloadURLS(doc["imageThumbnail"]),
+                                      builder: (context, image) {
+                                        if (type != true) {
+                                          downloadURLS(doc["images"]).then(
+                                                  (value) =>
+                                              videoUrl = value.toString());
+                                          print(videoUrl);
+                                        }
+                                        if (!type) {
+                                          // _controller = VideoPlayerController.network(
+                                          //     image.data.toString())
+                                          //   ..initialize().then((_) {
+                                          //     setState(() {});
+                                          //   });
+                                        }
+                                        // if (snapshot.connectionState ==
+                                        //     ConnectionState.done) {
+                                        return Card(
+                                          // shape: RoundedRectangleBorder(
+                                          //   borderRadius: BorderRadius.circular(20),
+                                          //   // if you need this
+                                          //   side: BorderSide(
+                                          //     color: Colors.grey.withOpacity(0.2),
+                                          //     width: 1,
+                                          //   ),
+                                          // ),
+                                          elevation: 5,
+                                          child: Container(
+                                            width: 200,
+                                            height: 200,
+                                            child: Stack(
+                                              children: [
+                                                InkWell(
+                                                  splashColor:
+                                                  Colors.blue.withAlpha(30),
+                                                  onTap: () {
+                                                    if (type) {
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                ImageView(image
+                                                                    .data
+                                                                    .toString())),
+                                                      );
+                                                    } else {
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                NFTVideoPlayer(
+                                                                    videoUrl)),
+                                                      );
+                                                    }
+                                                  },
+                                                  child: Center(
+                                                    child: type
+                                                        ? Image.network(
+                                                      image.data.toString(),
+                                                    )
+                                                        : Stack(
+                                                      children: [
+                                                        Image.network(
+                                                          image.data
+                                                              .toString(),
+                                                        ),
+                                                        Center(
+                                                          child: Container(
+                                                            decoration:
+                                                            BoxDecoration(
+                                                              color: Colors
+                                                                  .black
+                                                                  .withOpacity(
+                                                                  0.25),
+                                                              // border color
+                                                              shape: BoxShape
+                                                                  .circle,
+                                                            ),
+                                                            child: Icon(
+                                                              Icons
+                                                                  .play_arrow_rounded,
+                                                              size: 50,
+                                                              color: Colors
+                                                                  .white,
+                                                            ),
+                                                          ),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+
+                                        // else {
+                                        //   return Text("LOADING");
+                                        // }
+                                      });
+                                });
+                            // return new ListView.builder(
+                            //     itemCount: snapshot.data!.docs.length,
+                            //     itemBuilder: (context, index){
+                            //       DocumentSnapshot doc = snapshot.data!.docs[index];
+                            //
+                            //       // return Text(doc['title']);
+                            // });
+                          }
+                        }),
+                  ],
+                )),);
+        }
+        else{
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+                constraints:
+                BoxConstraints(minHeight: viewportConstraints.maxHeight),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+                            child: CustomTitle(
+                              fontSize: 20,
+                              text:  "THE UNBIASED",
+                              color: Colors.black,
+                            ),
+                          ),
+                          user == null? Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
+                            child: TextButton(
+                              child:  _isProcessing?Center(
+                                child: CircularProgressIndicator(
+                                  valueColor: new AlwaysStoppedAnimation<Color>(
+                                    Colors.blueGrey,
+                                  ),
+                                ),
+                              )
+                                  : CustomSubtitleTitle(
+                                text:"Sign In",
+                                fontSize: 15,
+                                color: Colors.black,
+                              ),
+                              onPressed:()async{
+                                setState(() {
+                                  _isProcessing = true;
+                                });
+                                await signInWithGoogle().then((result) {
+                                  if (result != null) {
+                                    // Navigator.of(context).push(
+                                    // MaterialPageRoute(
+                                    //     builder: (context) =>
+                                    //         ABC()));
+                                    // Navigator.of(context).pushNamedAndRemoveUntil('/homepage', (route) => true);
+                                  }
+                                }).catchError((error) {
+                                  print('Registration Error: $error');
+                                });
+                                setState(() {
+                                  _isProcessing = false;
+                                });
+
+                              },
+                            ),
+                          ): Container(),
+                        ]),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height: 80,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: CustomTitle(text:
+                                "BECOME A PART OF\nAN UNBIASED INITIATIVE",
+                                  fontSize: 26,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              //TODO Line not showing here
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  height: 3,
+                                  width: 150,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 60,
+                              ),
+
+                              StreamBuilder(
+                                  stream: FirebaseFirestore.instance
+                                      .collection("nft")
+                                      .snapshots(),
+                                  builder: (context,  AsyncSnapshot<QuerySnapshot> snapshot) {
+                                    if(snapshot.hasData){
+                                      return Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              CustomTitle(
+                                                text: "TOTAL SUBMISSION",
+                                                fontSize: 15,
+                                              ),
+                                              CustomTitle(
+                                                text:"${snapshot.data!.docs.length.toString()}",
+                                                fontSize: 25,
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            width: 60,
+                                          ),
+
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              CustomTitle(
+                                                text: "TOTAL SELECTED",
+                                                fontSize: 15,
+                                              ),
+                                              CustomTitle(
+                                                text: "100/100",
+                                                fontSize: 25,
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      );
+                                    }
+                                    else{
+                                      return Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    }
+                                  }
+                              ),
+                              SizedBox(
+                                height: 60,
+                              ),
+                              user!=null ? TextButton(
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                  MaterialStateProperty.all<Color>(
+                                      Colors.black),
+                                ),
+                                onPressed: () {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+                                },
+                                child:Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: CustomTitle(
+                                    color: Colors.white,
+                                    text: "Submit Your Art Work",
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ): Container(),
+                              SizedBox(
+                                height: 60,
+                              ),
+                            ],
+                          ),
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(10, 50, 10, 10),
+                            child: Image.network(
+                              "https://f8n-production-collection-assets.imgix.net/0xe7a49073905c68153449472e054041638d0FF547/3/nft.png?q=80&auto=format%2Ccompress&cs=srgb&max-w=1680&max-h=1680",
+                              width: MediaQuery.of(context).size.width/2.8,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    StreamBuilder(
+                        stream: FirebaseFirestore.instance
+                            .collection("nft")
+                            .snapshots(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<QuerySnapshot> snapshot) {
+                          if (!snapshot.hasData) {
+                            return CircularProgressIndicator();
+                          } else {
+                            return new GridView.builder(
+                                itemCount: snapshot.data!.docs.length,
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                gridDelegate:
+                                new SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2),
+                                itemBuilder: (BuildContext context, int index) {
+                                  DocumentSnapshot doc =
+                                  snapshot.data!.docs[index];
+                                  bool type = getUrlType(doc["type"]);
+                                  String videoUrl = "";
+                                  return FutureBuilder(
+                                      future: type
+                                          ? downloadURLS(doc["images"])
+                                          : downloadURLS(doc["imageThumbnail"]),
+                                      builder: (context, image) {
+                                        if (type != true) {
+                                          downloadURLS(doc["images"]).then(
+                                                  (value) =>
+                                              videoUrl = value.toString());
+                                          print(videoUrl);
+                                        }
+                                        if (!type) {
+                                          // _controller = VideoPlayerController.network(
+                                          //     image.data.toString())
+                                          //   ..initialize().then((_) {
+                                          //     setState(() {});
+                                          //   });
+                                        }
+                                        // if (snapshot.connectionState ==
+                                        //     ConnectionState.done) {
+                                        return Card(
+                                          // shape: RoundedRectangleBorder(
+                                          //   borderRadius: BorderRadius.circular(20),
+                                          //   // if you need this
+                                          //   side: BorderSide(
+                                          //     color: Colors.grey.withOpacity(0.2),
+                                          //     width: 1,
+                                          //   ),
+                                          // ),
+                                          elevation: 5,
+                                          child: Container(
+                                            width: 200,
+                                            height: 200,
+                                            child: Stack(
+                                              children: [
+                                                InkWell(
+                                                  splashColor:
+                                                  Colors.blue.withAlpha(30),
+                                                  onTap: () {
+                                                    if (type) {
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                ImageView(image
+                                                                    .data
+                                                                    .toString())),
+                                                      );
+                                                    } else {
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                NFTVideoPlayer(
+                                                                    videoUrl)),
+                                                      );
+                                                    }
+                                                  },
+                                                  child: Center(
+                                                    child: type
+                                                        ? Image.network(
+                                                      image.data.toString(),
+                                                    )
+                                                        : Stack(
+                                                      children: [
+                                                        Image.network(
+                                                          image.data
+                                                              .toString(),
+                                                        ),
+                                                        Center(
+                                                          child: Container(
+                                                            decoration:
+                                                            BoxDecoration(
+                                                              color: Colors
+                                                                  .black
+                                                                  .withOpacity(
+                                                                  0.25),
+                                                              // border color
+                                                              shape: BoxShape
+                                                                  .circle,
+                                                            ),
+                                                            child: Icon(
+                                                              Icons
+                                                                  .play_arrow_rounded,
+                                                              size: 50,
+                                                              color: Colors
+                                                                  .white,
+                                                            ),
+                                                          ),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+
+                                        // else {
+                                        //   return Text("LOADING");
+                                        // }
+                                      });
+                                });
+                            // return new ListView.builder(
+                            //     itemCount: snapshot.data!.docs.length,
+                            //     itemBuilder: (context, index){
+                            //       DocumentSnapshot doc = snapshot.data!.docs[index];
+                            //
+                            //       // return Text(doc['title']);
+                            // });
+                          }
+                        }),
+                  ],
+                )),);
+        }
+      }
     ));
 
     // return GridView.count(
