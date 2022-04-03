@@ -230,6 +230,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             return CircularProgressIndicator();
                           } else {
                             return new GridView.builder(
+                                physics: new NeverScrollableScrollPhysics(),
                                 itemCount: snapshot.data!.docs.length,
                                 scrollDirection: Axis.vertical,
                                 shrinkWrap: true,
