@@ -440,7 +440,9 @@ class _HomePageState extends State<HomePage> {
                       : AlertDialog(
                           title: Text("NFT Uploading Please Wait..."),
                           content: Center(
-                            child: CircularProgressIndicator(),
+                            child: CircularProgressIndicator(
+                              value: progress,
+                            ),
                           ),
                           actions: [
                             Center(child: Text("${percentage.toDouble()}%"))
