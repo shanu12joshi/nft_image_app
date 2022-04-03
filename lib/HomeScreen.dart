@@ -186,7 +186,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                         Colors.black),
                               ),
                               onPressed: () {
-                                Navigator.pop(context);
                                 Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
                               },
                               child:Padding(

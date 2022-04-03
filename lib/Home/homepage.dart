@@ -96,8 +96,10 @@ class _HomePageState extends State<HomePage> {
             onPressed: () async {
               await signOutGoogle().then((result) {
                 print(result);
-                Navigator.pop(context);
-                Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                    HomeScreen()), (Route<dynamic> route) => false);
+                // Navigator.pop(context);
+                // Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
               }).catchError((error) {
                 print('Sign Out Error: $error');
               });
@@ -117,48 +119,48 @@ class _HomePageState extends State<HomePage> {
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Container(
-                    height: MediaQuery.of(context).size.height * 0.25,
-                    child: Stepper(
-                      type: StepperType.horizontal,
-                      currentStep: _currentStep,
-                      elevation: 0.0,
-                      onStepCancel: () {
-                        if (_currentStep > 0) {
-                          setState(() {
-                            _currentStep -= 1;
-                          });
-                        }
-                      },
-                      onStepContinue: () {
-                        if (_currentStep <= 0) {
-                          setState(() {
-                            _currentStep += 1;
-                          });
-                        }
-                      },
-                      onStepTapped: (int index) {
-                        setState(() {
-                          _currentStep = index;
-                        });
-                      },
-                      steps: <Step>[
-                        Step(
-                          title: const Text('Step 1 SignIn'),
-                          content: Container(
-                              alignment: Alignment.centerLeft,
-                              child: const Text('Content for Step 1')),
-                        ),
-                        const Step(
-                          title: Text('Step 2 Submit Your ArtWork'),
-                          content: Text('Content for Step 2'),
-                        ),
-                        const Step(
-                          title: Text('Step 3 Share On Twitter'),
-                          content: Text('Content for Step 3'),
-                        ),
-                      ],
-                    )),
+                // Container(
+                //     height: MediaQuery.of(context).size.height * 0.25,
+                //     child: Stepper(
+                //       type: StepperType.horizontal,
+                //       currentStep: _currentStep,
+                //       elevation: 0.0,
+                //       onStepCancel: () {
+                //         if (_currentStep > 0) {
+                //           setState(() {
+                //             _currentStep -= 1;
+                //           });
+                //         }
+                //       },
+                //       onStepContinue: () {
+                //         if (_currentStep <= 0) {
+                //           setState(() {
+                //             _currentStep += 1;
+                //           });
+                //         }
+                //       },
+                //       onStepTapped: (int index) {
+                //         setState(() {
+                //           _currentStep = index;
+                //         });
+                //       },
+                //       steps: <Step>[
+                //         Step(
+                //           title: const Text('Step 1 SignIn'),
+                //           content: Container(
+                //               alignment: Alignment.centerLeft,
+                //               child: const Text('Content for Step 1')),
+                //         ),
+                //         const Step(
+                //           title: Text('Step 2 Submit Your ArtWork'),
+                //           content: Text('Content for Step 2'),
+                //         ),
+                //         const Step(
+                //           title: Text('Step 3 Share On Twitter'),
+                //           content: Text('Content for Step 3'),
+                //         ),
+                //       ],
+                //     )),
                 Row(
                   children: [
                     Flexible(
