@@ -36,7 +36,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget build(BuildContext context) {
     final User? user = FirebaseAuth.instance.currentUser;
-    bool isUserSignedIn = false;
+    print("user");
+    print(user);
     return Scaffold(body: LayoutBuilder(
       builder: (BuildContext context, BoxConstraints viewportConstraints) {
         return SingleChildScrollView(
@@ -185,6 +186,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         Colors.black),
                               ),
                               onPressed: () {
+                                Navigator.pop(context);
                                 Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
                               },
                               child:Padding(

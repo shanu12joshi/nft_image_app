@@ -15,6 +15,7 @@ import 'package:path/path.dart' as Path;
 import 'package:firebase/firebase.dart' as fb;
 import 'package:firebase/firestore.dart' as fs;
 
+import '../HomeScreen.dart';
 import '../widget/customtitle/customtitletext.dart';
 
 // flutter run -d chrome --web-hostname localhost --web-port 61992
@@ -95,8 +96,8 @@ class _HomePageState extends State<HomePage> {
             onPressed: () async {
               await signOutGoogle().then((result) {
                 print(result);
-                Navigator.of(context)
-                    .pushNamedAndRemoveUntil('/signin', (route) => false);
+                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
               }).catchError((error) {
                 print('Sign Out Error: $error');
               });
