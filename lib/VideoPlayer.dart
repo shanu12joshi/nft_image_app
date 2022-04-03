@@ -33,7 +33,7 @@ class _NFTVideoPlayerState extends State<NFTVideoPlayer> {
                     aspectRatio: _controller.value.aspectRatio,
                     child: VideoPlayer(_controller),
                   )
-                : Container(),
+                : CircularProgressIndicator(),
           ),
           // Center(
           //   child: InkWell(

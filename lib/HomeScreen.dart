@@ -219,7 +219,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       builder: (BuildContext context,
                           AsyncSnapshot<QuerySnapshot> snapshot) {
                         if (!snapshot.hasData) {
-                          return Text("NO DATA");
+                          return CircularProgressIndicator();
                         } else {
                           return new GridView.builder(
                               itemCount: snapshot.data!.docs.length,
