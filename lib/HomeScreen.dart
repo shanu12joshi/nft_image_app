@@ -60,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(30, 8, 8, 0),
                           child: CustomTitle(
-                            fontSize: 30,
+                            fontSize: 40,
                             text: "THE UNBIASED",
                             color: Colors.black,
                           ),
@@ -81,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         )
                                       : CustomSubtitleTitle(
                                           text: "Sign In",
-                                          fontSize: 20,
+                                          fontSize: 30,
                                           color: Colors.black,
                                         ),
                                   onPressed: () async {
@@ -124,14 +124,14 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: CustomTitle(
                                 text:
                                     "BECOME A PART OF\nAN UNBIASED INITIATIVE",
-                                fontSize: 40,
+                                fontSize: 60,
                                 color: Colors.black,
                               ),
                             ),
                             //TODO Line not showing here
                             Container(
                               height: 5,
-                              width: 300,
+                              width: 400,
                               color: Colors.black,
                             ),
                             SizedBox(
