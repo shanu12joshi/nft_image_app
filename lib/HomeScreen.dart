@@ -60,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(30, 8, 8, 0),
                           child: CustomTitle(
-                            fontSize: 40,
+                            fontSize: 30,
                             text: "THE UNBIASED",
                             color: Colors.black,
                           ),
@@ -81,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         )
                                       : CustomSubtitleTitle(
                                           text: "Sign In",
-                                          fontSize: 30,
+                                          fontSize: 20,
                                           color: Colors.black,
                                         ),
                                   onPressed: () async {
@@ -221,13 +221,44 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ],
                         ),
+                        // Padding(
+                        //   padding: EdgeInsets.fromLTRB(10, 50, 10, 10),
+                        //   child: Image.network(
+                        //     "https://f8n-production-collection-assets.imgix.net/0xe7a49073905c68153449472e054041638d0FF547/3/nft.png?q=80&auto=format%2Ccompress&cs=srgb&max-w=1680&max-h=1680",
+                        //     width: 400,
+                        //   ),
+                        // ),
                         Padding(
-                          padding: EdgeInsets.fromLTRB(10, 50, 10, 10),
-                          child: Image.network(
-                            "https://f8n-production-collection-assets.imgix.net/0xe7a49073905c68153449472e054041638d0FF547/3/nft.png?q=80&auto=format%2Ccompress&cs=srgb&max-w=1680&max-h=1680",
-                            width: 400,
+                          padding: const EdgeInsets.only(right: 18.0),
+                          child: Container(
+                            color: Colors.black,
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(10, 50, 10, 10),
+                                  child: Image.network(
+                                    "https://f8n-production-collection-assets.imgix.net/0xe7a49073905c68153449472e054041638d0FF547/3/nft.png?q=80&auto=format%2Ccompress&cs=srgb&max-w=1680&max-h=1680",
+                                    width: MediaQuery.of(context).size.width / 3.5,
+                                  ),
+                                ),
+                                Container(
+                                  // width: MediaQuery.of(context).size.width,
+                                  alignment: Alignment.center,
+                                  padding: EdgeInsets.all(12),
+                                  color: Colors.black,
+                                  child: Text(
+                                    "LAST UPLOADED",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
-                        )
+                        ),
+
                       ],
                     ),
                   ),
