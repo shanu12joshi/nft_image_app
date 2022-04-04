@@ -54,59 +54,62 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(30, 8, 8, 0),
-                          child: CustomTitle(
-                            fontSize: 30,
-                            text: "THE UNBIASED",
-                            color: Colors.black,
+                  Padding(
+                    padding: const EdgeInsets.only(bottom:18.0),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(30, 8, 8, 0),
+                            child: CustomTitle(
+                              fontSize: 30,
+                              text: "THE UNBIASED",
+                              color: Colors.black,
+                            ),
                           ),
-                        ),
-                        user == null
-                            ? Padding(
-                                padding: const EdgeInsets.fromLTRB(0, 0, 30, 0),
-                                child: TextButton(
-                                  child: _isProcessing
-                                      ? Center(
-                                          child: CircularProgressIndicator(
-                                            valueColor:
-                                                new AlwaysStoppedAnimation<
-                                                    Color>(
-                                              Colors.blueGrey,
+                          user == null
+                              ? Padding(
+                                  padding: const EdgeInsets.fromLTRB(0, 0, 30, 0),
+                                  child: TextButton(
+                                    child: _isProcessing
+                                        ? Center(
+                                            child: CircularProgressIndicator(
+                                              valueColor:
+                                                  new AlwaysStoppedAnimation<
+                                                      Color>(
+                                                Colors.blueGrey,
+                                              ),
                                             ),
+                                          )
+                                        : CustomSubtitleTitle(
+                                            text: "Sign In",
+                                            fontSize: 20,
+                                            color: Colors.black,
                                           ),
-                                        )
-                                      : CustomSubtitleTitle(
-                                          text: "Sign In",
-                                          fontSize: 20,
-                                          color: Colors.black,
-                                        ),
-                                  onPressed: () async {
-                                    setState(() {
-                                      _isProcessing = true;
-                                    });
-                                    await signInWithGoogle().then((result) {
-                                      if (result != null) {
-                                        // Navigator.of(context).push(
-                                        // MaterialPageRoute(
-                                        //     builder: (context) =>
-                                        //         ABC()));
-                                        // Navigator.of(context).pushNamedAndRemoveUntil('/homepage', (route) => true);
-                                      }
-                                    }).catchError((error) {
-                                      print('Registration Error: $error');
-                                    });
-                                    setState(() {
-                                      _isProcessing = false;
-                                    });
-                                  },
-                                ),
-                              )
-                            : Container(),
-                      ]),
+                                    onPressed: () async {
+                                      setState(() {
+                                        _isProcessing = true;
+                                      });
+                                      await signInWithGoogle().then((result) {
+                                        if (result != null) {
+                                          // Navigator.of(context).push(
+                                          // MaterialPageRoute(
+                                          //     builder: (context) =>
+                                          //         ABC()));
+                                          // Navigator.of(context).pushNamedAndRemoveUntil('/homepage', (route) => true);
+                                        }
+                                      }).catchError((error) {
+                                        print('Registration Error: $error');
+                                      });
+                                      setState(() {
+                                        _isProcessing = false;
+                                      });
+                                    },
+                                  ),
+                                )
+                              : Container(),
+                        ]),
+                  ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
                     child: Row(
