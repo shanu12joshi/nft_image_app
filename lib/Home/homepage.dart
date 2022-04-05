@@ -1,18 +1,14 @@
 import 'dart:async';
 import 'dart:html';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cupertino_stepper/cupertino_stepper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:nft_app/Utils/authentication.dart';
 import 'package:nft_app/Utils/nftuploadservice.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sn_progress_dialog/progress_dialog.dart';
-import 'package:path/path.dart' as Path;
 import 'package:firebase/firebase.dart' as fb;
 
 import '../HomeScreen.dart';
@@ -87,6 +83,7 @@ class _HomePageState extends State<HomePage> {
         .where('userid', isEqualTo: name)
         .limit(1)
         .get();
+    
     final List<DocumentSnapshot> documents = result.docs;
     return documents.length == 1;
   }
@@ -129,6 +126,24 @@ class _HomePageState extends State<HomePage> {
       ),
       body: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints viewportConstraints) {
+            doesNameAlreadyExist(user?.uid).then((value) {
+              print("VALUE");
+              print(value);
+              setState(() {
+                nftuploaded = value;
+              });
+            });
+            // FutureBuilder(
+            //   future: doesNameAlreadyExist(user?.uid),
+            //   builder: (context, AsyncSnapshot<bool> result) {
+            //     if (!result.hasData)
+            //       return Container(); // future still needs to be finished (loading)
+            //     if (result.data == true) // result.data is the returned bool from doesNameAlreadyExists
+            //         nftuploaded = true;
+            //     else
+            //       nftuploaded = false;
+            //   },
+            // );
             return Form(
               key: _formkey,
               child: ListView(
