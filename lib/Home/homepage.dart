@@ -383,7 +383,7 @@ class _HomePageState extends State<HomePage> {
                                         }
                                         if(isVideo == true && isVideoThumbnailUploaded == false){
                                           return TextButton(
-                                            child: Image.asset("Thumbnail.png",fit: BoxFit.cover,
+                                            child: Image.asset("assets/Thumbnail.png",fit: BoxFit.cover,
                                                 width:
                                                 MediaQuery.of(context).size.width /
                                                     3.5,
@@ -461,11 +461,10 @@ class _HomePageState extends State<HomePage> {
                                           ],
                                         );
                                       }
-
                                     } else {
                                       return TextButton(
                                         child: Image.asset(
-                                          "NFT.png",
+                                          "assets/NFT.png",
                                           fit: BoxFit.cover,
                                           width:
                                               MediaQuery.of(context).size.width /
