@@ -50,15 +50,17 @@ class _HomePageState extends State<HomePage> {
   double? progerss;
   fb.UploadTask? _uploadTask;
   bool? nftuploaded;
+  bool? nftUploaded100 = false;
 
   late String ImageURL;
+  String? ImageURLAfter100;
 
   final User? user = FirebaseAuth.instance.currentUser;
 
   // fb.UploadTask? task;
   // Future<void> _handleSignOut() => _googleSignIn.signOut();
   // FirebaseService service = new FirebaseService();
-  
+
   Future<bool?> data() async {
     final status = await SharedPreferences.getInstance();
     setState(() {
@@ -83,7 +85,7 @@ class _HomePageState extends State<HomePage> {
         .where('userid', isEqualTo: name)
         .limit(1)
         .get();
-    
+
     final List<DocumentSnapshot> documents = result.docs;
     return documents.length == 1;
   }
@@ -109,8 +111,9 @@ class _HomePageState extends State<HomePage> {
             onPressed: () async {
               await signOutGoogle().then((result) {
                 print(result);
-                Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-                    HomeScreen()), (Route<dynamic> route) => false);
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => HomeScreen()),
+                    (Route<dynamic> route) => false);
                 // Navigator.pop(context);
                 // Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
               }).catchError((error) {
@@ -126,425 +129,503 @@ class _HomePageState extends State<HomePage> {
       ),
       body: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints viewportConstraints) {
-            doesNameAlreadyExist(user?.uid).then((value) {
-              print("VALUE");
-              print(value);
-              setState(() {
-                nftuploaded = value;
-              });
-            });
-            // FutureBuilder(
-            //   future: doesNameAlreadyExist(user?.uid),
-            //   builder: (context, AsyncSnapshot<bool> result) {
-            //     if (!result.hasData)
-            //       return Container(); // future still needs to be finished (loading)
-            //     if (result.data == true) // result.data is the returned bool from doesNameAlreadyExists
-            //         nftuploaded = true;
-            //     else
-            //       nftuploaded = false;
-            //   },
-            // );
-            return Form(
-              key: _formkey,
-              child: ListView(
-                padding: EdgeInsets.all(10),
+        // doesNameAlreadyExist(user?.uid).then((value) {
+        //   setState(() {
+        //     nftuploaded = value;
+        //   });
+        // });
+        //TODO Un comment this part for not making user save nft twice
+
+        return Form(
+          key: _formkey,
+          child: ListView(
+            padding: EdgeInsets.all(10),
+            children: [
+              Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
+                  // Container(
+                  //     height: MediaQuery.of(context).size.height * 0.25,
+                  //     child: Stepper(
+                  //       type: StepperType.horizontal,
+                  //       currentStep: _currentStep,
+                  //       elevation: 0.0,
+                  //       onStepCancel: () {
+                  //         if (_currentStep > 0) {
+                  //           setState(() {
+                  //             _currentStep -= 1;
+                  //           });
+                  //         }
+                  //       },
+                  //       onStepContinue: () {
+                  //         if (_currentStep <= 0) {
+                  //           setState(() {
+                  //             _currentStep += 1;
+                  //           });
+                  //         }
+                  //       },
+                  //       onStepTapped: (int index) {
+                  //         setState(() {
+                  //           _currentStep = index;
+                  //         });
+                  //       },
+                  //       steps: <Step>[
+                  //         Step(
+                  //           title: const Text('Step 1 SignIn'),
+                  //           content: Container(
+                  //               alignment: Alignment.centerLeft,
+                  //               child: const Text('Content for Step 1')),
+                  //         ),
+                  //         const Step(
+                  //           title: Text('Step 2 Submit Your ArtWork'),
+                  //           content: Text('Content for Step 2'),
+                  //         ),
+                  //         const Step(
+                  //           title: Text('Step 3 Share On Twitter'),
+                  //           content: Text('Content for Step 3'),
+                  //         ),
+                  //       ],
+                  //     )),
+                  Row(
                     children: [
-                      // Container(
-                      //     height: MediaQuery.of(context).size.height * 0.25,
-                      //     child: Stepper(
-                      //       type: StepperType.horizontal,
-                      //       currentStep: _currentStep,
-                      //       elevation: 0.0,
-                      //       onStepCancel: () {
-                      //         if (_currentStep > 0) {
-                      //           setState(() {
-                      //             _currentStep -= 1;
-                      //           });
-                      //         }
-                      //       },
-                      //       onStepContinue: () {
-                      //         if (_currentStep <= 0) {
-                      //           setState(() {
-                      //             _currentStep += 1;
-                      //           });
-                      //         }
-                      //       },
-                      //       onStepTapped: (int index) {
-                      //         setState(() {
-                      //           _currentStep = index;
-                      //         });
-                      //       },
-                      //       steps: <Step>[
-                      //         Step(
-                      //           title: const Text('Step 1 SignIn'),
-                      //           content: Container(
-                      //               alignment: Alignment.centerLeft,
-                      //               child: const Text('Content for Step 1')),
-                      //         ),
-                      //         const Step(
-                      //           title: Text('Step 2 Submit Your ArtWork'),
-                      //           content: Text('Content for Step 2'),
-                      //         ),
-                      //         const Step(
-                      //           title: Text('Step 3 Share On Twitter'),
-                      //           content: Text('Content for Step 3'),
-                      //         ),
-                      //       ],
-                      //     )),
-                      Row(
-                        children: [
-                          Flexible(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                      Flexible(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Expanded(
-                                      child: CustomTitle(
-                                        text: "ART TITLE : ",
-                                        fontSize: 18,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      flex: 5,
-                                      child: TextFormField(
-                                        controller: titlecontroller,
-                                        validator: (value) {
-                                          if (value!.isEmpty) {
-                                            return "Please Enter Title";
-                                          } else {
-                                            return null;
-                                          }
-                                        },
-                                        decoration: const InputDecoration(
-                                            labelText: "Title",
-                                            border: OutlineInputBorder(
-                                                borderRadius: BorderRadius.all(
-                                                  Radius.circular(8),
-                                                ),
-                                                borderSide: BorderSide(
-                                                  color: Colors.black45,
-                                                ))),
-                                        style: TextStyle(),
-                                      ),
-                                    ),
-                                  ],
+                                Expanded(
+                                  child: CustomTitle(
+                                    text: "ART TITLE : ",
+                                    fontSize: 18,
+                                  ),
                                 ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Expanded(
-                                        child: CustomTitle(
-                                          text: "ART DESCRIPTION:",
-                                          fontSize: 18,
-                                        )),
-                                    Expanded(
-                                      flex: 5,
-                                      child: TextFormField(
-                                        controller: descriptioncontroller,
-                                        maxLines: 10,
-                                        validator: (value) {
-                                          if (value!.isEmpty) {
-                                            return "Please Enter Your ArtWork Description";
-                                          } else {
-                                            return null;
-                                          }
-                                        },
-                                        decoration: const InputDecoration(
-                                            labelText: "Description",
-                                            border: OutlineInputBorder(
-                                                borderRadius: BorderRadius.all(
-                                                  Radius.circular(8),
-                                                ),
-                                                borderSide: BorderSide(
-                                                  color: Colors.black45,
-                                                ))),
-                                        style: TextStyle(),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Expanded(
-                                        child: CustomTitle(
-                                          text: "TWITTER HANDLE : ",
-                                          fontSize: 18,
-                                        )),
-                                    Expanded(
-                                      flex: 5,
-                                      child: TextFormField(
-                                        controller: twittercontroller,
-                                        validator: (value) {
-                                          if (value!.isEmpty) {
-                                            return "Please Enter Twitter Account ID";
-                                          } else {
-                                            return null;
-                                          }
-                                        },
-                                        decoration: const InputDecoration(
-                                            labelText: "Twitter",
-                                            border: OutlineInputBorder(
-                                                borderRadius: BorderRadius.all(
-                                                  Radius.circular(8),
-                                                ),
-                                                borderSide: BorderSide(
-                                                  color: Colors.black45,
-                                                ))),
-                                        style: TextStyle(),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 40,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment
-                                      .spaceBetween,
-                                  children: [
-                                    ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          padding: EdgeInsets.all(20),
-                                          primary: Colors.white),
-                                      onPressed: () {
-                                        uploadStorage();
-                                      },
-                                      child: CustomTitle(
-                                        text: 'UPLOAD YOUR ARTWORK',
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                    // SizedBox(height: 30),
-                                    if (isVideo == true)
-                                      ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                            padding: EdgeInsets.all(20),
-                                            primary: Colors.white),
-                                        onPressed: () {
-                                          uploadThumbnailStorage();
-                                        },
-                                        child: Text(
-                                          'UPLOAD YOUR THUMBNAIL IMAGE',
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 18),
-                                        ),
-                                      )
-                                    else
-                                      Container(),
-                                  ],
+                                Expanded(
+                                  flex: 5,
+                                  child: TextFormField(
+                                    controller: titlecontroller,
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return "Please Enter Title";
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                    decoration: const InputDecoration(
+                                        labelText: "Title",
+                                        border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(8),
+                                            ),
+                                            borderSide: BorderSide(
+                                              color: Colors.black45,
+                                            ))),
+                                    style: TextStyle(),
+                                  ),
                                 ),
                               ],
                             ),
-                          ),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          Container(
-                            // height: MediaQuery.of(context).size.height*0.5,
-                              color: Colors.black,
-                              child: Column(
-                                children: [
-                                  Image.network(
-                                    "https://imageio.forbes.com/specials-images/imageserve/6170e01f8d7639b95a7f2eeb/Sotheby-s-NFT-Natively-Digital-1-2-sale-Bored-Ape-Yacht-Club--8817-by-Yuga-Labs/0x0.png?fit=bounds&format=png&width=960",
-                                    fit: BoxFit.cover,
-                                    width: MediaQuery
-                                        .of(context)
-                                        .size
-                                        .width / 3.5,
-                                    // scale: 2.5,
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                    child: CustomTitle(
+                                  text: "ART DESCRIPTION:",
+                                  fontSize: 18,
+                                )),
+                                Expanded(
+                                  flex: 5,
+                                  child: TextFormField(
+                                    controller: descriptioncontroller,
+                                    maxLines: 10,
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return "Please Enter Your ArtWork Description";
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                    decoration: const InputDecoration(
+                                        labelText: "Description",
+                                        border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(8),
+                                            ),
+                                            borderSide: BorderSide(
+                                              color: Colors.black45,
+                                            ))),
+                                    style: TextStyle(),
                                   ),
-                                  Container(
-                                    // width: MediaQuery.of(context).size.width,
-                                    alignment: Alignment.center,
-                                    padding: EdgeInsets.all(12),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                    child: CustomTitle(
+                                  text: "TWITTER HANDLE : ",
+                                  fontSize: 18,
+                                )),
+                                Expanded(
+                                  flex: 5,
+                                  child: TextFormField(
+                                    controller: twittercontroller,
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return "Please Enter Twitter Account ID";
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                    decoration: const InputDecoration(
+                                        labelText: "Twitter",
+                                        border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(8),
+                                            ),
+                                            borderSide: BorderSide(
+                                              color: Colors.black45,
+                                            ))),
+                                    style: TextStyle(),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 40,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      padding: EdgeInsets.all(20),
+                                      primary: Colors.white),
+                                  onPressed: () {
+                                    uploadStorage();
+                                  },
+                                  child: CustomTitle(
+                                    text: 'UPLOAD YOUR ARTWORK',
                                     color: Colors.black,
+                                  ),
+                                ),
+                                // SizedBox(height: 30),
+                                if (isVideo == true)
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        padding: EdgeInsets.all(20),
+                                        primary: Colors.white),
+                                    onPressed: () {
+                                      uploadThumbnailStorage();
+                                    },
                                     child: Text(
-                                      "ART PREVIEW",
+                                      'UPLOAD YOUR THUMBNAIL IMAGE',
                                       style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w600),
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 18),
                                     ),
                                   )
-                                ],
-                              ))
-
-                          // _upload
-                          //     ? FutureBuilder(
-                          //         future: downloadURLS(ImageURL),
-                          //         builder: (context, image) {
-                          //           print("HELLOOOOOOO");
-                          //           if (image.hasData) {
-                          //             print("IMAGE DATA");
-                          //             print(image.data);
-                          //             return Column(
-                          //               children: [
-                          //                 Image.network(
-                          //                   image.data.toString(),
-                          //                   fit: BoxFit.cover,
-                          //                   width: MediaQuery.of(context)
-                          //                           .size
-                          //                           .width /
-                          //                       3.5,
-                          //                   // scale: 2.5,
-                          //                 ),
-                          //                 Container(
-                          //                   // width: MediaQuery.of(context).size.width,
-                          //                   alignment: Alignment.center,
-                          //                   padding: EdgeInsets.all(12),
-                          //                   color: Colors.black,
-                          //                   child: Text(
-                          //                     "ART PREVIEW",
-                          //                     style: TextStyle(
-                          //                         color: Colors.white,
-                          //                         fontSize: 18,
-                          //                         fontWeight: FontWeight.w600),
-                          //                   ),
-                          //                 )
-                          //               ],
-                          //             );
-                          //           } else {
-                          //             return SizedBox.shrink();
-                          //           }
-                          //         })
-                          //     : TextButton(
-                          //         onPressed: () {},
-                          //         child: Container(
-                          //           color: Colors.red,
-                          //           width:
-                          //               MediaQuery.of(context).size.width / 3.5,
-                          //           height:
-                          //               MediaQuery.of(context).size.height / 2.5,
-                          //         ),
-                          //       )),
-
-                          // Expanded(
-                          //   child: Row(
-                          //     mainAxisSize: MainAxisSize.max,
-                          //     children: [
-                          //       Expanded(
-                          //         flex: 3,
-                          //         child: AbsorbPointer(
-                          //           absorbing: true,
-                          //           child: TextFormField(
-                          //             controller: imagecontroller,
-                          //             decoration: const InputDecoration(
-                          //                 labelText: "Nft File",
-                          //                 border: OutlineInputBorder(
-                          //                     borderRadius: BorderRadius.all(
-                          //                       Radius.circular(8),
-                          //                     ),
-                          //                     borderSide: BorderSide(
-                          //                       color: Colors.black45,
-                          //                     ))),
-                          //           ),
-                          //         ),
-                          //       ),
-                          //       SizedBox(
-                          //         width: 10,
-                          //       ),
-                          //       Expanded(
-                          //         child: Container(
-                          //           height: 50,
-                          //           child: ElevatedButton(
-                          //               style: ElevatedButton.styleFrom(
-                          //                   primary: Colors.green,
-                          //                   shape: RoundedRectangleBorder(
-                          //                       borderRadius:
-                          //                       BorderRadius.all(Radius.circular(10)))),
-                          //               onPressed: () {
-                          //                 uploadStorage();
-                          //
-                          //                 // uploadImage();
-                          //                 // uploadStorage();
-                          //               },
-                          //               child: Text("Upload")),
-                          //         ),
-                          //       ),
-                          //     ],
-                          //   ),
-                          // ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  nftuploaded == true
-                      ? Text("Your Artwork is Already Submitted!")
-                      : Text(''),
-                  SizedBox(
-                    height: 50,
-                  ),
-                  if (nftuploaded != true)
-                    if (isVideo == false || isVideoThumbnailUploaded == true)
-                      Visibility(
-                        visible: _upload,
-                        child: Center(
-                          child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  primary: Colors.blue[200],
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                      BorderRadius.all(Radius.circular(10)))),
-                              onPressed: () {
-                                if (_formkey.currentState!.validate()) {
-                                  setState(() {
-                                    uploadToCloud();
-                                  });
-                                }
-                              },
-                              child: Text("Save")),
-                        ),
-                      )
-                    else
-                      SizedBox(),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  StreamBuilder<fb.UploadTaskSnapshot>(
-                    stream: _uploadTask?.onStateChanged,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        final event = snapshot.data;
-                        double progress = event!.bytesTransferred /
-                            event.totalBytes;
-                        final percentage = progress * 100;
-                        print("%${percentage}");
-                        return percentage == 100
-                            ? SizedBox()
-                            : AlertDialog(
-                          title: Text("NFT Uploading Please Wait..."),
-                          content: Center(
-                            child: CircularProgressIndicator(
-                              value: progress,
+                                else
+                                  Container(),
+                              ],
                             ),
-                          ),
-                          actions: [
-                            Center(child: Text("${percentage.toDouble()}%"))
                           ],
-                        );
-                      } else {
-                        return SizedBox();
-                      }
-                    },
+                        ),
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Container(
+                          // height: MediaQuery.of(context).size.height*0.5,
+                          color: Colors.black,
+                          child: Column(
+                            children: [
+                              StreamBuilder<fb.UploadTaskSnapshot>(
+                                stream: _uploadTask?.onStateChanged,
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData) {
+                                    final event = snapshot.data;
+                                    double progress = event!.bytesTransferred /
+                                        event.totalBytes;
+                                    final percentage = progress * 100;
+                                    if (percentage == 100) {
+                                      downloadURLS(ImageURL).then((value) {
+                                        setState(() {
+                                          nftUploaded100 = true;
+                                          ImageURLAfter100 = value.toString();
+                                        });
+                                      });
+                                    }
+                                    if (percentage == 100) {
+                                      if (ImageURLAfter100 != null) {
+                                        return Image.network(
+                                          "${ImageURLAfter100}",
+                                          fit: BoxFit.cover,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              3.5,
+                                          // scale: 2.5,
+                                        );
+                                      } else {
+                                        return Container(
+                                          child: CircularProgressIndicator(),
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              3.5,
+                                        );
+                                      }
+                                    } else {
+                                      return AlertDialog(
+                                        title: Text(
+                                            "NFT Uploading Please Wait..."),
+                                        content: Center(
+                                          child: CircularProgressIndicator(
+                                            value: progress,
+                                          ),
+                                        ),
+                                        actions: [
+                                          Center(
+                                              child: Text(
+                                                  "${percentage.toDouble()}%"))
+                                        ],
+                                      );
+                                    }
+                                  } else {
+                                    return TextButton(
+                                      child: Image.network(
+                                        "https://imageio.forbes.com/specials-images/imageserve/6170e01f8d7639b95a7f2eeb/Sotheby-s-NFT-Natively-Digital-1-2-sale-Bored-Ape-Yacht-Club--8817-by-Yuga-Labs/0x0.png?fit=bounds&format=png&width=960",
+                                        fit: BoxFit.cover,
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                3.5,
+                                        // scale: 2.5,
+                                      ),
+                                      onPressed: () {
+                                        uploadStorage();
+                                      },
+                                    );
+                                  }
+                                },
+                              ),
+
+                              // if (nftUploaded100 == false)
+                              //   TextButton(
+                              //     child: Image.network(
+                              //       "https://imageio.forbes.com/specials-images/imageserve/6170e01f8d7639b95a7f2eeb/Sotheby-s-NFT-Natively-Digital-1-2-sale-Bored-Ape-Yacht-Club--8817-by-Yuga-Labs/0x0.png?fit=bounds&format=png&width=960",
+                              //       fit: BoxFit.cover,
+                              //       width:
+                              //           MediaQuery.of(context).size.width / 3.5,
+                              //       // scale: 2.5,
+                              //     ),
+                              //     onPressed: () {
+                              //       uploadStorage();
+                              //     },
+                              //   )
+                              // else
+                              //   Image.network(
+                              //     "${ImageURLAfter100}",
+                              //     fit: BoxFit.cover,
+                              //     width:
+                              //         MediaQuery.of(context).size.width / 3.5,
+                              //     // scale: 2.5,
+                              //   ),
+                              Container(
+                                // width: MediaQuery.of(context).size.width,
+                                alignment: Alignment.center,
+                                padding: EdgeInsets.all(12),
+                                color: Colors.black,
+                                child: Text(
+                                  "ART PREVIEW",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              )
+                            ],
+                          ))
+
+                      // _upload
+                      //     ? FutureBuilder(
+                      //         future: downloadURLS(ImageURL),
+                      //         builder: (context, image) {
+                      //           print("HELLOOOOOOO");
+                      //           if (image.hasData) {
+                      //             print("IMAGE DATA");
+                      //             print(image.data);
+                      //             return Column(
+                      //               children: [
+                      //                 Image.network(
+                      //                   image.data.toString(),
+                      //                   fit: BoxFit.cover,
+                      //                   width: MediaQuery.of(context)
+                      //                           .size
+                      //                           .width /
+                      //                       3.5,
+                      //                   // scale: 2.5,
+                      //                 ),
+                      //                 Container(
+                      //                   // width: MediaQuery.of(context).size.width,
+                      //                   alignment: Alignment.center,
+                      //                   padding: EdgeInsets.all(12),
+                      //                   color: Colors.black,
+                      //                   child: Text(
+                      //                     "ART PREVIEW",
+                      //                     style: TextStyle(
+                      //                         color: Colors.white,
+                      //                         fontSize: 18,
+                      //                         fontWeight: FontWeight.w600),
+                      //                   ),
+                      //                 )
+                      //               ],
+                      //             );
+                      //           } else {
+                      //             return SizedBox.shrink();
+                      //           }
+                      //         })
+                      //     : TextButton(
+                      //         onPressed: () {},
+                      //         child: Container(
+                      //           color: Colors.red,
+                      //           width:
+                      //               MediaQuery.of(context).size.width / 3.5,
+                      //           height:
+                      //               MediaQuery.of(context).size.height / 2.5,
+                      //         ),
+                      //       )),
+
+                      // Expanded(
+                      //   child: Row(
+                      //     mainAxisSize: MainAxisSize.max,
+                      //     children: [
+                      //       Expanded(
+                      //         flex: 3,
+                      //         child: AbsorbPointer(
+                      //           absorbing: true,
+                      //           child: TextFormField(
+                      //             controller: imagecontroller,
+                      //             decoration: const InputDecoration(
+                      //                 labelText: "Nft File",
+                      //                 border: OutlineInputBorder(
+                      //                     borderRadius: BorderRadius.all(
+                      //                       Radius.circular(8),
+                      //                     ),
+                      //                     borderSide: BorderSide(
+                      //                       color: Colors.black45,
+                      //                     ))),
+                      //           ),
+                      //         ),
+                      //       ),
+                      //       SizedBox(
+                      //         width: 10,
+                      //       ),
+                      //       Expanded(
+                      //         child: Container(
+                      //           height: 50,
+                      //           child: ElevatedButton(
+                      //               style: ElevatedButton.styleFrom(
+                      //                   primary: Colors.green,
+                      //                   shape: RoundedRectangleBorder(
+                      //                       borderRadius:
+                      //                       BorderRadius.all(Radius.circular(10)))),
+                      //               onPressed: () {
+                      //                 uploadStorage();
+                      //
+                      //                 // uploadImage();
+                      //                 // uploadStorage();
+                      //               },
+                      //               child: Text("Upload")),
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                    ],
                   ),
                 ],
               ),
-            );
-          }),
+              nftuploaded == true
+                  ? Text("Your Artwork is Already Submitted!")
+                  : Text(''),
+              SizedBox(
+                height: 50,
+              ),
+              if (nftuploaded != true)
+                if (isVideo == false || isVideoThumbnailUploaded == true)
+                  Visibility(
+                    visible: _upload,
+                    child: Center(
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              primary: Colors.blue[200],
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)))),
+                          onPressed: () {
+                            if (_formkey.currentState!.validate()) {
+                              setState(() {
+                                uploadToCloud();
+                              });
+                            }
+                          },
+                          child: Text("Save")),
+                    ),
+                  )
+                else
+                  SizedBox(),
+              SizedBox(
+                height: 10,
+              ),
+              StreamBuilder<fb.UploadTaskSnapshot>(
+                stream: _uploadTask?.onStateChanged,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    final event = snapshot.data;
+                    double progress =
+                        event!.bytesTransferred / event.totalBytes;
+                    final percentage = progress * 100;
+                    print("%${percentage}");
+                    if (percentage == 100) {
+                      downloadURLS(ImageURL).then((value) {
+                        setState(() {
+                          nftUploaded100 = true;
+                          ImageURLAfter100 = value.toString();
+                        });
+                      });
+                    }
+                    return percentage == 100
+                        ? SizedBox()
+                        : AlertDialog(
+                            title: Text("NFT Uploading Please Wait..."),
+                            content: Center(
+                              child: CircularProgressIndicator(
+                                value: progress,
+                              ),
+                            ),
+                            actions: [
+                              Center(child: Text("${percentage.toDouble()}%"))
+                            ],
+                          );
+                  } else {
+                    return SizedBox();
+                  }
+                },
+              ),
+            ],
+          ),
+        );
+      }),
     );
   }
 
@@ -729,7 +810,6 @@ class _HomePageState extends State<HomePage> {
 }
 
 Future<Uri> downloadURLS(String image) {
-  print("IMAGE");
   return fb
       .storage()
       .refFromURL("gs://nft-image-app.appspot.com/")
