@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
   bool? nftuploaded;
   bool? nftUploaded100 = false;
 
-  late String ImageURL;
+  String? ImageURL;
   String? ImageURLAfter100;
 
   final User? user = FirebaseAuth.instance.currentUser;
@@ -302,42 +302,42 @@ class _HomePageState extends State<HomePage> {
                             SizedBox(
                               height: 40,
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      padding: EdgeInsets.all(20),
-                                      primary: Colors.white),
-                                  onPressed: () {
-                                    uploadStorage();
-                                  },
-                                  child: CustomTitle(
-                                    text: 'UPLOAD YOUR ARTWORK',
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                // SizedBox(height: 30),
-                                if (isVideo == true)
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                        padding: EdgeInsets.all(20),
-                                        primary: Colors.white),
-                                    onPressed: () {
-                                      uploadThumbnailStorage();
-                                    },
-                                    child: Text(
-                                      'UPLOAD YOUR THUMBNAIL IMAGE',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 18),
-                                    ),
-                                  )
-                                else
-                                  Container(),
-                              ],
-                            ),
+                            // Row(
+                            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            //   children: [
+                            //     ElevatedButton(
+                            //       style: ElevatedButton.styleFrom(
+                            //           padding: EdgeInsets.all(20),
+                            //           primary: Colors.white),
+                            //       onPressed: () {
+                            //         uploadStorage();
+                            //       },
+                            //       child: CustomTitle(
+                            //         text: 'UPLOAD YOUR ARTWORK',
+                            //         color: Colors.black,
+                            //       ),
+                            //     ),
+                            //     // SizedBox(height: 30),
+                            //     if (isVideo == true)
+                            //       ElevatedButton(
+                            //         style: ElevatedButton.styleFrom(
+                            //             padding: EdgeInsets.all(20),
+                            //             primary: Colors.white),
+                            //         onPressed: () {
+                            //           uploadThumbnailStorage();
+                            //         },
+                            //         child: Text(
+                            //           'UPLOAD YOUR THUMBNAIL IMAGE',
+                            //           style: TextStyle(
+                            //               color: Colors.black,
+                            //               fontWeight: FontWeight.w600,
+                            //               fontSize: 18),
+                            //         ),
+                            //       )
+                            //     else
+                            //       Container(),
+                            //   ],
+                            // ),
                           ],
                         ),
                       ),
@@ -347,113 +347,175 @@ class _HomePageState extends State<HomePage> {
                       Container(
                           // height: MediaQuery.of(context).size.height*0.5,
                           color: Colors.black,
-                          child: Column(
-                            children: [
-                              StreamBuilder<fb.UploadTaskSnapshot>(
-                                stream: _uploadTask?.onStateChanged,
-                                builder: (context, snapshot) {
-                                  if (snapshot.hasData) {
-                                    final event = snapshot.data;
-                                    double progress = event!.bytesTransferred /
-                                        event.totalBytes;
-                                    final percentage = progress * 100;
-                                    if (percentage == 100) {
-                                      downloadURLS(ImageURL).then((value) {
-                                        setState(() {
-                                          nftUploaded100 = true;
-                                          ImageURLAfter100 = value.toString();
-                                        });
-                                      });
-                                    }
-                                    if (percentage == 100) {
-                                      if (ImageURLAfter100 != null) {
-                                        return Image.network(
-                                          "${ImageURLAfter100}",
-                                          fit: BoxFit.cover,
-                                          width: MediaQuery.of(context)
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: Column(
+                              children: [
+                                StreamBuilder<fb.UploadTaskSnapshot>(
+                                  stream: _uploadTask?.onStateChanged,
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasData) {
+                                      final event = snapshot.data;
+                                      double progress = event!.bytesTransferred /
+                                          event.totalBytes;
+                                      final percentage = progress * 100;
+                                      if (percentage == 100) {
+                                        if(isVideo == true && isVideoThumbnailUploaded == true){
+                                          print("HWLLOOOO");
+                                          downloadURLS(_imageThumbnailurl).then((value) {
+                                            if(mounted){
+                                              setState(() {
+                                                nftUploaded100 = true;
+                                                ImageURLAfter100 = value.toString();
+                                              });
+                                            }
+                                          });
+                                        }
+                                        else{
+                                          downloadURLS(ImageURL).then((value) {
+                                            if(mounted){
+                                              setState(() {
+                                                nftUploaded100 = true;
+                                                ImageURLAfter100 = value.toString();
+                                              });
+                                            }
+                                          });
+                                        }
+                                        if(isVideo == true && isVideoThumbnailUploaded == false){
+                                          return TextButton(
+                                            child: Image.asset("Thumbnail.png",fit: BoxFit.cover,
+                                                width:
+                                                MediaQuery.of(context).size.width /
+                                                    3.5,
+                                                // scale: 2.5,
+                                            ),
+                                            // child: Image.network(
+                                            //   "https://imageio.forbes.com/specials-images/imageserve/6170e01f8d7639b95a7f2eeb/Sotheby-s-NFT-Natively-Digital-1-2-sale-Bored-Ape-Yacht-Club--8817-by-Yuga-Labs/0x0.png?fit=bounds&format=png&width=960",
+                                            //   fit: BoxFit.cover,
+                                            //   width:
+                                            //   MediaQuery.of(context).size.width /
+                                            //       3.5,
+                                            //   // scale: 2.5,
+                                            // ),
+                                            onPressed: () {
+                                              uploadThumbnailStorage();
+                                            },
+                                          );
+                                        }
+                                        else if(isVideoThumbnailUploaded == true){
+                                          if (ImageURLAfter100 != null) {
+                                            return Image.network(
+                                              "${ImageURLAfter100}",
+                                              fit: BoxFit.cover,
+                                              width: MediaQuery.of(context)
                                                   .size
                                                   .width /
-                                              3.5,
-                                          // scale: 2.5,
-                                        );
-                                      } else {
-                                        return Container(
-                                          child: CircularProgressIndicator(),
-                                          width: MediaQuery.of(context)
+                                                  3.5,
+                                              // scale: 2.5,
+                                            );
+                                          } else {
+                                            return Container(
+                                              child: CircularProgressIndicator(),
+                                              width: MediaQuery.of(context)
                                                   .size
                                                   .width /
-                                              3.5,
+                                                  3.5,
+                                            );
+                                          }
+                                        }
+                                        else{
+                                          if (ImageURLAfter100 != null) {
+                                            return Image.network(
+                                              "${ImageURLAfter100}",
+                                              fit: BoxFit.cover,
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                                  3.5,
+                                              // scale: 2.5,
+                                            );
+                                          } else {
+                                            return Container(
+                                              child: CircularProgressIndicator(),
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                                  3.5,
+                                            );
+                                          }
+                                        }
+                                      }
+                                      else {
+                                        return AlertDialog(
+                                          title: Text(
+                                              "NFT Uploading Please Wait..."),
+                                          content: Center(
+                                            child: CircularProgressIndicator(
+                                              value: progress,
+                                            ),
+                                          ),
+                                          actions: [
+                                            Center(
+                                                child: Text(
+                                                    "${percentage.toDouble()}%"))
+                                          ],
                                         );
                                       }
+
                                     } else {
-                                      return AlertDialog(
-                                        title: Text(
-                                            "NFT Uploading Please Wait..."),
-                                        content: Center(
-                                          child: CircularProgressIndicator(
-                                            value: progress,
-                                          ),
+                                      return TextButton(
+                                        child: Image.asset(
+                                          "NFT.png",
+                                          fit: BoxFit.cover,
+                                          width:
+                                              MediaQuery.of(context).size.width /
+                                                  3.5,
+                                          // scale: 2.5,
                                         ),
-                                        actions: [
-                                          Center(
-                                              child: Text(
-                                                  "${percentage.toDouble()}%"))
-                                        ],
+                                        onPressed: () {
+                                          uploadStorage();
+                                        },
                                       );
                                     }
-                                  } else {
-                                    return TextButton(
-                                      child: Image.network(
-                                        "https://imageio.forbes.com/specials-images/imageserve/6170e01f8d7639b95a7f2eeb/Sotheby-s-NFT-Natively-Digital-1-2-sale-Bored-Ape-Yacht-Club--8817-by-Yuga-Labs/0x0.png?fit=bounds&format=png&width=960",
-                                        fit: BoxFit.cover,
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                3.5,
-                                        // scale: 2.5,
-                                      ),
-                                      onPressed: () {
-                                        uploadStorage();
-                                      },
-                                    );
-                                  }
-                                },
-                              ),
-
-                              // if (nftUploaded100 == false)
-                              //   TextButton(
-                              //     child: Image.network(
-                              //       "https://imageio.forbes.com/specials-images/imageserve/6170e01f8d7639b95a7f2eeb/Sotheby-s-NFT-Natively-Digital-1-2-sale-Bored-Ape-Yacht-Club--8817-by-Yuga-Labs/0x0.png?fit=bounds&format=png&width=960",
-                              //       fit: BoxFit.cover,
-                              //       width:
-                              //           MediaQuery.of(context).size.width / 3.5,
-                              //       // scale: 2.5,
-                              //     ),
-                              //     onPressed: () {
-                              //       uploadStorage();
-                              //     },
-                              //   )
-                              // else
-                              //   Image.network(
-                              //     "${ImageURLAfter100}",
-                              //     fit: BoxFit.cover,
-                              //     width:
-                              //         MediaQuery.of(context).size.width / 3.5,
-                              //     // scale: 2.5,
-                              //   ),
-                              Container(
-                                // width: MediaQuery.of(context).size.width,
-                                alignment: Alignment.center,
-                                padding: EdgeInsets.all(12),
-                                color: Colors.black,
-                                child: Text(
-                                  "ART PREVIEW",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w600),
+                                  },
                                 ),
-                              )
-                            ],
+
+                                // if (nftUploaded100 == false)
+                                //   TextButton(
+                                //     child: Image.network(
+                                //       "https://imageio.forbes.com/specials-images/imageserve/6170e01f8d7639b95a7f2eeb/Sotheby-s-NFT-Natively-Digital-1-2-sale-Bored-Ape-Yacht-Club--8817-by-Yuga-Labs/0x0.png?fit=bounds&format=png&width=960",
+                                //       fit: BoxFit.cover,
+                                //       width:
+                                //           MediaQuery.of(context).size.width / 3.5,
+                                //       // scale: 2.5,
+                                //     ),
+                                //     onPressed: () {
+                                //       uploadStorage();
+                                //     },
+                                //   )
+                                // else
+                                //   Image.network(
+                                //     "${ImageURLAfter100}",
+                                //     fit: BoxFit.cover,
+                                //     width:
+                                //         MediaQuery.of(context).size.width / 3.5,
+                                //     // scale: 2.5,
+                                //   ),
+                                Container(
+                                  // width: MediaQuery.of(context).size.width,
+                                  alignment: Alignment.center,
+                                  padding: EdgeInsets.all(12),
+                                  color: Colors.black,
+                                  child: Text(
+                                    "ART PREVIEW",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                )
+                              ],
+                            ),
                           ))
 
                       // _upload
@@ -584,44 +646,6 @@ class _HomePageState extends State<HomePage> {
                   )
                 else
                   SizedBox(),
-              SizedBox(
-                height: 10,
-              ),
-              StreamBuilder<fb.UploadTaskSnapshot>(
-                stream: _uploadTask?.onStateChanged,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    final event = snapshot.data;
-                    double progress =
-                        event!.bytesTransferred / event.totalBytes;
-                    final percentage = progress * 100;
-                    print("%${percentage}");
-                    if (percentage == 100) {
-                      downloadURLS(ImageURL).then((value) {
-                        setState(() {
-                          nftUploaded100 = true;
-                          ImageURLAfter100 = value.toString();
-                        });
-                      });
-                    }
-                    return percentage == 100
-                        ? SizedBox()
-                        : AlertDialog(
-                            title: Text("NFT Uploading Please Wait..."),
-                            content: Center(
-                              child: CircularProgressIndicator(
-                                value: progress,
-                              ),
-                            ),
-                            actions: [
-                              Center(child: Text("${percentage.toDouble()}%"))
-                            ],
-                          );
-                  } else {
-                    return SizedBox();
-                  }
-                },
-              ),
             ],
           ),
         );
@@ -809,10 +833,10 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-Future<Uri> downloadURLS(String image) {
+Future<Uri> downloadURLS(String? image) {
   return fb
       .storage()
       .refFromURL("gs://nft-image-app.appspot.com/")
-      .child(image)
+      .child(image!)
       .getDownloadURL();
 }
