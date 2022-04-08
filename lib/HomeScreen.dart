@@ -285,7 +285,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     scrollDirection: Axis.vertical,
                                     gridDelegate:
                                     new SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 3),
+                                        crossAxisCount: 2),
                                     itemBuilder: (BuildContext context, int index) {
                                       DocumentSnapshot doc =
                                       snapshot.data!.docs[index];
