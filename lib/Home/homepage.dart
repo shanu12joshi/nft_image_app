@@ -383,7 +383,7 @@ class _HomePageState extends State<HomePage> {
                                         }
                                         if(isVideo == true && isVideoThumbnailUploaded == false){
                                           return TextButton(
-                                            child: Image.asset("https://www.linkpicture.com/q/Thumbnail_5.png",fit: BoxFit.cover,
+                                            child: Image.network("https://www.linkpicture.com/q/Thumbnail_5.png",fit: BoxFit.cover,
                                                 width:
                                                 MediaQuery.of(context).size.width /
                                                     3.5,
