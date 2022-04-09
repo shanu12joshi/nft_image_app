@@ -219,44 +219,93 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ],
                         ),
+                        StreamBuilder(
+                            stream: FirebaseFirestore.instance
+                                .collection("nft").orderBy("CreatedAt",descending: true).limit(1)
+                                .snapshots(),
+                            builder: (context,
+                                AsyncSnapshot<QuerySnapshot> snapshot) {
+                              if(snapshot.hasData){
+                                DocumentSnapshot doc =
+                                snapshot.data!.docs[0];
+                                bool type = getUrlType(doc["type"]);
+                                return FutureBuilder(future: type ? downloadURLS(doc["images"])
+                                    : downloadURLS(doc["imageThumbnail"]),
+                                    builder: (context, image){
+                                  if(image.data == null){
+                                    return SizedBox();
+                                  }
+                                      return Padding(
+                                        padding: const EdgeInsets.only(right: 18.0),
+                                        child: Container(
+                                          color: Colors.black,
+                                          child: Column(
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsets.fromLTRB(10, 50, 10, 10),
+                                                child: Image.network(
+                                                  "${image.data}",
+                                                  width:
+                                                  MediaQuery.of(context).size.width / 3.5,
+                                                ),
+                                              ),
+                                              Container(
+                                                // width: MediaQuery.of(context).size.width,
+                                                alignment: Alignment.center,
+                                                padding: EdgeInsets.all(12),
+                                                color: Colors.black,
+                                                child: Text(
+                                                  "LAST UPLOADED",
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 18,
+                                                      fontWeight: FontWeight.w600),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    });
+                              }
+                              else{
+                                return Padding(
+                                  padding: const EdgeInsets.only(right: 18.0),
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
+                            }),
                         // Padding(
-                        //   padding: EdgeInsets.fromLTRB(10, 50, 10, 10),
-                        //   child: Image.network(
-                        //     "https://f8n-production-collection-assets.imgix.net/0xe7a49073905c68153449472e054041638d0FF547/3/nft.png?q=80&auto=format%2Ccompress&cs=srgb&max-w=1680&max-h=1680",
-                        //     width: 400,
+                        //   padding: const EdgeInsets.only(right: 18.0),
+                        //   child: Container(
+                        //     color: Colors.black,
+                        //     child: Column(
+                        //       children: [
+                        //         Padding(
+                        //           padding: EdgeInsets.fromLTRB(10, 50, 10, 10),
+                        //           child: Image.network(
+                        //             "https://f8n-production-collection-assets.imgix.net/0xe7a49073905c68153449472e054041638d0FF547/3/nft.png?q=80&auto=format%2Ccompress&cs=srgb&max-w=1680&max-h=1680",
+                        //             width:
+                        //                 MediaQuery.of(context).size.width / 3.5,
+                        //           ),
+                        //         ),
+                        //         Container(
+                        //           // width: MediaQuery.of(context).size.width,
+                        //           alignment: Alignment.center,
+                        //           padding: EdgeInsets.all(12),
+                        //           color: Colors.black,
+                        //           child: Text(
+                        //             "LAST UPLOADED",
+                        //             style: TextStyle(
+                        //                 color: Colors.white,
+                        //                 fontSize: 18,
+                        //                 fontWeight: FontWeight.w600),
+                        //           ),
+                        //         )
+                        //       ],
+                        //     ),
                         //   ),
                         // ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 18.0),
-                          child: Container(
-                            color: Colors.black,
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(10, 50, 10, 10),
-                                  child: Image.network(
-                                    "https://f8n-production-collection-assets.imgix.net/0xe7a49073905c68153449472e054041638d0FF547/3/nft.png?q=80&auto=format%2Ccompress&cs=srgb&max-w=1680&max-h=1680",
-                                    width:
-                                        MediaQuery.of(context).size.width / 3.5,
-                                  ),
-                                ),
-                                Container(
-                                  // width: MediaQuery.of(context).size.width,
-                                  alignment: Alignment.center,
-                                  padding: EdgeInsets.all(12),
-                                  color: Colors.black,
-                                  child: Text(
-                                    "LAST UPLOADED",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
                       ],
                     ),
                   ),
@@ -296,23 +345,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                           print(videoUrl);
                                         }
                                         if (!type) {
-                                          // _controller = VideoPlayerController.network(
-                                          //     image.data.toString())
-                                          //   ..initialize().then((_) {
-                                          //     setState(() {});
-                                          //   });
                                         }
-                                        // if (snapshot.connectionState ==
-                                        //     ConnectionState.done) {
                                         return Card(
-                                          // shape: RoundedRectangleBorder(
-                                          //   borderRadius: BorderRadius.circular(20),
-                                          //   // if you need this
-                                          //   side: BorderSide(
-                                          //     color: Colors.grey.withOpacity(0.2),
-                                          //     width: 1,
-                                          //   ),
-                                          // ),
                                           elevation: 5,
                                           child: Container(
                                             width: 200,
@@ -451,8 +485,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         _isProcessing = true;
                                       });
                                       await signInWithGoogle().then((result) {
-                                        if (result != null) {
-                                        }
+                                        if (result != null) {}
                                       }).catchError((error) {
                                         print('Registration Error: $error');
                                       });
@@ -652,24 +685,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 videoUrl = value.toString());
                                         print(videoUrl);
                                       }
-                                      if (!type) {
-                                        // _controller = VideoPlayerController.network(
-                                        //     image.data.toString())
-                                        //   ..initialize().then((_) {
-                                        //     setState(() {});
-                                        //   });
-                                      }
-                                      // if (snapshot.connectionState ==
-                                      //     ConnectionState.done) {
                                       return Card(
-                                        // shape: RoundedRectangleBorder(
-                                        //   borderRadius: BorderRadius.circular(20),
-                                        //   // if you need this
-                                        //   side: BorderSide(
-                                        //     color: Colors.grey.withOpacity(0.2),
-                                        //     width: 1,
-                                        //   ),
-                                        // ),
                                         elevation: 5,
                                         child: Container(
                                           width: 200,
@@ -739,19 +755,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ),
                                         ),
                                       );
-
-                                      // else {
-                                      //   return Text("LOADING");
-                                      // }
                                     });
                               });
-                          // return new ListView.builder(
-                          //     itemCount: snapshot.data!.docs.length,
-                          //     itemBuilder: (context, index){
-                          //       DocumentSnapshot doc = snapshot.data!.docs[index];
-                          //
-                          //       // return Text(doc['title']);
-                          // });
                         }
                       }),
                 ],
@@ -1097,19 +1102,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ),
                                         ),
                                       );
-
-                                      // else {
-                                      //   return Text("LOADING");
-                                      // }
                                     });
                               });
-                          // return new ListView.builder(
-                          //     itemCount: snapshot.data!.docs.length,
-                          //     itemBuilder: (context, index){
-                          //       DocumentSnapshot doc = snapshot.data!.docs[index];
-                          //
-                          //       // return Text(doc['title']);
-                          // });
                         }
                       }),
                 ],

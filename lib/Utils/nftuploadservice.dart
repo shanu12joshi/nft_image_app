@@ -40,7 +40,8 @@ class NftService {
         'images': image,
         "userid":userid,
         "type": type,
-        "imageThumbnail": imageThumbnail
+        "imageThumbnail": imageThumbnail,
+        "CreatedAt": DateTime.now()
       }).then((value) {
         pref.setBool('status',true);
         print("${pref.getBool("status")}");
