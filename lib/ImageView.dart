@@ -43,7 +43,7 @@ class _ImageViewState extends State<ImageView> {
         });
       }
     });
-    if (role != "owner") {
+    if (role == "owner") {
       return Scaffold(
         body: SingleChildScrollView(
           child: ConstrainedBox(
@@ -63,7 +63,11 @@ class _ImageViewState extends State<ImageView> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Card(
-                          elevation: 10, child: Image.network(widget.imageURL,height: MediaQuery.of(context).size.height/1.25,)),
+                          elevation: 10,
+                          child: Image.network(
+                            widget.imageURL,
+                            height: MediaQuery.of(context).size.height / 1.25,
+                          )),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(right: 12.0),
