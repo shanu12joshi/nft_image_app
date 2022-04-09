@@ -364,7 +364,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             builder: (context) =>
                                                                 ImageView(image
                                                                     .data
-                                                                    .toString())),
+                                                                    .toString(),doc['title'],doc['twitter'])),
                                                       );
                                                     } else {
                                                       Navigator.push(
@@ -372,7 +372,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         MaterialPageRoute(
                                                             builder: (context) =>
                                                                 NFTVideoPlayer(
-                                                                    videoUrl)),
+                                                                    videoUrl,doc['title'],doc['twitter'])),
                                                       );
                                                     }
                                                   },
@@ -721,7 +721,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           builder: (context) =>
                                                               ImageView(image
                                                                   .data
-                                                                  .toString())),
+                                                                  .toString(),doc['title'],doc['twitter'])),
                                                     );
                                                   } else {
                                                     Navigator.push(
@@ -729,7 +729,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       MaterialPageRoute(
                                                           builder: (context) =>
                                                               NFTVideoPlayer(
-                                                                  videoUrl)),
+                                                                  videoUrl,doc['title'],doc['twitter'])),
                                                     );
                                                   }
                                                 },
@@ -1092,7 +1092,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           builder: (context) =>
                                                               ImageView(image
                                                                   .data
-                                                                  .toString())),
+                                                                  .toString(),doc['title'],doc['twitter'])),
                                                     );
                                                   } else {
                                                     Navigator.push(
@@ -1100,7 +1100,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       MaterialPageRoute(
                                                           builder: (context) =>
                                                               NFTVideoPlayer(
-                                                                  videoUrl)),
+                                                                  videoUrl,doc['title'],doc['twitter'])),
                                                     );
                                                   }
                                                 },
