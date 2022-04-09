@@ -221,45 +221,68 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         StreamBuilder(
                             stream: FirebaseFirestore.instance
-                                .collection("nft").orderBy("CreatedAt",descending: true).limit(1)
+                                .collection("nft")
+                                .orderBy("CreatedAt", descending: true)
+                                .limit(1)
                                 .snapshots(),
                             builder: (context,
                                 AsyncSnapshot<QuerySnapshot> snapshot) {
-                              if(snapshot.hasData){
-                                DocumentSnapshot doc =
-                                snapshot.data!.docs[0];
+                              if (snapshot.hasData) {
+                                DocumentSnapshot doc = snapshot.data!.docs[0];
                                 bool type = getUrlType(doc["type"]);
-                                return FutureBuilder(future: type ? downloadURLS(doc["images"])
-                                    : downloadURLS(doc["imageThumbnail"]),
-                                    builder: (context, image){
-                                  if(image.data == null){
-                                    return SizedBox();
-                                  }
+                                return FutureBuilder(
+                                    future: type
+                                        ? downloadURLS(doc["images"])
+                                        : downloadURLS(doc["imageThumbnail"]),
+                                    builder: (context, image) {
+                                      if (image.data == null) {
+                                        return SizedBox();
+                                      }
                                       return Padding(
-                                        padding: const EdgeInsets.only(right: 18.0),
+                                        padding:
+                                            const EdgeInsets.only(right: 18.0),
                                         child: Container(
                                           color: Colors.black,
                                           child: Column(
                                             children: [
                                               Padding(
-                                                padding: EdgeInsets.fromLTRB(10, 50, 10, 10),
+                                                padding: EdgeInsets.fromLTRB(
+                                                    10, 50, 10, 10),
                                                 child: Image.network(
                                                   "${image.data}",
-                                                  width:
-                                                  MediaQuery.of(context).size.width / 3.5,
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width /
+                                                      3.5,
                                                 ),
                                               ),
                                               Container(
-                                                // width: MediaQuery.of(context).size.width,
-                                                alignment: Alignment.center,
-                                                padding: EdgeInsets.all(12),
+                                                padding: EdgeInsets.fromLTRB(
+                                                    0, 0, 0, 15),
                                                 color: Colors.black,
-                                                child: Text(
-                                                  "LAST UPLOADED",
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 18,
-                                                      fontWeight: FontWeight.w600),
+                                                child: Column(
+                                                  children: [
+                                                    Text(
+                                                      "LAST UPLOADED",
+                                                      style: TextStyle(
+                                                        decoration:
+                                                            TextDecoration
+                                                                .underline,
+                                                        color: Colors.white,
+                                                        fontSize: 8,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      "${doc["title"].toString().toUpperCase()}",
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 18,
+                                                          fontWeight:
+                                                              FontWeight.w600),
+                                                    ),
+                                                  ],
                                                 ),
                                               )
                                             ],
@@ -267,45 +290,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ),
                                       );
                                     });
-                              }
-                              else{
+                              } else {
                                 return Padding(
                                   padding: const EdgeInsets.only(right: 18.0),
                                   child: CircularProgressIndicator(),
                                 );
                               }
                             }),
-                        // Padding(
-                        //   padding: const EdgeInsets.only(right: 18.0),
-                        //   child: Container(
-                        //     color: Colors.black,
-                        //     child: Column(
-                        //       children: [
-                        //         Padding(
-                        //           padding: EdgeInsets.fromLTRB(10, 50, 10, 10),
-                        //           child: Image.network(
-                        //             "https://f8n-production-collection-assets.imgix.net/0xe7a49073905c68153449472e054041638d0FF547/3/nft.png?q=80&auto=format%2Ccompress&cs=srgb&max-w=1680&max-h=1680",
-                        //             width:
-                        //                 MediaQuery.of(context).size.width / 3.5,
-                        //           ),
-                        //         ),
-                        //         Container(
-                        //           // width: MediaQuery.of(context).size.width,
-                        //           alignment: Alignment.center,
-                        //           padding: EdgeInsets.all(12),
-                        //           color: Colors.black,
-                        //           child: Text(
-                        //             "LAST UPLOADED",
-                        //             style: TextStyle(
-                        //                 color: Colors.white,
-                        //                 fontSize: 18,
-                        //                 fontWeight: FontWeight.w600),
-                        //           ),
-                        //         )
-                        //       ],
-                        //     ),
-                        //   ),
-                        // ),
                       ],
                     ),
                   ),
@@ -344,8 +335,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   videoUrl = value.toString());
                                           print(videoUrl);
                                         }
-                                        if (!type) {
-                                        }
+                                        if (!type) {}
                                         return Card(
                                           elevation: 5,
                                           child: Container(
@@ -362,9 +352,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         context,
                                                         MaterialPageRoute(
                                                             builder: (context) =>
-                                                                ImageView(image
-                                                                    .data
-                                                                    .toString(),doc['title'],doc['twitter'])),
+                                                                ImageView(
+                                                                    image.data
+                                                                        .toString(),
+                                                                    doc['title'],
+                                                                    doc['twitter'])),
                                                       );
                                                     } else {
                                                       Navigator.push(
@@ -372,21 +364,59 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         MaterialPageRoute(
                                                             builder: (context) =>
                                                                 NFTVideoPlayer(
-                                                                    videoUrl,doc['title'],doc['twitter'])),
+                                                                    videoUrl,
+                                                                    doc['title'],
+                                                                    doc['twitter'])),
                                                       );
                                                     }
                                                   },
                                                   child: Center(
                                                     child: type
-                                                        ? Image.network(
-                                                            image.data
-                                                                .toString(),
-                                                          )
+                                                        ? Stack(
+                                                          children: [
+                                                            Image.network(
+                                                                image.data
+                                                                    .toString(),
+                                                              ),
+                                                            Positioned(
+                                                              bottom: 0,
+                                                              child: Container(
+                                                                padding: const EdgeInsets.only( left: 8.0, top: 4.0),
+                                                                height: 30,
+                                                                width: MediaQuery.of(context).size.width,
+                                                                color: Colors.black.withOpacity(0.75),
+                                                                child: Text(
+                                                                  "${doc["title"].toString().toUpperCase()}",
+                                                                  style: TextStyle(
+                                                                      color: Colors.white,
+                                                                      fontSize: 18,
+                                                                      fontWeight: FontWeight.w600),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        )
                                                         : Stack(
                                                             children: [
                                                               Image.network(
                                                                 image.data
                                                                     .toString(),
+                                                              ),
+                                                              Positioned(
+                                                                bottom: 0,
+                                                                child: Container(
+                                                                  padding: const EdgeInsets.only( left: 8.0, top: 4.0),
+                                                                  height: 30,
+                                                                  width: MediaQuery.of(context).size.width,
+                                                                  color: Colors.black.withOpacity(0.75),
+                                                                  child: Text(
+                                                                    "${doc["title"].toString().toUpperCase()}",
+                                                                    style: TextStyle(
+                                                                        color: Colors.white,
+                                                                        fontSize: 18,
+                                                                        fontWeight: FontWeight.w600),
+                                                                  ),
+                                                                ),
                                                               ),
                                                               Center(
                                                                 child:
@@ -613,45 +643,68 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         StreamBuilder(
                             stream: FirebaseFirestore.instance
-                                .collection("nft").orderBy("CreatedAt",descending: true).limit(1)
+                                .collection("nft")
+                                .orderBy("CreatedAt", descending: true)
+                                .limit(1)
                                 .snapshots(),
                             builder: (context,
                                 AsyncSnapshot<QuerySnapshot> snapshot) {
-                              if(snapshot.hasData){
-                                DocumentSnapshot doc =
-                                snapshot.data!.docs[0];
+                              if (snapshot.hasData) {
+                                DocumentSnapshot doc = snapshot.data!.docs[0];
                                 bool type = getUrlType(doc["type"]);
-                                return FutureBuilder(future: type ? downloadURLS(doc["images"])
-                                    : downloadURLS(doc["imageThumbnail"]),
-                                    builder: (context, image){
-                                      if(image.data == null){
+                                return FutureBuilder(
+                                    future: type
+                                        ? downloadURLS(doc["images"])
+                                        : downloadURLS(doc["imageThumbnail"]),
+                                    builder: (context, image) {
+                                      if (image.data == null) {
                                         return SizedBox();
                                       }
                                       return Padding(
-                                        padding: const EdgeInsets.only(right: 18.0),
+                                        padding:
+                                            const EdgeInsets.only(right: 18.0),
                                         child: Container(
                                           color: Colors.black,
                                           child: Column(
                                             children: [
                                               Padding(
-                                                padding: EdgeInsets.fromLTRB(10, 50, 10, 10),
+                                                padding: EdgeInsets.fromLTRB(
+                                                    10, 50, 10, 10),
                                                 child: Image.network(
                                                   "${image.data}",
-                                                  width:
-                                                  MediaQuery.of(context).size.width / 3.5,
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width /
+                                                      3.5,
                                                 ),
                                               ),
                                               Container(
-                                                // width: MediaQuery.of(context).size.width,
-                                                alignment: Alignment.center,
-                                                padding: EdgeInsets.all(12),
+                                                padding: EdgeInsets.fromLTRB(
+                                                    0, 0, 0, 15),
                                                 color: Colors.black,
-                                                child: Text(
-                                                  "LAST UPLOADED",
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 18,
-                                                      fontWeight: FontWeight.w600),
+                                                child: Column(
+                                                  children: [
+                                                    Text(
+                                                      "LAST UPLOADED",
+                                                      style: TextStyle(
+                                                        decoration:
+                                                            TextDecoration
+                                                                .underline,
+                                                        color: Colors.white,
+                                                        fontSize: 8,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      "${doc["title"].toString().toUpperCase()}",
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 18,
+                                                          fontWeight:
+                                                              FontWeight.w600),
+                                                    ),
+                                                  ],
                                                 ),
                                               )
                                             ],
@@ -659,8 +712,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ),
                                       );
                                     });
-                              }
-                              else{
+                              } else {
                                 return Padding(
                                   padding: const EdgeInsets.only(right: 18.0),
                                   child: CircularProgressIndicator(),
@@ -719,9 +771,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       context,
                                                       MaterialPageRoute(
                                                           builder: (context) =>
-                                                              ImageView(image
-                                                                  .data
-                                                                  .toString(),doc['title'],doc['twitter'])),
+                                                              ImageView(
+                                                                  image.data
+                                                                      .toString(),
+                                                                  doc['title'],
+                                                                  doc['twitter'])),
                                                     );
                                                   } else {
                                                     Navigator.push(
@@ -729,7 +783,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       MaterialPageRoute(
                                                           builder: (context) =>
                                                               NFTVideoPlayer(
-                                                                  videoUrl,doc['title'],doc['twitter'])),
+                                                                  videoUrl,
+                                                                  doc['title'],
+                                                                  doc['twitter'])),
                                                     );
                                                   }
                                                 },
@@ -965,18 +1021,23 @@ class _HomeScreenState extends State<HomeScreen> {
                                 : Container(),
                             StreamBuilder(
                                 stream: FirebaseFirestore.instance
-                                    .collection("nft").orderBy("CreatedAt",descending: true).limit(1)
+                                    .collection("nft")
+                                    .orderBy("CreatedAt", descending: true)
+                                    .limit(1)
                                     .snapshots(),
                                 builder: (context,
                                     AsyncSnapshot<QuerySnapshot> snapshot) {
-                                  if(snapshot.hasData){
+                                  if (snapshot.hasData) {
                                     DocumentSnapshot doc =
-                                    snapshot.data!.docs[0];
+                                        snapshot.data!.docs[0];
                                     bool type = getUrlType(doc["type"]);
-                                    return FutureBuilder(future: type ? downloadURLS(doc["images"])
-                                        : downloadURLS(doc["imageThumbnail"]),
-                                        builder: (context, image){
-                                          if(image.data == null){
+                                    return FutureBuilder(
+                                        future: type
+                                            ? downloadURLS(doc["images"])
+                                            : downloadURLS(
+                                                doc["imageThumbnail"]),
+                                        builder: (context, image) {
+                                          if (image.data == null) {
                                             return SizedBox();
                                           }
                                           return Container(
@@ -984,34 +1045,55 @@ class _HomeScreenState extends State<HomeScreen> {
                                             child: Column(
                                               children: [
                                                 Padding(
-                                                  padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                                                  padding: EdgeInsets.fromLTRB(
+                                                      10, 10, 10, 5),
                                                   child: Image.network(
                                                     "${image.data}",
                                                     width:
-                                                    MediaQuery.of(context).size.width / 1.5,
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width /
+                                                            1.5,
                                                   ),
                                                 ),
                                                 Container(
-                                                  // width: MediaQuery.of(context).size.width,
-                                                  alignment: Alignment.center,
-                                                  padding: EdgeInsets.all(12),
+                                                  padding: EdgeInsets.fromLTRB(
+                                                      0, 0, 0, 15),
                                                   color: Colors.black,
-                                                  child: Text(
-                                                    "LAST UPLOADED",
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 18,
-                                                        fontWeight: FontWeight.w600),
+                                                  child: Column(
+                                                    children: [
+                                                      Text(
+                                                        "LAST UPLOADED",
+                                                        style: TextStyle(
+                                                          decoration:
+                                                              TextDecoration
+                                                                  .underline,
+                                                          color: Colors.white,
+                                                          fontSize: 8,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        "${doc["title"].toString().toUpperCase()}",
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 18,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w600),
+                                                      ),
+                                                    ],
                                                   ),
                                                 )
                                               ],
                                             ),
                                           );
                                         });
-                                  }
-                                  else{
+                                  } else {
                                     return Padding(
-                                      padding: const EdgeInsets.only(right: 18.0),
+                                      padding:
+                                          const EdgeInsets.only(right: 18.0),
                                       child: CircularProgressIndicator(),
                                     );
                                   }
@@ -1090,9 +1172,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       context,
                                                       MaterialPageRoute(
                                                           builder: (context) =>
-                                                              ImageView(image
-                                                                  .data
-                                                                  .toString(),doc['title'],doc['twitter'])),
+                                                              ImageView(
+                                                                  image.data
+                                                                      .toString(),
+                                                                  doc['title'],
+                                                                  doc['twitter'])),
                                                     );
                                                   } else {
                                                     Navigator.push(
@@ -1100,7 +1184,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       MaterialPageRoute(
                                                           builder: (context) =>
                                                               NFTVideoPlayer(
-                                                                  videoUrl,doc['title'],doc['twitter'])),
+                                                                  videoUrl,
+                                                                  doc['title'],
+                                                                  doc['twitter'])),
                                                     );
                                                   }
                                                 },
