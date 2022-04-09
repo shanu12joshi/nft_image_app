@@ -611,44 +611,62 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ],
                         ),
-                        // Padding(
-                        //   padding: EdgeInsets.fromLTRB(10, 50, 10, 10),
-                        //   child: Image.network(
-                        //     "https://f8n-production-collection-assets.imgix.net/0xe7a49073905c68153449472e054041638d0FF547/3/nft.png?q=80&auto=format%2Ccompress&cs=srgb&max-w=1680&max-h=1680",
-                        //     width: 400,
-                        //   ),
-                        // ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 18.0),
-                          child: Container(
-                            color: Colors.black,
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(10, 50, 10, 10),
-                                  child: Image.network(
-                                    "https://f8n-production-collection-assets.imgix.net/0xe7a49073905c68153449472e054041638d0FF547/3/nft.png?q=80&auto=format%2Ccompress&cs=srgb&max-w=1680&max-h=1680",
-                                    width:
-                                        MediaQuery.of(context).size.width / 3.5,
-                                  ),
-                                ),
-                                Container(
-                                  // width: MediaQuery.of(context).size.width,
-                                  alignment: Alignment.center,
-                                  padding: EdgeInsets.all(12),
-                                  color: Colors.black,
-                                  child: Text(
-                                    "LAST UPLOADED",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
+                        StreamBuilder(
+                            stream: FirebaseFirestore.instance
+                                .collection("nft").orderBy("CreatedAt",descending: true).limit(1)
+                                .snapshots(),
+                            builder: (context,
+                                AsyncSnapshot<QuerySnapshot> snapshot) {
+                              if(snapshot.hasData){
+                                DocumentSnapshot doc =
+                                snapshot.data!.docs[0];
+                                bool type = getUrlType(doc["type"]);
+                                return FutureBuilder(future: type ? downloadURLS(doc["images"])
+                                    : downloadURLS(doc["imageThumbnail"]),
+                                    builder: (context, image){
+                                      if(image.data == null){
+                                        return SizedBox();
+                                      }
+                                      return Padding(
+                                        padding: const EdgeInsets.only(right: 18.0),
+                                        child: Container(
+                                          color: Colors.black,
+                                          child: Column(
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsets.fromLTRB(10, 50, 10, 10),
+                                                child: Image.network(
+                                                  "${image.data}",
+                                                  width:
+                                                  MediaQuery.of(context).size.width / 3.5,
+                                                ),
+                                              ),
+                                              Container(
+                                                // width: MediaQuery.of(context).size.width,
+                                                alignment: Alignment.center,
+                                                padding: EdgeInsets.all(12),
+                                                color: Colors.black,
+                                                child: Text(
+                                                  "LAST UPLOADED",
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 18,
+                                                      fontWeight: FontWeight.w600),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    });
+                              }
+                              else{
+                                return Padding(
+                                  padding: const EdgeInsets.only(right: 18.0),
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
+                            }),
                       ],
                     ),
                   ),
@@ -945,35 +963,59 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                   )
                                 : Container(),
-                            Container(
-                              color: Colors.black,
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.fromLTRB(10, 10, 10, 10),
-                                    child: Image.network(
-                                      "https://f8n-production-collection-assets.imgix.net/0xe7a49073905c68153449472e054041638d0FF547/3/nft.png?q=80&auto=format%2Ccompress&cs=srgb&max-w=1680&max-h=1680",
-                                      width: MediaQuery.of(context).size.width /
-                                          1.5,
-                                    ),
-                                  ),
-                                  Container(
-                                    // width: MediaQuery.of(context).size.width,
-                                    alignment: Alignment.center,
-                                    padding: EdgeInsets.all(12),
-                                    color: Colors.black,
-                                    child: Text(
-                                      "LAST UPLOADED",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
+                            StreamBuilder(
+                                stream: FirebaseFirestore.instance
+                                    .collection("nft").orderBy("CreatedAt",descending: true).limit(1)
+                                    .snapshots(),
+                                builder: (context,
+                                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                                  if(snapshot.hasData){
+                                    DocumentSnapshot doc =
+                                    snapshot.data!.docs[0];
+                                    bool type = getUrlType(doc["type"]);
+                                    return FutureBuilder(future: type ? downloadURLS(doc["images"])
+                                        : downloadURLS(doc["imageThumbnail"]),
+                                        builder: (context, image){
+                                          if(image.data == null){
+                                            return SizedBox();
+                                          }
+                                          return Container(
+                                            color: Colors.black,
+                                            child: Column(
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                                                  child: Image.network(
+                                                    "${image.data}",
+                                                    width:
+                                                    MediaQuery.of(context).size.width / 1.5,
+                                                  ),
+                                                ),
+                                                Container(
+                                                  // width: MediaQuery.of(context).size.width,
+                                                  alignment: Alignment.center,
+                                                  padding: EdgeInsets.all(12),
+                                                  color: Colors.black,
+                                                  child: Text(
+                                                    "LAST UPLOADED",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 18,
+                                                        fontWeight: FontWeight.w600),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          );
+                                        });
+                                  }
+                                  else{
+                                    return Padding(
+                                      padding: const EdgeInsets.only(right: 18.0),
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  }
+                                }),
                             SizedBox(
                               height: 60,
                             ),

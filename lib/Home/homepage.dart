@@ -885,7 +885,6 @@ class _HomePageState extends State<HomePage> {
                 type: type,
                 imageThumbnail: _imageThumbnailurl)
             .then((value) {
-          print("DATA SUbmitetd");
           setState(() {
             // pref.setBool("status", true);
             _loading = false;
