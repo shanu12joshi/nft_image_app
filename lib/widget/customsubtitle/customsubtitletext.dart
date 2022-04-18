@@ -22,7 +22,7 @@ class CustomSubtitleTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(text,style: GoogleFonts.dmSans(
+    return Text(text,style: GoogleFonts.poppins(
       letterSpacing: letterspace,
       foreground: foreground,
       fontSize: fontSize,

@@ -22,12 +22,12 @@ class CustomTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(text,style: GoogleFonts.dmSans(
+    return Text(text,style: GoogleFonts.poppins(
       letterSpacing: letterspace,
       foreground: foreground,
       fontSize: fontSize,
       color: color,
-      fontWeight: FontWeight.w700,
+      fontWeight: FontWeight.w500,
       decoration: linethrough,
     ),textAlign: align,);
   }

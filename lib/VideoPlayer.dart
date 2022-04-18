@@ -83,7 +83,7 @@ class _NFTVideoPlayerState extends State<NFTVideoPlayer> {
                           CustomTitle(
                             align: TextAlign.left,
                             fontSize: 20,
-                            text: "By:",
+                            text: "By: @",
                             color: Colors.black,
                           ),
                           CustomTitle(

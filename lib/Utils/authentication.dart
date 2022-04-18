@@ -15,6 +15,19 @@ String? imageUrl;
 
 /// For checking if the user is already signed into the
 
+Future getDoc(String? uid) async{
+  var a = await FirebaseFirestore.instance.collection('users').doc(uid).get();
+  if(a.exists){
+    print('Exists');
+    return true;
+  }
+  if(!a.exists){
+    print('Not exists');
+    return false;
+  }
+
+}
+
 Future getUser() async {
   await Firebase.initializeApp();
 
@@ -80,8 +93,12 @@ Future<User?> signInWithGoogle() async {
       }
     }
   }
+  bool? there;
+  getDoc(user?.uid).then((value) {
+    there = value;
+  });
 
-  if (user != null) {
+  if (user != null && there==true) {
     uid = user.uid;
     name = user.displayName;
     userEmail = user.email;

@@ -84,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           )
                                         : CustomSubtitleTitle(
                                             text: "Sign In",
-                                            fontSize: 25,
+                                            fontSize: 20,
                                             color: Colors.black,
                                           ),
                                     onPressed: () async {
