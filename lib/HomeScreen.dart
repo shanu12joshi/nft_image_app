@@ -33,17 +33,11 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _isProcessing = false;
   String? role;
   User? user;
+  bool? findUserOnce = false;
 
   @override
   void initState() {
     user = FirebaseAuth.instance.currentUser;
-    FindRole().then((value) {
-      if (mounted) {
-        setState(() {
-          role = value;
-        });
-      }
-    });
     super.initState();
   }
 
@@ -68,6 +62,19 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget build(BuildContext context) {
     user = FirebaseAuth.instance.currentUser;
+    if(findUserOnce == false){
+      FindRole().then((value) {
+        if (mounted) {
+          setState(() {
+            role = value;
+            print("role1");
+            print(role);
+            findUserOnce = true;
+          });
+        }
+      });
+    }
+
     return Scaffold(body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints viewportConstraints) {
       if (viewportConstraints.maxWidth > 1000) {

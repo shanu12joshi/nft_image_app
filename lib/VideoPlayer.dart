@@ -10,7 +10,7 @@ class NFTVideoPlayer extends StatefulWidget {
   final String twitterHandel;
   final String? role;
 
-  const NFTVideoPlayer(this.url, this.title, this.twitterHandel,this.role);
+  const NFTVideoPlayer(this.url, this.title, this.twitterHandel, this.role);
 
   @override
   _NFTVideoPlayerState createState() => _NFTVideoPlayerState();
@@ -27,72 +27,88 @@ class _NFTVideoPlayerState extends State<NFTVideoPlayer> {
         setState(() {});
       });
     _controller.play();
+    print(widget.role);
   }
 
   Widget build(BuildContext context) {
-    if (widget.role == "owner") {
-      return Scaffold(
-          body: Padding(
-        padding: const EdgeInsets.only(top: 18.0),
-        child: Center(
-          child: _controller.value.isInitialized
-              ? Column(
-                  children: [
-                    CustomTitle(
-                      fontSize: 30,
-                      text: widget.title,
-                      color: Colors.black,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Card(
-                        elevation: 10,
-                        child: Container(
-                          height: MediaQuery.of(context).size.height/1.25,
-                          child: AspectRatio(
-                            aspectRatio: _controller.value.aspectRatio,
-                            child: VideoPlayer(_controller),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 12.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+    return Scaffold(
+      body: widget.role == "owner"
+          ? Padding(
+              padding: const EdgeInsets.only(top: 18.0),
+              child: Center(
+                child: _controller.value.isInitialized
+                    ? Column(
                         children: [
                           CustomTitle(
-                            align: TextAlign.left,
-                            fontSize: 20,
-                            text: "By: @",
+                            fontSize: 30,
+                            text: widget.title,
                             color: Colors.black,
                           ),
-                          CustomTitle(
-                            align: TextAlign.right,
-                            fontSize: 20,
-                            text: widget.twitterHandel,
-                            color: Colors.black,
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Card(
+                              elevation: 10,
+                              child: Container(
+                                height:
+                                    MediaQuery.of(context).size.height / 1.25,
+                                child: AspectRatio(
+                                  aspectRatio: _controller.value.aspectRatio,
+                                  child: VideoPlayer(_controller),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 12.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                CustomTitle(
+                                  align: TextAlign.left,
+                                  fontSize: 20,
+                                  text: "By: @",
+                                  color: Colors.black,
+                                ),
+                                CustomTitle(
+                                  align: TextAlign.right,
+                                  fontSize: 20,
+                                  text: widget.twitterHandel,
+                                  color: Colors.black,
+                                ),
+                              ],
+                            ),
                           ),
                         ],
-                      ),
-                    ),
-                  ],
-                )
-              : CircularProgressIndicator(),
-        ),
-      ));
-    } else {
-      return Center(
-        child: _controller.value.isInitialized
-            ? Card(
-                elevation: 10,
-                child: AspectRatio(
-                  aspectRatio: _controller.value.aspectRatio,
-                  child: VideoPlayer(_controller),
-                ),
-              )
-            : CircularProgressIndicator(),
-      );
-    }
+                      )
+                    : CircularProgressIndicator(),
+              ),
+            )
+          : Center(
+              child: _controller.value.isInitialized
+                  ? Column(
+                      children: [
+                        CustomTitle(
+                          fontSize: 30,
+                          text: widget.title,
+                          color: Colors.black,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Card(
+                            elevation: 10,
+                            child: Container(
+                              height: MediaQuery.of(context).size.height / 1.15,
+                              child: AspectRatio(
+                                aspectRatio: _controller.value.aspectRatio,
+                                child: VideoPlayer(_controller),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  : CircularProgressIndicator(),
+            ),
+    );
   }
 }
