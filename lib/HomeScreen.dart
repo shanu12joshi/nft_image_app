@@ -67,8 +67,6 @@ class _HomeScreenState extends State<HomeScreen> {
         if (mounted) {
           setState(() {
             role = value;
-            print("role1");
-            print(role);
             findUserOnce = true;
           });
         }

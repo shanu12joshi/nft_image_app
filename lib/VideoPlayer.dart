@@ -27,7 +27,6 @@ class _NFTVideoPlayerState extends State<NFTVideoPlayer> {
         setState(() {});
       });
     _controller.play();
-    print(widget.role);
   }
 
   Widget build(BuildContext context) {
@@ -50,7 +49,7 @@ class _NFTVideoPlayerState extends State<NFTVideoPlayer> {
                               elevation: 10,
                               child: Container(
                                 height:
-                                    MediaQuery.of(context).size.height / 1.25,
+                                    MediaQuery.of(context).size.height / 1.5,
                                 child: AspectRatio(
                                   aspectRatio: _controller.value.aspectRatio,
                                   child: VideoPlayer(_controller),
@@ -97,7 +96,7 @@ class _NFTVideoPlayerState extends State<NFTVideoPlayer> {
                           child: Card(
                             elevation: 10,
                             child: Container(
-                              height: MediaQuery.of(context).size.height / 1.15,
+                              height: MediaQuery.of(context).size.height / 1.5,
                               child: AspectRatio(
                                 aspectRatio: _controller.value.aspectRatio,
                                 child: VideoPlayer(_controller),
