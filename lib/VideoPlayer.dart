@@ -8,8 +8,9 @@ class NFTVideoPlayer extends StatefulWidget {
   final String url;
   final String title;
   final String twitterHandel;
+  final String? role;
 
-  const NFTVideoPlayer(this.url, this.title, this.twitterHandel);
+  const NFTVideoPlayer(this.url, this.title, this.twitterHandel,this.role);
 
   @override
   _NFTVideoPlayerState createState() => _NFTVideoPlayerState();
@@ -17,13 +18,10 @@ class NFTVideoPlayer extends StatefulWidget {
 
 class _NFTVideoPlayerState extends State<NFTVideoPlayer> {
   late VideoPlayerController _controller;
-  User? user;
-  String? role;
 
   @override
   void initState() {
     super.initState();
-    user = FirebaseAuth.instance.currentUser;
     _controller = VideoPlayerController.network(widget.url)
       ..initialize().then((_) {
         setState(() {});
@@ -31,25 +29,8 @@ class _NFTVideoPlayerState extends State<NFTVideoPlayer> {
     _controller.play();
   }
 
-  Future<String> FindRole() async {
-    final DocumentSnapshot result = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(user?.uid)
-        .get();
-    final String documents = result["role"];
-    return documents;
-    // return documents.length == 1;
-  }
-
   Widget build(BuildContext context) {
-    FindRole().then((value) {
-      if (mounted) {
-        setState(() {
-          role = value;
-        });
-      }
-    });
-    if (role == "owner") {
+    if (widget.role == "owner") {
       return Scaffold(
           body: Padding(
         padding: const EdgeInsets.only(top: 18.0),

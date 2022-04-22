@@ -7,43 +7,20 @@ class ImageView extends StatefulWidget {
   final String imageURL;
   final String title;
   final String twitterHandel;
+  final String? role;
 
-  const ImageView(this.imageURL, this.title, this.twitterHandel);
+  const ImageView(this.imageURL, this.title, this.twitterHandel,this.role);
 
   @override
   State<ImageView> createState() => _ImageViewState();
 }
 
 class _ImageViewState extends State<ImageView> {
-  String? role;
-  User? user;
-
-  Future<String> FindRole() async {
-    final DocumentSnapshot result = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(user?.uid)
-        .get();
-    final String documents = result["role"];
-    return documents;
-    // return documents.length == 1;
-  }
-
-  @override
-  void initState() {
-    user = FirebaseAuth.instance.currentUser;
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
-    FindRole().then((value) {
-      if (mounted) {
-        setState(() {
-          role = value;
-        });
-      }
-    });
-    if (role == "owner") {
+
+    if (widget.role == "owner") {
       return Scaffold(
         body: SingleChildScrollView(
           child: ConstrainedBox(

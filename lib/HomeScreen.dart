@@ -31,6 +31,30 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   bool _isProcessing = false;
+  String? role;
+  User? user;
+
+  @override
+  void initState() {
+    user = FirebaseAuth.instance.currentUser;
+    FindRole().then((value) {
+      if (mounted) {
+        setState(() {
+          role = value;
+        });
+      }
+    });
+    super.initState();
+  }
+
+  Future<String> FindRole() async {
+    final DocumentSnapshot result = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user?.uid)
+        .get();
+    final String documents = result["role"];
+    return documents;
+  }
 
   Future<bool> doesNameAlreadyExist(String? name) async {
     final QuerySnapshot result = await FirebaseFirestore.instance
@@ -43,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget build(BuildContext context) {
-    final User? user = FirebaseAuth.instance.currentUser;
+    user = FirebaseAuth.instance.currentUser;
     return Scaffold(body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints viewportConstraints) {
       if (viewportConstraints.maxWidth > 1000) {
@@ -333,7 +357,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                           downloadURLS(doc["images"]).then(
                                               (value) =>
                                                   videoUrl = value.toString());
-                                          print(videoUrl);
                                         }
                                         if (!type) {}
                                         return Card(
@@ -356,7 +379,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                     image.data
                                                                         .toString(),
                                                                     doc['title'],
-                                                                    doc['twitter'])),
+                                                                    doc['twitter'],role)),
                                                       );
                                                     } else {
                                                       Navigator.push(
@@ -366,7 +389,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                 NFTVideoPlayer(
                                                                     videoUrl,
                                                                     doc['title'],
-                                                                    doc['twitter'])),
+                                                                    doc['twitter'],role)),
                                                       );
                                                     }
                                                   },
@@ -753,7 +776,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                         downloadURLS(doc["images"]).then(
                                             (value) =>
                                                 videoUrl = value.toString());
-                                        print(videoUrl);
                                       }
                                       return Card(
                                         elevation: 5,
@@ -775,7 +797,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                   image.data
                                                                       .toString(),
                                                                   doc['title'],
-                                                                  doc['twitter'])),
+                                                                  doc['twitter'],role)),
                                                     );
                                                   } else {
                                                     Navigator.push(
@@ -785,7 +807,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               NFTVideoPlayer(
                                                                   videoUrl,
                                                                   doc['title'],
-                                                                  doc['twitter'])),
+                                                                  doc['twitter'],role)),
                                                     );
                                                   }
                                                 },
@@ -1137,7 +1159,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                         downloadURLS(doc["images"]).then(
                                             (value) =>
                                                 videoUrl = value.toString());
-                                        print(videoUrl);
                                       }
                                       if (!type) {
                                         // _controller = VideoPlayerController.network(
@@ -1176,7 +1197,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                   image.data
                                                                       .toString(),
                                                                   doc['title'],
-                                                                  doc['twitter'])),
+                                                                  doc['twitter'],role)),
                                                     );
                                                   } else {
                                                     Navigator.push(
@@ -1186,7 +1207,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               NFTVideoPlayer(
                                                                   videoUrl,
                                                                   doc['title'],
-                                                                  doc['twitter'])),
+                                                                  doc['twitter'],role)),
                                                     );
                                                   }
                                                 },
