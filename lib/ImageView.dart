@@ -4,12 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:nft_app/widget/customtitle/customtitletext.dart';
 
 class ImageView extends StatefulWidget {
+  final DocumentSnapshot snapshot;
   final String imageURL;
-  final String title;
-  final String twitterHandel;
   final String? role;
 
-  const ImageView(this.imageURL, this.title, this.twitterHandel, this.role);
+  const ImageView(this.snapshot,this.imageURL, this.role);
 
   @override
   State<ImageView> createState() => _ImageViewState();
@@ -32,7 +31,7 @@ class _ImageViewState extends State<ImageView> {
                         children: [
                           CustomTitle(
                             fontSize: 30,
-                            text: widget.title,
+                            text: widget.snapshot['title'],
                             color: Colors.black,
                           ),
                           Padding(
@@ -59,7 +58,7 @@ class _ImageViewState extends State<ImageView> {
                                 CustomTitle(
                                   align: TextAlign.right,
                                   fontSize: 20,
-                                  text: widget.twitterHandel,
+                                  text: widget.snapshot['twitter'],
                                   color: Colors.black,
                                 ),
                               ],
@@ -76,7 +75,7 @@ class _ImageViewState extends State<ImageView> {
                   children: [
                     CustomTitle(
                       fontSize: 30,
-                      text: widget.title,
+                      text: widget.snapshot['title'],
                       color: Colors.black,
                     ),
                     Padding(
@@ -89,6 +88,22 @@ class _ImageViewState extends State<ImageView> {
                             MediaQuery.of(context).size.height / 1.25,
                           )),
                     ),
+                    widget.role == "curator"?
+                    IconButton(
+                        onPressed: (){
+                          FirebaseFirestore.instance.collection('selectedArt').doc(widget.snapshot.id).set({
+                            'title': widget.snapshot["title"],
+                            'id': widget.snapshot["id"],
+                            'description': widget.snapshot["description"],
+                            'twitter':widget.snapshot["twitter"],
+                            'images': widget.snapshot["images"],
+                            "userid":widget.snapshot["userid"],
+                            "type": widget.snapshot["type"],
+                            "imageThumbnail": widget.snapshot["imageThumbnail"],
+                          });
+                        }
+                        , icon: Icon(Icons.heart_broken_rounded))
+                        : SizedBox.shrink(),
                   ],
                 ),
               ),

@@ -381,10 +381,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         MaterialPageRoute(
                                                             builder: (context) =>
                                                                 ImageView(
+                                                                  doc,
                                                                     image.data
                                                                         .toString(),
-                                                                    doc['title'],
-                                                                    doc['twitter'],
                                                                     role)),
                                                       );
                                                     } else {
@@ -826,10 +825,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       MaterialPageRoute(
                                                           builder: (context) =>
                                                               ImageView(
+                                                                doc,
                                                                   image.data
                                                                       .toString(),
-                                                                  doc['title'],
-                                                                  doc['twitter'],
                                                                   role)),
                                                     );
                                                   } else {
@@ -1227,10 +1225,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       MaterialPageRoute(
                                                           builder: (context) =>
                                                               ImageView(
+                                                                doc,
                                                                   image.data
                                                                       .toString(),
-                                                                  doc['title'],
-                                                                  doc['twitter'],
                                                                   role)),
                                                     );
                                                   } else {

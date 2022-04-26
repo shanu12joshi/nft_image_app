@@ -107,17 +107,16 @@ class _NFTVideoPlayerState extends State<NFTVideoPlayer> {
                         widget.role == "curator"?
                         IconButton(
                             onPressed: (){
-                              // FirebaseFirestore.instance.collection('selectedArt').doc(widget).set({
-                              //   'title': title,
-                              //   'id': nftId,
-                              //   'description': description,
-                              //   'twitter':twitter,
-                              //   'images': image,
-                              //   "userid":userid,
-                              //   "type": type,
-                              //   "imageThumbnail": imageThumbnail,
-                              //   "CreatedAt": DateTime.now()
-                              // })
+                              FirebaseFirestore.instance.collection('selectedArt').doc(widget.documentSnapshot.id).set({
+                                'title': widget.documentSnapshot["title"],
+                                'id': widget.documentSnapshot["id"],
+                                'description': widget.documentSnapshot["description"],
+                                'twitter':widget.documentSnapshot["twitter"],
+                                'images': widget.documentSnapshot["images"],
+                                "userid":widget.documentSnapshot["userid"],
+                                "type": widget.documentSnapshot["type"],
+                                "imageThumbnail": widget.documentSnapshot["imageThumbnail"],
+                              });
                             }
                             , icon: Icon(Icons.heart_broken_rounded))
                             : SizedBox.shrink(),
