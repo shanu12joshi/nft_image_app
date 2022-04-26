@@ -377,21 +377,30 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       Colors.blue.withAlpha(30),
                                                   onTap: () {
                                                     if (type) {
-                                                      Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                ImageView(
+                                                      Navigator.of(context)
+                                                          .push(
+                                                        PageTransition(
+                                                            type:
+                                                            PageTransitionType
+                                                                .scale,
+                                                            alignment: Alignment
+                                                                .bottomCenter,
+                                                            child: ImageView(
                                                                     doc,
                                                                     image.data
                                                                         .toString(),
                                                                     role)),
                                                       );
                                                     } else {
-                                                      Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
+                                                      Navigator.of(context)
+                                                          .push(
+                                                          PageTransition(
+                                                            type:
+                                                            PageTransitionType
+                                                                .scale,
+                                                            alignment: Alignment
+                                                                .bottomCenter,
+                                                            child:
                                                                 NFTVideoPlayer(
                                                                     doc,
                                                                     videoUrl,
@@ -821,22 +830,31 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     Colors.blue.withAlpha(30),
                                                 onTap: () {
                                                   if (type) {
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              ImageView(
+                                                    Navigator.of(context)
+                                                        .push(
+                                                      PageTransition(
+                                                          type:
+                                                          PageTransitionType
+                                                              .scale,
+                                                          alignment: Alignment
+                                                              .bottomCenter,
+                                                          child: ImageView(
                                                                   doc,
                                                                   image.data
                                                                       .toString(),
                                                                   role)),
                                                     );
                                                   } else {
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              NFTVideoPlayer(
+                                                    Navigator.of(context)
+                                                        .push(
+                                                      PageTransition(
+                                                          type:
+                                                          PageTransitionType
+                                                              .scale,
+                                                          alignment: Alignment
+                                                              .bottomCenter,
+                                                          child:
+                                                          NFTVideoPlayer(
                                                                   doc,
                                                                   videoUrl,
                                                                   role)),
@@ -1221,22 +1239,31 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     Colors.blue.withAlpha(30),
                                                 onTap: () {
                                                   if (type) {
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              ImageView(
+                                                    Navigator.of(context)
+                                                        .push(
+                                                      PageTransition(
+                                                          type:
+                                                          PageTransitionType
+                                                              .scale,
+                                                          alignment: Alignment
+                                                              .bottomCenter,
+                                                          child: ImageView(
                                                                   doc,
                                                                   image.data
                                                                       .toString(),
                                                                   role)),
                                                     );
                                                   } else {
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              NFTVideoPlayer(
+                                                    Navigator.of(context)
+                                                        .push(
+                                                      PageTransition(
+                                                          type:
+                                                          PageTransitionType
+                                                              .scale,
+                                                          alignment: Alignment
+                                                              .bottomCenter,
+                                                          child:
+                                                          NFTVideoPlayer(
                                                                   doc,
                                                                   videoUrl,
                                                                   role)),
