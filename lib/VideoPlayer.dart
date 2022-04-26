@@ -97,7 +97,10 @@ class _NFTVideoPlayerState extends State<NFTVideoPlayer> {
                           child: Card(
                             elevation: 10,
                             child: Container(
-                              height: MediaQuery.of(context).size.height / 1.15,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(25)),
+                              height: MediaQuery.of(context).size.height / 1.30,
+                              // width: MediaQuery.of(context).size.width / 2,
                               child: AspectRatio(
                                 aspectRatio: _controller.value.aspectRatio,
                                 child: VideoPlayer(_controller),
@@ -105,6 +108,19 @@ class _NFTVideoPlayerState extends State<NFTVideoPlayer> {
                             ),
                           ),
                         ),
+                        FloatingActionButton(
+                          child: _controller.value.isPlaying
+                              ? Icon(Icons.pause)
+                              : Icon(Icons.play_arrow),
+                          onPressed: () {
+                            setState(() {
+                              if (_controller.value.isPlaying)
+                                _controller.pause();
+                              else
+                                _controller.play();
+                            });
+                          },
+                        )
                       ],
                     )
                   : CircularProgressIndicator(),
