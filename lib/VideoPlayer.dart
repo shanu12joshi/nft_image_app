@@ -1,16 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:nft_app/widget/customtitle/customtitletext.dart';
 import 'package:video_player/video_player.dart';
 
 class NFTVideoPlayer extends StatefulWidget {
+  final DocumentSnapshot documentSnapshot;
   final String url;
-  final String title;
-  final String twitterHandel;
   final String? role;
 
-  const NFTVideoPlayer(this.url, this.title, this.twitterHandel, this.role);
+  const NFTVideoPlayer(this.documentSnapshot,this.url, this.role);
 
   @override
   _NFTVideoPlayerState createState() => _NFTVideoPlayerState();
@@ -27,7 +27,6 @@ class _NFTVideoPlayerState extends State<NFTVideoPlayer> {
         setState(() {});
       });
     _controller.play();
-    print(widget.role);
   }
 
   Widget build(BuildContext context) {
@@ -41,7 +40,7 @@ class _NFTVideoPlayerState extends State<NFTVideoPlayer> {
                         children: [
                           CustomTitle(
                             fontSize: 30,
-                            text: widget.title,
+                            text: widget.documentSnapshot['title'],
                             color: Colors.black,
                           ),
                           Padding(
@@ -50,7 +49,7 @@ class _NFTVideoPlayerState extends State<NFTVideoPlayer> {
                               elevation: 10,
                               child: Container(
                                 height:
-                                    MediaQuery.of(context).size.height / 1.25,
+                                    MediaQuery.of(context).size.height / 1.5,
                                 child: AspectRatio(
                                   aspectRatio: _controller.value.aspectRatio,
                                   child: VideoPlayer(_controller),
@@ -72,7 +71,7 @@ class _NFTVideoPlayerState extends State<NFTVideoPlayer> {
                                 CustomTitle(
                                   align: TextAlign.right,
                                   fontSize: 20,
-                                  text: widget.twitterHandel,
+                                  text: widget.documentSnapshot['twitter'],
                                   color: Colors.black,
                                 ),
                               ],
@@ -89,7 +88,7 @@ class _NFTVideoPlayerState extends State<NFTVideoPlayer> {
                       children: [
                         CustomTitle(
                           fontSize: 30,
-                          text: widget.title,
+                          text: widget.documentSnapshot['title'],
                           color: Colors.black,
                         ),
                         Padding(
@@ -97,10 +96,14 @@ class _NFTVideoPlayerState extends State<NFTVideoPlayer> {
                           child: Card(
                             elevation: 10,
                             child: Container(
+<<<<<<< HEAD
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(25)),
                               height: MediaQuery.of(context).size.height / 1.30,
                               // width: MediaQuery.of(context).size.width / 2,
+=======
+                              height: MediaQuery.of(context).size.height / 1.5,
+>>>>>>> 4479d285e4bdb492ce2cb61a0a11cff93d0ba46a
                               child: AspectRatio(
                                 aspectRatio: _controller.value.aspectRatio,
                                 child: VideoPlayer(_controller),
@@ -108,6 +111,7 @@ class _NFTVideoPlayerState extends State<NFTVideoPlayer> {
                             ),
                           ),
                         ),
+<<<<<<< HEAD
                         FloatingActionButton(
                           child: _controller.value.isPlaying
                               ? Icon(Icons.pause)
@@ -121,6 +125,25 @@ class _NFTVideoPlayerState extends State<NFTVideoPlayer> {
                             });
                           },
                         )
+=======
+                        widget.role == "curator"?
+                        IconButton(
+                            onPressed: (){
+                              // FirebaseFirestore.instance.collection('selectedArt').doc(widget).set({
+                              //   'title': title,
+                              //   'id': nftId,
+                              //   'description': description,
+                              //   'twitter':twitter,
+                              //   'images': image,
+                              //   "userid":userid,
+                              //   "type": type,
+                              //   "imageThumbnail": imageThumbnail,
+                              //   "CreatedAt": DateTime.now()
+                              // })
+                            }
+                            , icon: Icon(Icons.heart_broken_rounded))
+                            : SizedBox.shrink(),
+>>>>>>> 4479d285e4bdb492ce2cb61a0a11cff93d0ba46a
                       ],
                     )
                   : CircularProgressIndicator(),

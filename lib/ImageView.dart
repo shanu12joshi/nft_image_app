@@ -18,15 +18,66 @@ class ImageView extends StatefulWidget {
 class _ImageViewState extends State<ImageView> {
   @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
     if (widget.role == "owner") {
       return Scaffold(
         body: SingleChildScrollView(
           child: ConstrainedBox(
+=======
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: ConstrainedBox(
+>>>>>>> 4479d285e4bdb492ce2cb61a0a11cff93d0ba46a
             constraints: BoxConstraints(
               minHeight: MediaQuery.of(context).size.height,
             ),
-            child: Padding(
-              padding: const EdgeInsets.only(top: 18.0),
+            child: widget.role == "owner"
+                ? Padding(
+                    padding: const EdgeInsets.only(top: 18.0),
+                    child: Center(
+                      child: Column(
+                        children: [
+                          CustomTitle(
+                            fontSize: 30,
+                            text: widget.title,
+                            color: Colors.black,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Card(
+                                elevation: 10,
+                                child: Image.network(
+                                  widget.imageURL,
+                                  height:
+                                      MediaQuery.of(context).size.height / 1.25,
+                                )),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 12.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                CustomTitle(
+                                  align: TextAlign.left,
+                                  fontSize: 20,
+                                  text: "By:",
+                                  color: Colors.black,
+                                ),
+                                CustomTitle(
+                                  align: TextAlign.right,
+                                  fontSize: 20,
+                                  text: widget.twitterHandel,
+                                  color: Colors.black,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                : Padding(
+              padding: const EdgeInsets.only(top: 8),
               child: Center(
                 child: Column(
                   children: [
@@ -38,6 +89,7 @@ class _ImageViewState extends State<ImageView> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Card(
+<<<<<<< HEAD
                         // shape: RoundedRectangleBorder(
                         // borderRadius: BorderRadius.circular(50)),
                         elevation: 10,
@@ -46,30 +98,19 @@ class _ImageViewState extends State<ImageView> {
                           height: MediaQuery.of(context).size.height / 1.25,
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 12.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          CustomTitle(
-                            align: TextAlign.left,
-                            fontSize: 20,
-                            text: "By:",
-                            color: Colors.black,
-                          ),
-                          CustomTitle(
-                            align: TextAlign.right,
-                            fontSize: 20,
-                            text: widget.twitterHandel,
-                            color: Colors.black,
-                          ),
-                        ],
-                      ),
+=======
+                          elevation: 10,
+                          child: Image.network(
+                            widget.imageURL,
+                            height:
+                            MediaQuery.of(context).size.height / 1.25,
+                          )),
+>>>>>>> 4479d285e4bdb492ce2cb61a0a11cff93d0ba46a
                     ),
                   ],
                 ),
               ),
+<<<<<<< HEAD
             ),
           ),
         ),
@@ -102,6 +143,11 @@ class _ImageViewState extends State<ImageView> {
         ),
       );
     }
+=======
+            )),
+      ),
+    );
+>>>>>>> 4479d285e4bdb492ce2cb61a0a11cff93d0ba46a
   }
 }
 

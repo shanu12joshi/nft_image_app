@@ -12,45 +12,39 @@ bool? exist;
 class NftService {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
   FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
+
   Future<void> uploadNft(
-      {
-        String? title,
-        String? description,
-        String? twitter,
-        String? image,
-        String? imageThumbnail,
-        String? userid,
-        String? type,
-        bool? status
-        }
-      )
-  async {
+      {String? title,
+      String? description,
+      String? twitter,
+      String? image,
+      String? imageThumbnail,
+      String? userid,
+      String? type,
+      bool? status}) async {
     //used for generatng id for nft in project
     var id = Uuid();
     String nftId = id.v1();
     final pref = await SharedPreferences.getInstance();
 
     // String downloadUrl = await _firebaseStorage.ref(image.toString()).getDownloadURL();
-    if(image!=null){
+    if (image != null) {
       _firestore.collection('nft').doc(nftId).set({
         'title': title,
         'id': nftId,
         'description': description,
-        'twitter':twitter,
+        'twitter': twitter,
         'images': image,
-        "userid":userid,
+        "userid": userid,
         "type": type,
         "imageThumbnail": imageThumbnail,
         "CreatedAt": DateTime.now()
       }).then((value) {
-        pref.setBool('status',true);
+        pref.setBool('status', true);
         print("${pref.getBool("status")}");
       });
-    }
-    else{
+    } else {
       Fluttertoast.showToast(msg: "Select Nft Artwork");
     }
-
   }
-
 }
