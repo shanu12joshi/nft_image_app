@@ -1,7 +1,6 @@
 import 'dart:html';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:nft_app/Home/homepage.dart';
@@ -9,7 +8,7 @@ import 'package:nft_app/ImageView.dart';
 import 'package:nft_app/VideoPlayer.dart';
 import 'package:nft_app/widget/customsubtitle/customsubtitletext.dart';
 import 'package:nft_app/widget/customtitle/customtitletext.dart';
-import 'package:video_player/video_player.dart';
+import 'package:page_transition/page_transition.dart';
 
 // import 'package:firebase/firestore.dart';
 import 'package:flutter/material.dart';
@@ -73,20 +72,22 @@ class _HomeScreenState extends State<HomeScreen> {
       });
     }
 
-    return Scaffold(body: LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints viewportConstraints) {
-      if (viewportConstraints.maxWidth > 1000) {
-        return CustomScrollView(slivers: <Widget>[
-          SliverList(
-              delegate: SliverChildListDelegate(
-            [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 18.0),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Scaffold(
+        backgroundColor: Colors.white,
+        body: LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints viewportConstraints) {
+              if (viewportConstraints.maxWidth > 1000) {
+                return CustomScrollView(slivers: <Widget>[
+                  SliverList(
+                      delegate: SliverChildListDelegate(
+                        [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 18.0),
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Padding(
                             padding: const EdgeInsets.fromLTRB(30, 8, 8, 0),
@@ -381,7 +382,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         MaterialPageRoute(
                                                             builder: (context) =>
                                                                 ImageView(
-                                                                  doc,
+                                                                    doc,
                                                                     image.data
                                                                         .toString(),
                                                                     role)),
@@ -825,7 +826,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       MaterialPageRoute(
                                                           builder: (context) =>
                                                               ImageView(
-                                                                doc,
+                                                                  doc,
                                                                   image.data
                                                                       .toString(),
                                                                   role)),
@@ -1225,7 +1226,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       MaterialPageRoute(
                                                           builder: (context) =>
                                                               ImageView(
-                                                                doc,
+                                                                  doc,
                                                                   image.data
                                                                       .toString(),
                                                                   role)),

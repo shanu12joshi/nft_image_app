@@ -104,6 +104,19 @@ class _NFTVideoPlayerState extends State<NFTVideoPlayer> {
                             ),
                           ),
                         ),
+                        FloatingActionButton(
+                          child: _controller.value.isPlaying
+                              ? Icon(Icons.pause)
+                              : Icon(Icons.play_arrow),
+                          onPressed: () {
+                            setState(() {
+                              if (_controller.value.isPlaying)
+                                _controller.pause();
+                              else
+                                _controller.play();
+                            });
+                          },
+                        ),
                         widget.role == "curator"?
                         IconButton(
                             onPressed: (){
