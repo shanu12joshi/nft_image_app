@@ -62,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget build(BuildContext context) {
     user = FirebaseAuth.instance.currentUser;
-    if(findUserOnce == false){
+    if (findUserOnce == false) {
       FindRole().then((value) {
         if (mounted) {
           setState(() {
@@ -384,7 +384,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                     image.data
                                                                         .toString(),
                                                                     doc['title'],
-                                                                    doc['twitter'],role)),
+                                                                    doc['twitter'],
+                                                                    role)),
                                                       );
                                                     } else {
                                                       Navigator.push(
@@ -392,38 +393,51 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         MaterialPageRoute(
                                                             builder: (context) =>
                                                                 NFTVideoPlayer(
+                                                                    doc,
                                                                     videoUrl,
-                                                                    doc['title'],
-                                                                    doc['twitter'],role)),
+                                                                    role)),
                                                       );
                                                     }
                                                   },
                                                   child: Center(
                                                     child: type
                                                         ? Stack(
-                                                          children: [
-                                                            Image.network(
+                                                            children: [
+                                                              Image.network(
                                                                 image.data
                                                                     .toString(),
                                                               ),
-                                                            Positioned(
-                                                              bottom: 0,
-                                                              child: Container(
-                                                                padding: const EdgeInsets.only( left: 8.0, top: 4.0),
-                                                                height: 30,
-                                                                width: MediaQuery.of(context).size.width,
-                                                                color: Colors.black.withOpacity(0.75),
-                                                                child: Text(
-                                                                  "${doc["title"].toString().toUpperCase()}",
-                                                                  style: TextStyle(
-                                                                      color: Colors.white,
-                                                                      fontSize: 18,
-                                                                      fontWeight: FontWeight.w600),
+                                                              Positioned(
+                                                                bottom: 0,
+                                                                child:
+                                                                    Container(
+                                                                  padding: const EdgeInsets
+                                                                          .only(
+                                                                      left: 8.0,
+                                                                      top: 4.0),
+                                                                  height: 30,
+                                                                  width: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width,
+                                                                  color: Colors
+                                                                      .black
+                                                                      .withOpacity(
+                                                                          0.75),
+                                                                  child: Text(
+                                                                    "${doc["title"].toString().toUpperCase()}",
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        fontSize:
+                                                                            18,
+                                                                        fontWeight:
+                                                                            FontWeight.w600),
+                                                                  ),
                                                                 ),
                                                               ),
-                                                            ),
-                                                          ],
-                                                        )
+                                                            ],
+                                                          )
                                                         : Stack(
                                                             children: [
                                                               Image.network(
@@ -432,17 +446,30 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               ),
                                                               Positioned(
                                                                 bottom: 0,
-                                                                child: Container(
-                                                                  padding: const EdgeInsets.only( left: 8.0, top: 4.0),
+                                                                child:
+                                                                    Container(
+                                                                  padding: const EdgeInsets
+                                                                          .only(
+                                                                      left: 8.0,
+                                                                      top: 4.0),
                                                                   height: 30,
-                                                                  width: MediaQuery.of(context).size.width,
-                                                                  color: Colors.black.withOpacity(0.75),
+                                                                  width: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width,
+                                                                  color: Colors
+                                                                      .black
+                                                                      .withOpacity(
+                                                                          0.75),
                                                                   child: Text(
                                                                     "${doc["title"].toString().toUpperCase()}",
                                                                     style: TextStyle(
-                                                                        color: Colors.white,
-                                                                        fontSize: 18,
-                                                                        fontWeight: FontWeight.w600),
+                                                                        color: Colors
+                                                                            .white,
+                                                                        fontSize:
+                                                                            18,
+                                                                        fontWeight:
+                                                                            FontWeight.w600),
                                                                   ),
                                                                 ),
                                                               ),
@@ -802,7 +829,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                   image.data
                                                                       .toString(),
                                                                   doc['title'],
-                                                                  doc['twitter'],role)),
+                                                                  doc['twitter'],
+                                                                  role)),
                                                     );
                                                   } else {
                                                     Navigator.push(
@@ -810,9 +838,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       MaterialPageRoute(
                                                           builder: (context) =>
                                                               NFTVideoPlayer(
+                                                                  doc,
                                                                   videoUrl,
-                                                                  doc['title'],
-                                                                  doc['twitter'],role)),
+                                                                  role)),
                                                     );
                                                   }
                                                 },
@@ -1202,7 +1230,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                   image.data
                                                                       .toString(),
                                                                   doc['title'],
-                                                                  doc['twitter'],role)),
+                                                                  doc['twitter'],
+                                                                  role)),
                                                     );
                                                   } else {
                                                     Navigator.push(
@@ -1210,9 +1239,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       MaterialPageRoute(
                                                           builder: (context) =>
                                                               NFTVideoPlayer(
+                                                                  doc,
                                                                   videoUrl,
-                                                                  doc['title'],
-                                                                  doc['twitter'],role)),
+                                                                  role)),
                                                     );
                                                   }
                                                 },
