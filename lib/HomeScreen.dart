@@ -387,7 +387,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   scrollDirection: Axis.vertical,
                                   gridDelegate:
                                       new SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 3,
+                                          crossAxisCount: 4,
                                           crossAxisSpacing: 20,
                                           mainAxisSpacing: 20),
                                   itemBuilder:
@@ -473,7 +473,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                   MediaQuery.of(
                                                                           context)
                                                                       .size
-                                                                      .width/3,
+                                                                      .width/4.2,
                                                               color:
                                                                   Colors.black,
                                                               child: Padding(
@@ -526,7 +526,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                   MediaQuery.of(
                                                                           context)
                                                                       .size
-                                                                      .width,
+                                                                      .width ,
                                                               child: Padding(
                                                                 padding: const EdgeInsets.only(left:8.0,right: 8.0),
                                                                 child: Text(
