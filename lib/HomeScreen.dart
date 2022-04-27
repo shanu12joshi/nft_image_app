@@ -334,8 +334,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   ],
                                                 ),
                                                 Container(
+                                                  width: MediaQuery.of(context).size.width/3.75,
                                                   padding: EdgeInsets.fromLTRB(
-                                                      0, 15, 0, 15),
+                                                      6, 15, 6, 15),
                                                   color: Color(0xFF4B4848),
                                                   child: Text(
                                                       "${doc["title"].toString().toUpperCase()}",
@@ -348,7 +349,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                   FontWeight
                                                                       .w300,
                                                               letterSpacing:
-                                                                  2)),
+                                                                  2),overflow: TextOverflow.ellipsis,),
                                                 )
                                               ],
                                             ),
@@ -466,25 +467,29 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                   const EdgeInsets
                                                                           .only(
                                                                       left: 8.0,
-                                                                      top: 4.0),
+                                                                      top: 4.0,right: 8.0),
                                                               height: 30,
                                                               width:
                                                                   MediaQuery.of(
                                                                           context)
                                                                       .size
-                                                                      .width,
+                                                                      .width/3,
                                                               color:
                                                                   Colors.black,
-                                                              child: Text(
-                                                                "${doc["title"].toString().toUpperCase()}",
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .white,
-                                                                    fontSize:
-                                                                        18,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600),
+                                                              child: Padding(
+                                                                padding: const EdgeInsets.only(left:8.0,right: 8.0),
+                                                                child: Text(
+                                                                  "${doc["title"].toString().toUpperCase()}",
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontSize:
+                                                                          18,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600),
+                                                                  overflow: TextOverflow.ellipsis,
+                                                                ),
                                                               ),
                                                             ),
                                                           ),
@@ -509,6 +514,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           Positioned(
                                                             bottom: 0,
                                                             child: Container(
+                                                              color: Colors
+                                                                  .black,
                                                               padding:
                                                                   const EdgeInsets
                                                                           .only(
@@ -520,18 +527,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                           context)
                                                                       .size
                                                                       .width,
-                                                              color:
-                                                                  Colors.black,
-                                                              child: Text(
-                                                                "${doc["title"].toString().toUpperCase()}",
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .white,
-                                                                    fontSize:
-                                                                        18,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600),
+                                                              child: Padding(
+                                                                padding: const EdgeInsets.only(left:8.0,right: 8.0),
+                                                                child: Text(
+                                                                  "${doc["title"].toString().toUpperCase()}",
+                                                                  overflow: TextOverflow.ellipsis,
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontSize:
+                                                                          18,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600),
+                                                                ),
                                                               ),
                                                             ),
                                                           ),
@@ -539,6 +548,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             child: Container(
                                                               decoration:
                                                                   BoxDecoration(
+                                                                    borderRadius: BorderRadius.circular(50),
                                                                 color: Colors
                                                                     .black
                                                                     .withOpacity(
