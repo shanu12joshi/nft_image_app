@@ -413,167 +413,164 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   borderRadius: BorderRadius.circular(10),
                                                 ),
                                                 child: Container(
-                                                  width: 200,
-                                                  child: Stack(
-                                                    children: [
-                                                      InkWell(
-                                                        splashColor: Colors.blue
-                                                            .withAlpha(30),
-                                                        onTap: () {
-                                                          if (type) {
-                                                            Navigator.of(context)
-                                                                .push(
-                                                              PageTransition(
-                                                                  type:
-                                                                  PageTransitionType
-                                                                      .scale,
-                                                                  alignment: Alignment
-                                                                      .bottomCenter,
-                                                                  child: ImageView(
-                                                                      doc,
-                                                                      image.data
-                                                                          .toString(),
-                                                                      role)),
-                                                            );
-                                                          } else {
-                                                            Navigator.of(context)
-                                                                .push(
-                                                              PageTransition(
-                                                                  type:
-                                                                  PageTransitionType
-                                                                      .scale,
-                                                                  alignment: Alignment
-                                                                      .bottomCenter,
-                                                                  child:
-                                                                  NFTVideoPlayer(
-                                                                      doc,
-                                                                      videoUrl,
-                                                                      role)),
-                                                            );
-                                                          }
-                                                        },
-                                                        child: Center(
-                                                          child: type
-                                                              ? Stack(
-                                                            children: [
-                                                              Image.network(
-                                                                image.data
-                                                                    .toString(),
-                                                              ),
-                                                              Positioned(
-                                                                bottom: 0,
-                                                                child:
-                                                                Container(
-                                                                  padding: const EdgeInsets
-                                                                      .only(
-                                                                      left:
-                                                                      8.0,
-                                                                      top:
-                                                                      4.0),
-                                                                  height: 30,
-                                                                  width: MediaQuery.of(
-                                                                      context)
-                                                                      .size
-                                                                      .width,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(10),
+                                                    image: DecorationImage(
+                                                      fit: BoxFit.cover,
+                                                      image: NetworkImage(image.data
+                                                          .toString(),)
+                                                    )
+                                                  ),
+                                                  child: InkWell(
+                                                    splashColor: Colors.blue
+                                                        .withAlpha(30),
+                                                    onTap: () {
+                                                      if (type) {
+                                                        Navigator.of(context)
+                                                            .push(
+                                                          PageTransition(
+                                                              type:
+                                                              PageTransitionType
+                                                                  .scale,
+                                                              alignment: Alignment
+                                                                  .bottomCenter,
+                                                              child: ImageView(
+                                                                  doc,
+                                                                  image.data
+                                                                      .toString(),
+                                                                  role)),
+                                                        );
+                                                      } else {
+                                                        Navigator.of(context)
+                                                            .push(
+                                                          PageTransition(
+                                                              type:
+                                                              PageTransitionType
+                                                                  .scale,
+                                                              alignment: Alignment
+                                                                  .bottomCenter,
+                                                              child:
+                                                              NFTVideoPlayer(
+                                                                  doc,
+                                                                  videoUrl,
+                                                                  role)),
+                                                        );
+                                                      }
+                                                    },
+                                                    child: type
+                                                        ? Stack(
+                                                      children: [
+                                                        Positioned(
+                                                          bottom: 0,
+                                                          child:
+                                                          Container(
+                                                            padding: const EdgeInsets
+                                                                .only(
+                                                                left:
+                                                                8.0,
+                                                                top:
+                                                                4.0),
+                                                            height: 30,
+                                                            width: MediaQuery.of(
+                                                                context)
+                                                                .size
+                                                                .width,
+                                                            color: Colors
+                                                                .black,
+                                                            child: Text(
+                                                              "${doc["title"].toString().toUpperCase()}",
+                                                              style: TextStyle(
                                                                   color: Colors
-                                                                      .black,
-                                                                  child: Text(
-                                                                    "${doc["title"].toString().toUpperCase()}",
-                                                                    style: TextStyle(
-                                                                        color: Colors
-                                                                            .white,
-                                                                        fontSize:
-                                                                        18,
-                                                                        fontWeight:
-                                                                        FontWeight.w600),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              role == "owner"
-                                                                  ? IconButton(
-                                                                  onPressed:
-                                                                      () {
-                                                                    FirebaseFirestore
-                                                                        .instance
-                                                                        .runTransaction((transaction) async => await transaction.delete(doc.reference));
-                                                                  },
-                                                                  icon: Icon(Icons
-                                                                      .delete))
-                                                                  : SizedBox
-                                                                  .shrink()
-                                                            ],
-                                                          )
-                                                              : Stack(
-                                                            children: [
-                                                              Image.network(
-                                                                image.data
-                                                                    .toString(),
-                                                              ),
-                                                              Positioned(
-                                                                bottom: 0,
-                                                                child:
-                                                                Container(
-                                                                  padding: const EdgeInsets
-                                                                      .only(
-                                                                      left:
-                                                                      8.0,
-                                                                      top:
-                                                                      4.0),
-                                                                  height: 30,
-                                                                  width: MediaQuery.of(
-                                                                      context)
-                                                                      .size
-                                                                      .width,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  child: Text(
-                                                                    "${doc["title"].toString().toUpperCase()}",
-                                                                    style: TextStyle(
-                                                                        color: Colors
-                                                                            .white,
-                                                                        fontSize:
-                                                                        18,
-                                                                        fontWeight:
-                                                                        FontWeight.w600),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              Center(
-                                                                child:
-                                                                Container(
-                                                                  decoration:
-                                                                  BoxDecoration(
-                                                                    color: Colors
-                                                                        .black
-                                                                        .withOpacity(
-                                                                        0.25),
-                                                                  ),
-                                                                  child: Icon(
-                                                                    Icons
-                                                                        .play_arrow_rounded,
-                                                                    size: 50,
-                                                                    color: Colors
-                                                                        .white,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              role == "owner"
-                                                                  ? IconButton(
-                                                                  onPressed:
-                                                                      () {
-                                                                    FirebaseFirestore
-                                                                        .instance
-                                                                        .runTransaction((transaction) async => await transaction.delete(doc.reference));
-                                                                  },
-                                                                  icon: Icon(Icons
-                                                                      .delete))
-                                                                  : SizedBox
-                                                                  .shrink()
-                                                            ],
+                                                                      .white,
+                                                                  fontSize:
+                                                                  18,
+                                                                  fontWeight:
+                                                                  FontWeight.w600),
+                                                            ),
                                                           ),
                                                         ),
-                                                      ),
-                                                    ],
+                                                        role == "owner"
+                                                            ? IconButton(
+                                                            onPressed:
+                                                                () {
+                                                              FirebaseFirestore
+                                                                  .instance
+                                                                  .runTransaction((transaction) async => await transaction.delete(doc.reference));
+                                                            },
+                                                            icon: Icon(Icons
+                                                                .delete))
+                                                            : SizedBox
+                                                            .shrink()
+                                                      ],
+                                                    )
+                                                        : Stack(
+                                                      children: [
+                                                        // Image.network(
+                                                        //   image.data
+                                                        //       .toString(),
+                                                        // ),
+                                                        Positioned(
+                                                          bottom: 0,
+                                                          child:
+                                                          Container(
+                                                            padding: const EdgeInsets
+                                                                .only(
+                                                                left:
+                                                                8.0,
+                                                                top:
+                                                                4.0),
+                                                            height: 30,
+                                                            width: MediaQuery.of(
+                                                                context)
+                                                                .size
+                                                                .width,
+                                                            color: Colors
+                                                                .black,
+                                                            child: Text(
+                                                              "${doc["title"].toString().toUpperCase()}",
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize:
+                                                                  18,
+                                                                  fontWeight:
+                                                                  FontWeight.w600),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Center(
+                                                          child:
+                                                          Container(
+                                                            decoration:
+                                                            BoxDecoration(
+                                                              color: Colors
+                                                                  .black
+                                                                  .withOpacity(
+                                                                  0.25),
+                                                            ),
+                                                            child: Icon(
+                                                              Icons
+                                                                  .play_arrow_rounded,
+                                                              size: 50,
+                                                              color: Colors
+                                                                  .white,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        role == "owner"
+                                                            ? IconButton(
+                                                            onPressed:
+                                                                () {
+                                                              FirebaseFirestore
+                                                                  .instance
+                                                                  .runTransaction((transaction) async => await transaction.delete(doc.reference));
+                                                            },
+                                                            icon: Icon(Icons
+                                                                .delete))
+                                                            : SizedBox
+                                                            .shrink()
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
                                               );
@@ -583,13 +580,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                               // }
                                             });
                                       });
-                                  // return new ListView.builder(
-                                  //     itemCount: snapshot.data!.docs.length,
-                                  //     itemBuilder: (context, index){
-                                  //       DocumentSnapshot doc = snapshot.data!.docs[index];
-                                  //
-                                  //       // return Text(doc['title']);
-                                  // });
                                 }
                               }),
                         ),
