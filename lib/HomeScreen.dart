@@ -77,13 +77,13 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: AppBar(
           title: Image.network(
             "https://www.linkpicture.com/q/unbaised-1_2.png",
-            width: MediaQuery.of(context).size.width / 5,
+            width: MediaQuery.of(context).size.width / 6,
           ),
           backgroundColor: Colors.white,
           actions: [
             user == null
                 ? Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 100, 0),
+                    padding: const EdgeInsets.fromLTRB(0, 0, 150, 0),
                     child: TextButton(
                       child: _isProcessing
                           ? Center(
@@ -124,13 +124,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 delegate: SliverChildListDelegate(
               [
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(
-                      height: MediaQuery.of(context).size.height / 9,
+                      height: MediaQuery.of(context).size.height / 7,
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(100, 0, 100, 0),
+                      padding: const EdgeInsets.fromLTRB(200, 0, 200, 0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -188,11 +188,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                           Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                               CustomSubtitleTitle(
                                                 text: "TOTAL SUBMISSION",
                                                 fontSize: 15,
                                               ),
+                                              SizedBox(height: 30),
                                               CustomTitle(
                                                 text:
                                                     "${snapshot.data!.docs.length.toString()}",
@@ -205,7 +207,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ),
                                           Container(
                                             color: Colors.black45,
-                                            height: 80,
+                                            height: 100,
                                             width: 2,
                                           ),
                                           SizedBox(
@@ -219,9 +221,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 text: "TOTAL PICKED",
                                                 fontSize: 15,
                                               ),
-                                              SizedBox(
-                                                width: 80,
-                                              ),
+                                              SizedBox(height: 30),
                                               CustomTitle(
                                                 text: "100/100",
                                                 fontSize: 40,
@@ -255,7 +255,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     HomePage()));
                                       },
                                       child: Padding(
-                                        padding: const EdgeInsets.all(12.0),
+                                        padding: const EdgeInsets.fromLTRB(60,12,60,12),
                                         child: CustomTitle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.w200,
@@ -267,7 +267,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     )
                                   : Container(),
                               SizedBox(
-                                height: 60,
+                                height: 170,
                               ),
                             ],
                           ),
@@ -305,7 +305,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           MediaQuery.of(context)
                                                                   .size
                                                                   .width /
-                                                              4,
+                                                              3.75,
                                                     ),
                                                     Positioned(
                                                       left: 0,
