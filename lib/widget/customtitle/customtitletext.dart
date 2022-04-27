@@ -27,7 +27,6 @@ class CustomTitle extends StatelessWidget {
       foreground: foreground,
       fontSize: fontSize,
       color: color,
-      fontWeight: FontWeight.w500,
       decoration: linethrough,
     ),textAlign: align,);
   }
