@@ -83,10 +83,13 @@ class _HomePageState extends State<HomePage> {
         automaticallyImplyLeading: true,
         backgroundColor: Colors.white,
         elevation: 0.0,
-        title: CustomTitle(
-          fontSize: 30,
-          text: "THE UNBIASED",
-          color: Colors.black,
+        title: Row(
+          children: [
+            Image.network(
+              "https://www.linkpicture.com/q/unbaised-1_2.png",
+              width: MediaQuery.of(context).size.width / 6,
+            ),
+          ],
         ),
         actions: [
           IconButton(
@@ -123,6 +126,9 @@ class _HomePageState extends State<HomePage> {
             child: ListView(
               padding: EdgeInsets.all(10),
               children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height / 9,
+                ),
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
