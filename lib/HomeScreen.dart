@@ -269,7 +269,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   )
                                       : Container(),
                                   SizedBox(
-                                    height: 130,
+                                    height: 150,
                                   ),
                                 ],
                               ),
@@ -376,7 +376,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   AsyncSnapshot<QuerySnapshot> snapshot) {
                                 if (!snapshot.hasData) {
                                   return Padding(
-                                    padding: const EdgeInsets.only(top:80.0),
+                                    padding: const EdgeInsets.only(top:180.0),
                                     child: CircularProgressIndicator(),
                                   );
                                 } else {
