@@ -18,6 +18,7 @@ class NFTVideoPlayer extends StatefulWidget {
 
 class _NFTVideoPlayerState extends State<NFTVideoPlayer> {
   late VideoPlayerController _controller;
+  bool doesExists = false;
 
   @override
   void initState() {
@@ -29,7 +30,23 @@ class _NFTVideoPlayerState extends State<NFTVideoPlayer> {
     _controller.play();
   }
 
+  @override
+  Future<bool> doesIdAlreadyExists(String? docId) async {
+    final QuerySnapshot result = await FirebaseFirestore.instance
+        .collection('selectedArt')
+        .where('id', isEqualTo: docId)
+        .limit(1)
+        .get();
+    final List<DocumentSnapshot> documents = result.docs;
+    return documents.length == 1;
+  }
+
   Widget build(BuildContext context) {
+    doesIdAlreadyExists(widget.documentSnapshot.id).then((value) {
+      setState(() {
+        doesExists = value;
+      });
+    });
     return Scaffold(
       body: widget.role == "owner"
           ? Padding(
@@ -120,18 +137,26 @@ class _NFTVideoPlayerState extends State<NFTVideoPlayer> {
                         widget.role == "curator"?
                         IconButton(
                             onPressed: (){
-                              FirebaseFirestore.instance.collection('selectedArt').doc(widget.documentSnapshot.id).set({
-                                'title': widget.documentSnapshot["title"],
-                                'id': widget.documentSnapshot["id"],
-                                'description': widget.documentSnapshot["description"],
-                                'twitter':widget.documentSnapshot["twitter"],
-                                'images': widget.documentSnapshot["images"],
-                                "userid":widget.documentSnapshot["userid"],
-                                "type": widget.documentSnapshot["type"],
-                                "imageThumbnail": widget.documentSnapshot["imageThumbnail"],
-                              });
+                              if (doesExists) {
+                                FirebaseFirestore
+                                    .instance.collection("selectedArt").doc(widget.documentSnapshot.id).delete();
+                              }
+                              else{
+                                FirebaseFirestore.instance.collection('selectedArt').doc(widget.documentSnapshot.id).set({
+                                  'title': widget.documentSnapshot["title"],
+                                  'id': widget.documentSnapshot["id"],
+                                  'description': widget.documentSnapshot["description"],
+                                  'twitter':widget.documentSnapshot["twitter"],
+                                  'images': widget.documentSnapshot["images"],
+                                  "userid":widget.documentSnapshot["userid"],
+                                  "type": widget.documentSnapshot["type"],
+                                  "imageThumbnail": widget.documentSnapshot["imageThumbnail"],
+                                });
+                              }
                             }
-                            , icon: Icon(Icons.heart_broken_rounded))
+                            ,icon: doesExists
+                            ? Icon(Icons.heart_broken_rounded)
+                            : Icon(Icons.print), color:doesExists? Colors.red:Colors.black,)
                             : SizedBox.shrink(),
                       ],
                     )

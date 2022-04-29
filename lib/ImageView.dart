@@ -19,7 +19,7 @@ class _ImageViewState extends State<ImageView> {
   bool doesExists = false;
 
   @override
-  Future<bool> doesNameAlreadyExist(String? docId) async {
+  Future<bool> doesIdAlreadyExists(String? docId) async {
     final QuerySnapshot result = await FirebaseFirestore.instance
         .collection('selectedArt')
         .where('id', isEqualTo: docId)
@@ -30,7 +30,7 @@ class _ImageViewState extends State<ImageView> {
   }
 
   Widget build(BuildContext context) {
-    doesNameAlreadyExist(widget.snapshot.id).then((value) {
+    doesIdAlreadyExists(widget.snapshot.id).then((value) {
       setState(() {
         doesExists = value;
       });
@@ -145,8 +145,8 @@ class _ImageViewState extends State<ImageView> {
                     }
                   },
                   icon: doesExists
-                      ? Icon(Icons.heart_broken_rounded)
-                      : Icon(Icons.print), color:doesExists? Colors.red:Colors.black,)
+                      ? Icon(Icons.favorite)
+                      : Icon(Icons.favorite_border_outlined), color:doesExists? Colors.red:Colors.black,)
                   : SizedBox.shrink(),
             ],
           ),
