@@ -120,7 +120,7 @@ class _ImageViewState extends State<ImageView> {
                   ),
                 ),
               ),
-              widget.role != "curator"
+              widget.role == "curator"
                   ? //TODO CHANGE TO == Later
               IconButton(
                   onPressed: () {
@@ -148,7 +148,7 @@ class _ImageViewState extends State<ImageView> {
                   },
                   icon: doesExists
                       ? Icon(Icons.heart_broken_rounded)
-                      : Icon(Icons.print))
+                      : Icon(Icons.print), color:doesExists? Colors.red:Colors.black,)
                   : SizedBox.shrink(),
             ],
           ),
