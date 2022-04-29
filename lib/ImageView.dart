@@ -125,12 +125,10 @@ class _ImageViewState extends State<ImageView> {
               IconButton(
                   onPressed: () {
                     if (doesExists) {
-                      print("tru");
                       FirebaseFirestore
                           .instance.collection("selectedArt").doc(widget.snapshot.id).delete();
                     }
                     else {
-                      print("false");
                       FirebaseFirestore.instance
                           .collection('selectedArt')
                           .doc(widget.snapshot.id)
