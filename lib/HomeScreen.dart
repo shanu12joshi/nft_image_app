@@ -78,9 +78,12 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: AppBar(
           title: Row(
             children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 15,
+              ),
               Image.network(
                 "https://www.linkpicture.com/q/unbaised-1_2.png",
-                width: MediaQuery.of(context).size.width / 6,
+                height: MediaQuery.of(context).size.height / 14,
               ),
             ],
           ),
@@ -267,9 +270,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                     )
                                   : Container(),
-                              SizedBox(
-                                height: 150,
-                              ),
                             ],
                           ),
                           StreamBuilder(
@@ -334,22 +334,25 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   ],
                                                 ),
                                                 Container(
-                                                  width: MediaQuery.of(context).size.width/3.75,
+                                                  alignment: Alignment.center,
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width /
+                                                      3.75,
                                                   padding: EdgeInsets.fromLTRB(
                                                       6, 15, 6, 15),
                                                   color: Color(0xFF4B4848),
                                                   child: Text(
-                                                      "${doc["title"].toString().toUpperCase()}",
-                                                      style:
-                                                          GoogleFonts.poppins(
-                                                              fontSize: 20,
-                                                              color:
-                                                                  Colors.white,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w300,
-                                                              letterSpacing:
-                                                                  2),overflow: TextOverflow.ellipsis,),
+                                                    "${doc["title"].toString().toUpperCase()}",
+                                                    style: GoogleFonts.poppins(
+                                                        fontSize: 20,
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.w300,
+                                                        letterSpacing: 2),
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
                                                 )
                                               ],
                                             ),
@@ -365,6 +368,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               }),
                         ],
                       ),
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height / 6,
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -409,10 +415,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                           }
                                           return Card(
                                             elevation: 5,
-                                            // shape: RoundedRectangleBorder(
-                                            //   borderRadius:
-                                            //       BorderRadius.circular(10),
-                                            // ),
                                             child: Container(
                                               decoration: BoxDecoration(
                                                 borderRadius:
@@ -467,17 +469,25 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                   const EdgeInsets
                                                                           .only(
                                                                       left: 8.0,
-                                                                      top: 4.0,right: 8.0),
-                                                              height: 30,
-                                                              width:
-                                                                  MediaQuery.of(
+                                                                      top: 4.0,
+                                                                      right:
+                                                                          8.0),
+                                                              height: 60,
+                                                              width: MediaQuery.of(
                                                                           context)
                                                                       .size
-                                                                      .width/4.2,
+                                                                      .width /
+                                                                  4.2,
                                                               color:
                                                                   Colors.black,
                                                               child: Padding(
-                                                                padding: const EdgeInsets.only(left:8.0,right: 8.0),
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .only(
+                                                                        left:
+                                                                            8.0,
+                                                                        right:
+                                                                            8.0),
                                                                 child: Text(
                                                                   "${doc["title"].toString().toUpperCase()}",
                                                                   style: TextStyle(
@@ -488,7 +498,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                       fontWeight:
                                                                           FontWeight
                                                                               .w600),
-                                                                  overflow: TextOverflow.ellipsis,
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
                                                                 ),
                                                               ),
                                                             ),
@@ -514,8 +526,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           Positioned(
                                                             bottom: 0,
                                                             child: Container(
-                                                              color: Colors
-                                                                  .black,
+                                                              color:
+                                                                  Colors.black,
                                                               padding:
                                                                   const EdgeInsets
                                                                           .only(
@@ -526,12 +538,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                   MediaQuery.of(
                                                                           context)
                                                                       .size
-                                                                      .width ,
+                                                                      .width,
                                                               child: Padding(
-                                                                padding: const EdgeInsets.only(left:8.0,right: 8.0),
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .only(
+                                                                        left:
+                                                                            8.0,
+                                                                        right:
+                                                                            8.0),
                                                                 child: Text(
                                                                   "${doc["title"].toString().toUpperCase()}",
-                                                                  overflow: TextOverflow.ellipsis,
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
                                                                   style: TextStyle(
                                                                       color: Colors
                                                                           .white,
@@ -548,7 +568,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             child: Container(
                                                               decoration:
                                                                   BoxDecoration(
-                                                                    borderRadius: BorderRadius.circular(50),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            50),
                                                                 color: Colors
                                                                     .black
                                                                     .withOpacity(
