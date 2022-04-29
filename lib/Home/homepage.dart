@@ -10,6 +10,7 @@ import 'package:nft_app/Utils/authentication.dart';
 import 'package:nft_app/Utils/nftuploadservice.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase/firebase.dart' as fb;
+import 'package:url_launcher/url_launcher.dart';
 
 import '../HomeScreen.dart';
 import '../widget/customtitle/customtitletext.dart';
@@ -820,6 +821,7 @@ class _HomePageState extends State<HomePage> {
               actions: [
                 ElevatedButton(
                   onPressed: () {
+                    _launchUrl();
                     Navigator.pop(context);
                     Navigator.pop(context);
                   },
@@ -863,6 +865,7 @@ class _HomePageState extends State<HomePage> {
               actions: [
                 ElevatedButton(
                   onPressed: () {
+                    _launchUrl();
                     Navigator.pop(context);
                     Navigator.pop(context);
                   },
@@ -909,10 +912,11 @@ class _HomePageState extends State<HomePage> {
           builder: (context) {
             return AlertDialog(
               title: Text("NFT SAVE"),
-              content: Text("NFT save successfully!"),
+              content: Text("NFT Saved successfully!"),
               actions: [
                 ElevatedButton(
                   onPressed: () {
+                    _launchUrl();
                     Navigator.pop(context);
                     Navigator.pop(context);
                   },
@@ -925,6 +929,13 @@ class _HomePageState extends State<HomePage> {
       // Navigator.pop(context);
     }
   }
+}
+
+
+void _launchUrl() async {
+  print("HELLOOOO");
+  final Uri _url = Uri.parse('https://twitter.com/intent/tweet?text=I am verifying that I have submitted my art to THE UNBIASED');
+  if (!await launchUrl(_url)) throw 'Could not launch $_url';
 }
 
 Future<Uri> downloadURLS(String? image) {

@@ -240,7 +240,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     }
                                   }),
                               SizedBox(
-                                height: 60,
+                                height: 80,
                               ),
                               user != null
                                   ? TextButton(
@@ -300,14 +300,30 @@ class _HomeScreenState extends State<HomeScreen> {
                                               children: [
                                                 Stack(
                                                   children: [
-                                                    Image.network(
-                                                      "${image.data}",
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width /
-                                                              3.75,
+                                                    Container(
+                                                      child:Container(
+                                                        width: MediaQuery.of(context).size.width/3.75,
+                                                        height: MediaQuery.of(context).size.height/1.8,
+                                                      ),
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                        BorderRadius.circular(10),
+                                                        image: DecorationImage(
+                                                          fit: BoxFit.cover,
+                                                          image: NetworkImage(
+                                                            image.data.toString(),
+                                                          ),
+                                                        ),
+                                                      ),
                                                     ),
+                                                    // Image.network(
+                                                    //   "${image.data}",
+                                                    //   width:
+                                                    //       MediaQuery.of(context)
+                                                    //               .size
+                                                    //               .width /
+                                                    //           3.75,
+                                                    // ),
                                                     Positioned(
                                                       left: 0,
                                                       bottom: 0,
