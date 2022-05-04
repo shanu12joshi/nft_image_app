@@ -301,17 +301,24 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 Stack(
                                                   children: [
                                                     Container(
-                                                      child:Container(
-                                                        width: MediaQuery.of(context).size.width/3.75,
-                                                        height: MediaQuery.of(context).size.height/1.8,
+                                                      child: Container(
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width /
+                                                            3.75,
+                                                        height: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .height /
+                                                            1.8,
                                                       ),
                                                       decoration: BoxDecoration(
-                                                        borderRadius:
-                                                        BorderRadius.circular(10),
                                                         image: DecorationImage(
                                                           fit: BoxFit.cover,
                                                           image: NetworkImage(
-                                                            image.data.toString(),
+                                                            image.data
+                                                                .toString(),
                                                           ),
                                                         ),
                                                       ),
@@ -409,7 +416,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   scrollDirection: Axis.vertical,
                                   gridDelegate:
                                       new SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 4,
+                                          childAspectRatio: 1 / 1.2,
+                                          crossAxisCount: 3,
                                           crossAxisSpacing: 20,
                                           mainAxisSpacing: 20),
                                   itemBuilder:
@@ -430,200 +438,162 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     value.toString());
                                           }
                                           return Card(
-                                            elevation: 5,
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                image: DecorationImage(
-                                                  fit: BoxFit.cover,
-                                                  image: NetworkImage(
-                                                    image.data.toString(),
-                                                  ),
-                                                ),
-                                              ),
-                                              child: InkWell(
-                                                splashColor:
-                                                    Colors.blue.withAlpha(30),
-                                                onTap: () {
-                                                  if (type) {
-                                                    Navigator.of(context).push(
-                                                      PageTransition(
-                                                          type:
-                                                              PageTransitionType
-                                                                  .scale,
-                                                          alignment: Alignment
-                                                              .bottomCenter,
-                                                          child: ImageView(
-                                                              doc,
+                                            child: InkWell(
+                                              splashColor:
+                                                  Colors.blue.withAlpha(30),
+                                              onTap: () {
+                                                if (type) {
+                                                  Navigator.of(context).push(
+                                                    PageTransition(
+                                                        type: PageTransitionType
+                                                            .scale,
+                                                        alignment: Alignment
+                                                            .bottomCenter,
+                                                        child: ImageView(
+                                                            doc,
+                                                            image.data
+                                                                .toString(),
+                                                            role)),
+                                                  );
+                                                } else {
+                                                  Navigator.of(context).push(
+                                                    PageTransition(
+                                                        type: PageTransitionType
+                                                            .scale,
+                                                        alignment: Alignment
+                                                            .bottomCenter,
+                                                        child: NFTVideoPlayer(
+                                                            doc,
+                                                            videoUrl,
+                                                            role)),
+                                                  );
+                                                }
+                                              },
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Stack(
+                                                    alignment: Alignment.center,
+                                                    children: [
+                                                      Container(
+                                                        height: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .height /
+                                                            1.8,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          // borderRadius:
+                                                          //     BorderRadius.circular(10),
+                                                          image:
+                                                              DecorationImage(
+                                                            fit: BoxFit.cover,
+                                                            image: NetworkImage(
                                                               image.data
                                                                   .toString(),
-                                                              role)),
-                                                    );
-                                                  } else {
-                                                    Navigator.of(context).push(
-                                                      PageTransition(
-                                                          type:
-                                                              PageTransitionType
-                                                                  .scale,
-                                                          alignment: Alignment
-                                                              .bottomCenter,
-                                                          child: NFTVideoPlayer(
-                                                              doc,
-                                                              videoUrl,
-                                                              role)),
-                                                    );
-                                                  }
-                                                },
-                                                child: type
-                                                    ? Stack(
-                                                        children: [
-                                                          Positioned(
-                                                            bottom: 0,
-                                                            child: Container(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .only(
-                                                                      left: 8.0,
-                                                                      top: 4.0,
-                                                                      right:
-                                                                          8.0),
-                                                              height: 60,
-                                                              width: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width /
-                                                                  4.2,
-                                                              color:
-                                                                  Colors.black,
-                                                              child: Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .only(
-                                                                        left:
-                                                                            8.0,
-                                                                        right:
-                                                                            8.0),
-                                                                child: Text(
-                                                                  "${doc["title"].toString().toUpperCase()}",
-                                                                  style: TextStyle(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontSize:
-                                                                          18,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600),
-                                                                  overflow:
-                                                                      TextOverflow
-                                                                          .ellipsis,
-                                                                ),
-                                                              ),
                                                             ),
                                                           ),
-                                                          role == "owner"
-                                                              ? IconButton(
-                                                                  onPressed:
-                                                                      () {
-                                                                    FirebaseFirestore
-                                                                        .instance
-                                                                        .runTransaction((transaction) async =>
-                                                                            await transaction.delete(doc.reference));
-                                                                  },
-                                                                  icon: Icon(Icons
-                                                                      .delete),
-                                                                )
-                                                              : SizedBox
-                                                                  .shrink()
-                                                        ],
-                                                      )
-                                                    : Stack(
-                                                        children: [
-                                                          Positioned(
-                                                            bottom: 0,
-                                                            child: Container(
-                                                              color:
-                                                                  Colors.black,
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .only(
-                                                                      left: 8.0,
-                                                                      top: 4.0),
-                                                              height: 30,
-                                                              width:
-                                                                  MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width,
-                                                              child: Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .only(
-                                                                        left:
-                                                                            8.0,
-                                                                        right:
-                                                                            8.0),
-                                                                child: Text(
-                                                                  "${doc["title"].toString().toUpperCase()}",
-                                                                  overflow:
-                                                                      TextOverflow
-                                                                          .ellipsis,
-                                                                  style: TextStyle(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontSize:
-                                                                          18,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          Center(
-                                                            child: Container(
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            50),
-                                                                color: Colors
-                                                                    .black
-                                                                    .withOpacity(
-                                                                        0.25),
-                                                              ),
-                                                              child: Icon(
-                                                                Icons
-                                                                    .play_arrow_rounded,
-                                                                size: 50,
-                                                                color: Colors
-                                                                    .white,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          role == "owner"
-                                                              ? IconButton(
-                                                                  onPressed:
-                                                                      () {
-                                                                    FirebaseFirestore
-                                                                        .instance
-                                                                        .runTransaction((transaction) async =>
-                                                                            await transaction.delete(doc.reference));
-                                                                  },
-                                                                  icon: Icon(Icons
-                                                                      .delete))
-                                                              : SizedBox
-                                                                  .shrink()
-                                                        ],
+                                                        ),
                                                       ),
+                                                      type
+                                                          ? SizedBox.shrink()
+                                                          : Center(
+                                                              child: Container(
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              50),
+                                                                  color: Colors
+                                                                      .black
+                                                                      .withOpacity(
+                                                                          0.25),
+                                                                ),
+                                                                child: Icon(
+                                                                  Icons
+                                                                      .play_arrow_rounded,
+                                                                  size: 50,
+                                                                  color: Colors
+                                                                      .white,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                    ],
+                                                  ),
+                                                  Container(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 8.0,
+                                                            top: 4.0,
+                                                            right: 8.0),
+                                                    color: Colors.black,
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 8.0,
+                                                              top: 20,
+                                                              right: 8.0),
+                                                      child: Text(
+                                                        "${doc["title"].toString().toUpperCase()}",
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 18,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w600),
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    padding:
+                                                    const EdgeInsets.only(
+                                                        left: 8.0,
+                                                        top: 4.0,
+                                                        right: 8.0),
+                                                    color: Colors.black,
+                                                    child: Padding(
+                                                      padding:
+                                                      const EdgeInsets.only(
+                                                          left: 8.0,
+                                                          top: 20,
+                                                          right: 8.0),
+                                                      child: Text(
+                                                        "${doc["CreatedAt"].toDate()}",
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 18,
+                                                            fontWeight:
+                                                            FontWeight
+                                                                .w600),
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  role != "owner"
+                                                      ? IconButton(
+                                                    alignment: Alignment.bottomRight,
+                                                        color: Colors.red,
+                                                        onPressed: () {
+                                                          FirebaseFirestore
+                                                              .instance
+                                                              .runTransaction(
+                                                                  (transaction) async =>
+                                                              await transaction.delete(doc.reference));
+                                                        },
+                                                        icon: Icon(
+                                                          Icons.delete,size: 20,),
+                                                      )
+                                                      : SizedBox.shrink()
+                                                ],
                                               ),
                                             ),
+                                            color: Colors.black,
+                                            elevation: 5,
                                           );
-
-                                          // else {
-                                          //   return Text("LOADING");
-                                          // }
                                         });
                                   });
                             }
