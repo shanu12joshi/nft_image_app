@@ -528,22 +528,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     ],
                                                   ),
                                                   Container(
-                                                    color: Colors.black,
                                                     child: Padding(
                                                       padding:
                                                           const EdgeInsets.only(
                                                               left: 16.0,
-                                                              top: 20,
+                                                              top: 10,
                                                               right: 8.0),
                                                       child: Text(
                                                         "${doc["title"].toString().toUpperCase()}",
-                                                        style: TextStyle(
+                                                        style: GoogleFonts.poppins(
+                                                            fontSize: 20,
                                                             color: Colors.white,
-                                                            fontSize: 18,
                                                             fontWeight:
-                                                                FontWeight
-                                                                    .w600),
-                                                        overflow: TextOverflow
+                                                            FontWeight.w300,
+                                                            letterSpacing: 2),
+                                                        overflow:
+                                                        TextOverflow
                                                             .ellipsis,
                                                       ),
                                                     ),
@@ -551,23 +551,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   Row(
                                                     children: [
                                                       Container(
-                                                        color: Colors.black,
                                                         child: Padding(
                                                           padding:
                                                               const EdgeInsets
                                                                       .only(
                                                                   left: 16.0,
                                                                   right: 8.0,
-                                                                  top: 20),
+                                                                  top: 10),
                                                           child: Text(
                                                             "Submitted At:",
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .white,
+                                                            style: GoogleFonts.poppins(
                                                                 fontSize: 18,
+                                                                color: Colors.white,
                                                                 fontWeight:
-                                                                    FontWeight
-                                                                        .w600),
+                                                                FontWeight.w300,
+                                                                letterSpacing: 2),
                                                             overflow:
                                                                 TextOverflow
                                                                     .ellipsis,
@@ -575,24 +573,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         ),
                                                       ),
                                                       Container(
-                                                        color: Colors.black,
                                                         child: Padding(
                                                           padding:
                                                               const EdgeInsets
                                                                       .only(
                                                                   left: 8.0,
-                                                                  top: 20,
+                                                                  top: 10,
                                                                   right: 8.0),
                                                           child: Text(
                                                             // "${doc["CreatedAt"].toDate()}",
                                                             "${DateFormat.yMMMMd('en_US').format(doc["CreatedAt"].toDate())}",
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .white,
+                                                            style: GoogleFonts.poppins(
                                                                 fontSize: 18,
+                                                                color: Colors.white,
                                                                 fontWeight:
-                                                                    FontWeight
-                                                                        .w600),
+                                                                FontWeight.w300,
+                                                                letterSpacing: 2),
                                                             overflow:
                                                                 TextOverflow
                                                                     .ellipsis,
@@ -623,7 +619,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 ],
                                               ),
                                             ),
-                                            color: Colors.black,
+                                            color: Color(0xFF4B4848),
                                             elevation: 5,
                                           );
                                         });
