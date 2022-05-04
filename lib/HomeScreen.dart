@@ -10,6 +10,7 @@ import 'package:nft_app/VideoPlayer.dart';
 import 'package:nft_app/widget/customsubtitle/customsubtitletext.dart';
 import 'package:nft_app/widget/customtitle/customtitletext.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:intl/intl.dart';
 
 // import 'package:firebase/firestore.dart';
 import 'package:flutter/material.dart';
@@ -547,31 +548,62 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       ),
                                                     ),
                                                   ),
-                                                  Container(
-                                                    padding:
-                                                    const EdgeInsets.only(
-                                                        left: 8.0,
-                                                        top: 4.0,
-                                                        right: 8.0),
-                                                    color: Colors.black,
-                                                    child: Padding(
-                                                      padding:
-                                                      const EdgeInsets.only(
-                                                          left: 8.0,
-                                                          top: 20,
-                                                          right: 8.0),
-                                                      child: Text(
-                                                        "${doc["CreatedAt"].toDate()}",
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 18,
-                                                            fontWeight:
-                                                            FontWeight
-                                                                .w600),
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
+                                                  Row(
+                                                    children: [
+                                                      Container(
+                                                        padding:
+                                                        const EdgeInsets.only(
+                                                            left: 8.0,
+                                                            top: 4.0,
+                                                            right: 8.0),
+                                                        color: Colors.black,
+                                                        child: Padding(
+                                                          padding:
+                                                          const EdgeInsets.only(
+                                                              left: 8.0,
+                                                              top: 20,
+                                                              right: 8.0),
+                                                          child: Text(
+                                                            "CreatedAt:",
+                                                            style: TextStyle(
+                                                                color: Colors.white,
+                                                                fontSize: 18,
+                                                                fontWeight:
+                                                                FontWeight
+                                                                    .w600),
+                                                            overflow: TextOverflow
+                                                                .ellipsis,
+                                                          ),
+                                                        ),
                                                       ),
-                                                    ),
+                                                      Container(
+                                                        padding:
+                                                        const EdgeInsets.only(
+                                                            left: 8.0,
+                                                            top: 4.0,
+                                                            right: 8.0),
+                                                        color: Colors.black,
+                                                        child: Padding(
+                                                          padding:
+                                                          const EdgeInsets.only(
+                                                              left: 8.0,
+                                                              top: 20,
+                                                              right: 8.0),
+                                                          child: Text(
+                                                            // "${doc["CreatedAt"].toDate()}",
+                                                            "${DateFormat.yMMMMd('en_US').format(doc["CreatedAt"].toDate())}",
+                                                            style: TextStyle(
+                                                                color: Colors.white,
+                                                                fontSize: 18,
+                                                                fontWeight:
+                                                                FontWeight
+                                                                    .w600),
+                                                            overflow: TextOverflow
+                                                                .ellipsis,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
                                                   role != "owner"
                                                       ? IconButton(
