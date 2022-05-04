@@ -15,6 +15,7 @@ import 'package:intl/intl.dart';
 // import 'package:firebase/firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase/firebase.dart' as fb;
+import 'package:sizer/sizer.dart';
 
 import 'Utils/authentication.dart';
 
@@ -80,11 +81,11 @@ class _HomeScreenState extends State<HomeScreen> {
           title: Row(
             children: [
               SizedBox(
-                width: MediaQuery.of(context).size.width / 15,
+                width: 6.w,
               ),
               Image.network(
                 "https://www.linkpicture.com/q/unbaised-1_2.png",
-                height: MediaQuery.of(context).size.height / 14,
+                height: 8.h,
               ),
             ],
           ),
@@ -92,8 +93,8 @@ class _HomeScreenState extends State<HomeScreen> {
           actions: [
             user == null
                 ? Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 150, 0),
-                    child: TextButton(
+              padding: EdgeInsets.symmetric(horizontal: 10.h),
+              child: TextButton(
                       child: _isProcessing
                           ? Center(
                               child: CircularProgressIndicator(
@@ -104,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             )
                           : CustomSubtitleTitle(
                               text: "SIGN IN",
-                              fontSize: 20,
+                              fontSize: 5.sp,
                               color: Colors.black,
                             ),
                       onPressed: () async {
@@ -136,10 +137,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(
-                      height: MediaQuery.of(context).size.height / 6,
+                      height: 15.h,
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(200, 0, 200, 0),
+                      padding: EdgeInsets.symmetric(horizontal: 25.h),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -148,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 2.h),
                                 child: RichText(
                                   textAlign: TextAlign.center,
                                   text: TextSpan(children: [
@@ -157,25 +158,25 @@ class _HomeScreenState extends State<HomeScreen> {
                                         style: GoogleFonts.poppins(
                                           fontWeight: FontWeight.w200,
                                           color: Colors.black,
-                                          fontSize: 45,
+                                          fontSize: 9.sp,
                                         )),
                                     TextSpan(
                                         text: "UNBIASED ",
                                         style: GoogleFonts.poppins(
                                             fontWeight: FontWeight.w500,
                                             color: Colors.black,
-                                            fontSize: 45)),
+                                            fontSize: 9.sp)),
                                     TextSpan(
                                         text: "INITIATIVE",
                                         style: GoogleFonts.poppins(
                                             fontWeight: FontWeight.w200,
                                             color: Colors.black,
-                                            fontSize: 45)),
+                                            fontSize: 9.sp)),
                                   ]),
                                 ),
                               ),
                               SizedBox(
-                                height: 60,
+                                height: 10.h,
                               ),
                               StreamBuilder(
                                   stream: FirebaseFirestore.instance
@@ -195,40 +196,44 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               CustomSubtitleTitle(
+                                                letterspace: 0.5.sp,
                                                 text: "TOTAL SUBMISSION",
-                                                fontSize: 15,
+                                                fontSize: 3.sp,
+                                                fontWeight: FontWeight.w200,
                                               ),
-                                              SizedBox(height: 30),
+                                              SizedBox(height: 3.5.h),
                                               CustomTitle(
                                                 text:
                                                     "${snapshot.data!.docs.length.toString()}",
-                                                fontSize: 40,
+                                                fontSize: 7.sp,
                                               ),
                                             ],
                                           ),
                                           SizedBox(
-                                            width: 60,
+                                            width: 10.h,
                                           ),
                                           Container(
                                             color: Colors.black45,
-                                            height: 100,
-                                            width: 2,
+                                            height: 13.h,
+                                            width: .1.w,
                                           ),
                                           SizedBox(
-                                            width: 60,
+                                            width: 10.h,
                                           ),
                                           Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.center,
                                             children: [
                                               CustomSubtitleTitle(
+                                                letterspace: 0.5.sp,
                                                 text: "TOTAL PICKED",
-                                                fontSize: 15,
+                                                fontSize: 3.sp,
+                                                fontWeight: FontWeight.w200,
                                               ),
-                                              SizedBox(height: 30),
+                                              SizedBox(height: 3.h),
                                               CustomTitle(
-                                                text: "100/100",
-                                                fontSize: 40,
+                                                text: "80/100",
+                                                fontSize: 7.sp,
                                               ),
                                             ],
                                           ),
@@ -241,7 +246,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     }
                                   }),
                               SizedBox(
-                                height: 80,
+                                height: 12.h,
                               ),
                               user != null
                                   ? TextButton(
@@ -259,14 +264,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     HomePage()));
                                       },
                                       child: Padding(
-                                        padding: const EdgeInsets.fromLTRB(
-                                            60, 12, 60, 12),
+                                        padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 13.h),
                                         child: CustomTitle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.w200,
                                           text: "SUBMIT YOUR ART HERE",
-                                          fontSize: 18,
-                                          letterspace: 5,
+                                          fontSize: 4.sp,
+                                          letterspace: 0.7.sp,
                                         ),
                                       ),
                                     )

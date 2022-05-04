@@ -27,7 +27,7 @@ class CustomSubtitleTitle extends StatelessWidget {
       foreground: foreground,
       fontSize: fontSize,
       color: color,
-      fontWeight: FontWeight.w400,
+      fontWeight: fontWeight,
       decoration: linethrough,
     ),textAlign: align,);
   }
