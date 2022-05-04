@@ -417,7 +417,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   scrollDirection: Axis.vertical,
                                   gridDelegate:
                                       new SliverGridDelegateWithFixedCrossAxisCount(
-                                          childAspectRatio: 1 / 1.2,
+                                          childAspectRatio: 1 / 1.3,
                                           crossAxisCount: 3,
                                           crossAxisSpacing: 20,
                                           mainAxisSpacing: 20),
@@ -471,7 +471,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 }
                                               },
                                               child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 children: [
                                                   Stack(
                                                     alignment: Alignment.center,
@@ -481,7 +482,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                     context)
                                                                 .size
                                                                 .height /
-                                                            1.8,
+                                                            1.5,
                                                         decoration:
                                                             BoxDecoration(
                                                           // borderRadius:
@@ -523,16 +524,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     ],
                                                   ),
                                                   Container(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 8.0,
-                                                            top: 4.0,
-                                                            right: 8.0),
                                                     color: Colors.black,
                                                     child: Padding(
                                                       padding:
                                                           const EdgeInsets.only(
-                                                              left: 8.0,
+                                                              left: 16.0,
                                                               top: 20,
                                                               right: 8.0),
                                                       child: Text(
@@ -551,75 +547,75 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   Row(
                                                     children: [
                                                       Container(
-                                                        padding:
-                                                        const EdgeInsets.only(
-                                                            left: 8.0,
-                                                            top: 4.0,
-                                                            right: 8.0),
                                                         color: Colors.black,
                                                         child: Padding(
                                                           padding:
-                                                          const EdgeInsets.only(
-                                                              left: 8.0,
-                                                              top: 20,
-                                                              right: 8.0),
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  left: 16.0,
+                                                                  right: 8.0,
+                                                                  top: 20),
                                                           child: Text(
-                                                            "CreatedAt:",
+                                                            "Submitted At:",
                                                             style: TextStyle(
-                                                                color: Colors.white,
+                                                                color: Colors
+                                                                    .white,
                                                                 fontSize: 18,
                                                                 fontWeight:
-                                                                FontWeight
-                                                                    .w600),
-                                                            overflow: TextOverflow
-                                                                .ellipsis,
+                                                                    FontWeight
+                                                                        .w600),
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
                                                           ),
                                                         ),
                                                       ),
                                                       Container(
-                                                        padding:
-                                                        const EdgeInsets.only(
-                                                            left: 8.0,
-                                                            top: 4.0,
-                                                            right: 8.0),
                                                         color: Colors.black,
                                                         child: Padding(
                                                           padding:
-                                                          const EdgeInsets.only(
-                                                              left: 8.0,
-                                                              top: 20,
-                                                              right: 8.0),
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  left: 8.0,
+                                                                  top: 20,
+                                                                  right: 8.0),
                                                           child: Text(
                                                             // "${doc["CreatedAt"].toDate()}",
                                                             "${DateFormat.yMMMMd('en_US').format(doc["CreatedAt"].toDate())}",
                                                             style: TextStyle(
-                                                                color: Colors.white,
+                                                                color: Colors
+                                                                    .white,
                                                                 fontSize: 18,
                                                                 fontWeight:
-                                                                FontWeight
-                                                                    .w600),
-                                                            overflow: TextOverflow
-                                                                .ellipsis,
+                                                                    FontWeight
+                                                                        .w600),
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
                                                           ),
                                                         ),
                                                       ),
-                                                    ],
-                                                  ),
-                                                  role != "owner"
-                                                      ? IconButton(
-                                                    alignment: Alignment.bottomRight,
+                                                      role == "owner"
+                                                          ? IconButton(
+                                                        alignment: Alignment
+                                                            .bottomRight,
                                                         color: Colors.red,
                                                         onPressed: () {
                                                           FirebaseFirestore
                                                               .instance
                                                               .runTransaction(
                                                                   (transaction) async =>
-                                                              await transaction.delete(doc.reference));
+                                                              await transaction
+                                                                  .delete(doc.reference));
                                                         },
                                                         icon: Icon(
-                                                          Icons.delete,size: 20,),
+                                                          Icons.delete,
+                                                          size: 20,
+                                                        ),
                                                       )
-                                                      : SizedBox.shrink()
+                                                          : SizedBox.shrink()
+                                                    ],
+                                                  ),
                                                 ],
                                               ),
                                             ),
