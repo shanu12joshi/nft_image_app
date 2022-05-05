@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
               //   HomePage.route:(context)=>HomePage(),
               //   HomeScreen.route:(context) => HomeScreen()
               // },
-              home: HomePage(),
+              home: HomeScreen(),
             );
           }
       );
