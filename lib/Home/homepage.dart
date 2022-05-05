@@ -154,13 +154,13 @@ class _HomePageState extends State<HomePage> {
                                       controller: titlecontroller,
                                       validator: (value) {
                                         if (value!.isEmpty) {
-                                          return "Please Enter Title";
+                                          return "Please Enter Art Title";
                                         } else {
                                           return null;
                                         }
                                       },
                                       decoration: const InputDecoration(
-                                          labelText: "Title",
+                                          labelText: "Art Title",
                                           border: OutlineInputBorder(
                                               borderRadius: BorderRadius.all(
                                                 Radius.circular(8),
@@ -191,13 +191,13 @@ class _HomePageState extends State<HomePage> {
                                       maxLines: 10,
                                       validator: (value) {
                                         if (value!.isEmpty) {
-                                          return "Please Enter Your ArtWork Description";
+                                          return "Please Enter Your Art Description";
                                         } else {
                                           return null;
                                         }
                                       },
                                       decoration: const InputDecoration(
-                                          labelText: "Description",
+                                          labelText: "Art Description",
                                           border: OutlineInputBorder(
                                               borderRadius: BorderRadius.all(
                                                 Radius.circular(8),
@@ -227,13 +227,13 @@ class _HomePageState extends State<HomePage> {
                                       controller: twittercontroller,
                                       validator: (value) {
                                         if (value!.isEmpty) {
-                                          return "Please Enter Twitter Account ID";
+                                          return "Please Enter Twitter Handle";
                                         } else {
                                           return null;
                                         }
                                       },
                                       decoration: const InputDecoration(
-                                          labelText: "Twitter",
+                                          labelText: "Twitter Handle",
                                           border: OutlineInputBorder(
                                               borderRadius: BorderRadius.all(
                                                 Radius.circular(8),
@@ -912,7 +912,7 @@ class _HomePageState extends State<HomePage> {
           builder: (context) {
             return AlertDialog(
               title: Text("NFT SAVE"),
-              content: Text("NFT Saved successfully!"),
+              content: Text("NFT saved successfully!"),
               actions: [
                 ElevatedButton(
                   onPressed: () {
@@ -934,7 +934,7 @@ class _HomePageState extends State<HomePage> {
 
 void _launchUrl() async {
   print("HELLOOOO");
-  final Uri _url = Uri.parse('https://twitter.com/intent/tweet?text=I am verifying that I have submitted my art to THE UNBIASED');
+  final Uri _url = Uri.parse('https://twitter.com/intent/tweet?text=I am verifying that I have submitted my art to THE UNBIASED #theunbiased #theunbiasedproject #nft #nfts');
   if (!await launchUrl(_url)) throw 'Could not launch $_url';
 }
 

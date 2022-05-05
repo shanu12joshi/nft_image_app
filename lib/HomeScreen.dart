@@ -559,7 +559,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                   right: 8.0,
                                                                   top: 10),
                                                           child: Text(
-                                                            "Submitted At:",
+                                                            "Submitted On:",
                                                             style: GoogleFonts.poppins(
                                                                 fontSize: 18,
                                                                 color: Colors.white,
