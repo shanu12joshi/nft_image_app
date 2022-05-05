@@ -920,7 +920,7 @@ class _HomePageState extends State<HomePage> {
                     Navigator.pop(context);
                     Navigator.pop(context);
                   },
-                  child: Text("Ok", style: TextStyle(color: Colors.white)),
+                  child: Text("Submit", style: TextStyle(color: Colors.white)),
                   style: ElevatedButton.styleFrom(primary: Colors.green),
                 )
               ],
