@@ -272,7 +272,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                           Container(
                             // height: MediaQuery.of(context).size.height*0.5,
-                            color: Colors.black,
+                            color: Color(0xFF4B4848),
                             child: Padding(
                               padding: const EdgeInsets.only(top: 8.0),
                               child: Column(
@@ -290,7 +290,6 @@ class _HomePageState extends State<HomePage> {
                                           if (isVideo == true &&
                                               isVideoThumbnailUploaded ==
                                                   true) {
-                                            print("HWLLOOOO");
                                             downloadURLS(_imageThumbnailurl)
                                                 .then((value) {
                                               if (mounted) {
@@ -420,13 +419,14 @@ class _HomePageState extends State<HomePage> {
                                     // width: MediaQuery.of(context).size.width,
                                     alignment: Alignment.center,
                                     padding: EdgeInsets.all(12),
-                                    color: Colors.black,
+                                    color: Color(0xFF4B4848),
                                     child: Text(
                                       "ART PREVIEW",
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 18,
-                                          fontWeight: FontWeight.w600),
+                                          fontWeight: FontWeight.w300,
+                                      letterSpacing: 0.5.sp),
                                     ),
                                   )
                                 ],
@@ -441,28 +441,36 @@ class _HomePageState extends State<HomePage> {
                 nftuploaded == true
                     ? Text("Your Artwork is Already Submitted!")
                     : Text(''),
-                SizedBox(
-                  height: 50,
-                ),
                 if (nftuploaded != true)
                   if (isVideo == false || isVideoThumbnailUploaded == true)
                     Visibility(
                       visible: _upload,
                       child: Center(
-                        child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                primary: Colors.blue[200],
-                                shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)))),
-                            onPressed: () {
-                              if (_formkey.currentState!.validate()) {
-                                setState(() {
-                                  uploadToCloud();
-                                });
-                              }
-                            },
-                            child: Text("Save")),
+                        child:TextButton(
+                          style: ButtonStyle(
+                            alignment: Alignment.center,
+                            backgroundColor:
+                            MaterialStateProperty.all<Color>(
+                                Color(0xFF4B4848)),
+                          ),
+                          onPressed: () {
+                            if (_formkey.currentState!.validate()) {
+                              setState(() {
+                                uploadToCloud();
+                              });
+                            }
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 13.h),
+                            child: CustomTitle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w200,
+                              text: "SUBMIT",
+                              fontSize: 4.sp,
+                              letterspace: 0.7.sp,
+                            ),
+                          ),
+                        ),
                       ),
                     )
                   else
@@ -593,7 +601,7 @@ class _HomePageState extends State<HomePage> {
                     Container(
                       // height: MediaQuery.of(context).size.height*0.5,
                       width: MediaQuery.of(context).size.width / 2,
-                      color: Colors.black,
+                      color: Color(0xFF4B4848),
                       child: Padding(
                         padding: const EdgeInsets.only(top: 8.0),
                         child: Column(
@@ -715,13 +723,15 @@ class _HomePageState extends State<HomePage> {
                               // width: MediaQuery.of(context).size.width,
                               alignment: Alignment.center,
                               padding: EdgeInsets.all(12),
-                              color: Colors.black,
+                              color: Color(0xFF4B4848),
                               child: Text(
                                 "ART PREVIEW",
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 18,
-                                    fontWeight: FontWeight.w600),
+                                    fontWeight: FontWeight.w300,
+                                  letterSpacing: 0.5.sp
+                                ),
                               ),
                             )
                           ],
@@ -952,7 +962,6 @@ class _HomePageState extends State<HomePage> {
 }
 
 void _launchUrl() async {
-  print("HELLOOOO");
   final Uri _url = Uri.parse(
       'https://twitter.com/intent/tweet?text=I am verifying that I have submitted my art to THE UNBIASED #theunbiased #theunbiasedproject #nft #nfts');
   if (!await launchUrl(_url)) throw 'Could not launch $_url';
