@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:nft_app/Home/homepage.dart';
 import 'package:nft_app/HomeScreen.dart';
 import 'package:sizer/sizer.dart';
 
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
               //   HomePage.route:(context)=>HomePage(),
               //   HomeScreen.route:(context) => HomeScreen()
               // },
-              home: HomeScreen(),
+              home: HomePage(),
             );
           }
       );
